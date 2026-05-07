@@ -5,6 +5,8 @@ use App\Livewire\Register;
 use App\Livewire\Login;
 use App\Livewire\Dashboard;
 use App\Livewire\Logout;
+use App\Livewire\Permintaan;
+use App\Livewire\Riwayat;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +31,10 @@ Route::group(['middleware'=>'guest'], function(){
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/logout', Logout::class)->name('logout');
+    Route::get('/permintaan', Permintaan::class)->name('permintaan');
+    Route::get('/riwayat', Riwayat::class)->name('riwayat');
+    Route::get('/donasi/{rebox_id}', \App\Livewire\FormDonasi::class)->name('donasi.form');
 });
+
+
+

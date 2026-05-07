@@ -1,5 +1,5 @@
-<ul class="dropdown-menu">
-    <li>
-        <a class="dropdown-item" href="/logout" wire:click.prevent="logout">Logout</a>
-    </li>
-</ul>
+<div>
+    <a href="#" wire:click.prevent="logout" class="logout-link" style="cursor: pointer; text-decoration: none; display: flex; align-items: center;">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+    </a>
+</div>

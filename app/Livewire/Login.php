@@ -7,7 +7,7 @@ use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
 
-#[Title('Login - AllPHPTricks.com')] 
+#[Title('Login')] 
 class Login extends Component
 {
     #[Validate('required|email')]
@@ -16,24 +16,28 @@ class Login extends Component
     #[Validate('required')]
     public $password;
 
+    // Default role saat login
+    public $role = 'donatur';
+
     public function login()
-    {
-        $this->validate();
+{
+    $this->validate();
 
-        $credentials = [
-            'email' => $this->email,
-            'password' => $this->password,
-        ];
+    $credentials = [
+        'email' => $this->email,
+        'password' => $this->password,
+        'role' => $this->role, // Menambahkan pengecekan role langsung ke database
+    ];
 
-        if(Auth::attempt($credentials))
-        {
-            session()->flash('message', 'You have successfully logged in!');
- 
-            return $this->redirectRoute('dashboard', navigate: true);
-        }
-        
-        session()->flash('error', 'Invalid credentials!');
-    }   
+    if (Auth::attempt($credentials)) {
+        session()->flash('message', 'Selamat datang kembali!');
+        return $this->redirectRoute('dashboard', navigate: true);
+    }
+
+    // Jika akun ada tapi role salah, atau password salah
+    session()->flash('error', 'Login gagal. Akun tidak ditemukan atau peran tidak sesuai.');
+}
+
     public function render()
     {
         return view('livewire.login');
