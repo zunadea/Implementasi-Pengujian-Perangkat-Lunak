@@ -584,9 +584,7 @@
             Daftar Penerima
         </h3>
 
-        <a href="#" class="view-all-btn">
-            Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
-        </a>
+        
     </div>
 
     <div class="receiver-grid">
