@@ -6,229 +6,454 @@
     <title>Rebox | Dashboard</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=fallback">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
     <style>
         :root {
-            --rebox-dark: #024d36;      /* Hijau gelap sidebar */
-            --rebox-active: #05664a;    /* Hijau menu aktif */
-            --rebox-emerald: #007f4e;   /* Hijau tombol panduan */
-            --rebox-text-dim: #94b2a8;  /* Warna teks sekunder/slogan */
-            --bg-light: #F8FAFB;
+            --rebox-primary: #024d36;
+            --rebox-secondary: #036b4b;
+            --rebox-accent: #2ecc71;
+            --rebox-soft: rgba(255, 255, 255, 0.10);
+            --rebox-soft-hover: rgba(255, 255, 255, 0.16);
+            --bg-body: #f4f7f6;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-light); 
+        * {
+            box-sizing: border-box;
         }
 
-        /* Sidebar Styling Fix */
-        .main-sidebar { 
-            background-color: var(--rebox-dark) !important; 
-            padding-top: 20px !important;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+        }
+
+        /* NAVBAR AREA */
+        .rebox-navbar-area {
+            background: var(--bg-body);
+            padding: 14px 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        /* NAVBAR */
+        .rebox-navbar {
+            min-height: 74px;
+            background: linear-gradient(135deg, #024d36 0%, #035d41 100%);
+            border-radius: 0 0 26px 26px;
+            padding: 0 34px;
             display: flex;
-            flex-direction: column;
-            height: 100vh;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 12px 28px rgba(2, 77, 54, 0.22);
         }
 
-        .sidebar {
-            padding-left: 12px !important;
-            padding-right: 12px !important;
+        /* BRAND */
+        .brand-rebox {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+            text-decoration: none;
+            margin-right: 40px;
+            white-space: nowrap;
+        }
+
+        .brand-rebox span {
+            color: var(--rebox-accent);
+        }
+
+        .brand-rebox:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* LEFT MENU */
+        .navbar-left {
             display: flex;
-            flex-direction: column;
-            flex: 1;
+            align-items: center;
+            gap: 20px;
         }
 
-        .brand-link { 
-            padding: 10px 15px !important; 
-            margin-bottom: 25px;
+        .rebox-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
-        
-        .brand-text { 
-            font-size: 1.8rem !important; 
+
+        .rebox-menu .nav-link {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 15px;
             font-weight: 700;
-            color: #fff !important;
-            line-height: 1;
-        }
-        
-        .slogan-text { 
-            color: #2ecc71 !important; 
-            font-size: 0.75rem; 
-            margin-top: 5px;
-            opacity: 0.9;
-        }
-
-        .nav-pills .nav-link {
-            color: #ffffffd1 !important;
-            padding: 12px 18px !important;
-            margin: 4px 0 !important;
-            border-radius: 12px !important;
+            padding: 13px 22px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
-            transition: all 0.3s;
+            gap: 10px;
+            transition: 0.25s ease;
+            text-decoration: none;
         }
 
-        .nav-pills .nav-link i {
-            margin-right: 15px !important;
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
+        .rebox-menu .nav-link i {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.70);
         }
 
-        .nav-pills .nav-link.active {
-            background-color: var(--rebox-active) !important;
-            color: #fff !important;
-            box-shadow: none !important;
+        .rebox-menu .nav-link:hover,
+        .rebox-menu .nav-link.active {
+            background: var(--rebox-soft-hover);
+            color: #ffffff;
         }
 
-        .help-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 5px;
+        .rebox-menu .nav-link:hover i,
+        .rebox-menu .nav-link.active i {
+            color: #ffffff;
         }
 
-        .help-box .title { color: #fff; font-weight: 600; margin-bottom: 5px; font-size: 0.95rem; }
-        .help-box .subtitle { color: var(--rebox-text-dim); font-size: 0.8rem; margin-bottom: 15px; line-height: 1.4; }
-
-        .btn-panduan {
-            background-color: var(--rebox-emerald) !important;
-            color: white !important;
-            border-radius: 10px;
-            padding: 10px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border: none;
-            width: 100%;
-        }
-
-        /* --- BAGIAN PROFIL BARU --- */
-        .sidebar-user-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 12px;
-            margin: 10px 5px;
+        /* RIGHT USER */
+        .navbar-right {
             display: flex;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 16px;
+        }
+
+        .user-dropdown-wrap {
+            position: relative;
+        }
+
+        .user-dropdown-btn {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 7px 13px 7px 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 230px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.13);
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 3px solid rgba(46, 204, 113, 0.65);
+            background: #ffffff;
         }
 
         .user-info {
-            margin-left: 12px;
-            overflow: hidden;
+            text-align: left;
+            line-height: 1.15;
+            flex: 1;
         }
 
         .user-name {
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 0;
+            display: block;
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
             white-space: nowrap;
+            max-width: 135px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .user-role {
-            color: #2ecc71;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: capitalize;
+            display: block;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            color: var(--rebox-accent);
+            text-transform: uppercase;
+            margin-top: 3px;
         }
-        /* -------------------------- */
 
-        .content-wrapper { 
-            background-color: var(--bg-light) !important; 
-            border-top-left-radius: 30px; 
+        .dropdown-arrow {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            transition: 0.25s ease;
+        }
+
+        .show .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* DROPDOWN */
+        .rebox-dropdown-menu {
             border: none;
+            border-radius: 18px;
+            padding: 10px;
+            margin-top: 12px;
+            min-width: 230px;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
+            overflow: hidden;
+        }
+
+        .rebox-dropdown-menu .dropdown-header-box {
+            padding: 12px 12px 10px;
+            border-bottom: 1px solid #eef2f1;
+            margin-bottom: 8px;
+        }
+
+        .dropdown-header-box .dropdown-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 3px;
+        }
+
+        .dropdown-header-box .dropdown-role {
+            font-size: 11px;
+            font-weight: 800;
+            color: #00a85a;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .rebox-dropdown-menu .dropdown-item {
+            border-radius: 12px;
+            padding: 11px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s ease;
+        }
+
+        .rebox-dropdown-menu .dropdown-item:hover {
+            background: #e9f8ef;
+            color: var(--rebox-primary);
+        }
+
+        .logout-item {
+            color: #dc2626 !important;
+        }
+
+        .logout-item:hover {
+            background: #fee2e2 !important;
+            color: #b91c1c !important;
+        }
+
+        /* CONTENT */
+        .content-wrapper {
+            background: transparent !important;
+            min-height: 100vh;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .rebox-navbar {
+                padding: 18px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+                border-radius: 0 0 22px 22px;
+            }
+
+            .navbar-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .rebox-menu {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .rebox-menu .nav-link {
+                padding: 11px 15px;
+                font-size: 13px;
+            }
+
+            .navbar-right {
+                justify-content: flex-start;
+            }
+
+            .user-dropdown-btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .rebox-navbar-area {
+                padding: 10px 10px 0;
+            }
+
+            .brand-rebox {
+                font-size: 23px;
+            }
+
+            .rebox-menu {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rebox-menu .nav-link {
+                justify-content: center;
+            }
         }
     </style>
+
     @livewireStyles
 </head>
-<body class="hold-transition sidebar-mini">
+
+<body class="hold-transition layout-top-nav">
+
 <div class="wrapper">
 
     @auth
-    <aside class="main-sidebar elevation-0">
-        <div class="brand-link border-0 text-left">
-            <div class="brand-text">Rebox</div>
-            <div class="slogan-text">Dependable Helper</div>
-        </div>
+    <div class="rebox-navbar-area">
+        <nav class="rebox-navbar">
 
-        <div class="sidebar">
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-                    <li class="nav-item">
-                        <a href="/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
-                            <i class="fas fa-hand-holding-heart"></i>
-                            <p>Donasi</p>
+            <div class="navbar-left">
+                <a href="/dashboard" class="brand-rebox">
+                    Re<span>box</span>
+                </a>
+
+                <ul class="rebox-menu">
+                    <li>
+                        <a href="/dashboard"
+                           class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+                            <i class="fas fa-border-all"></i>
+                            Donasi
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/permintaan" class="nav-link {{ request()->is('permintaan*') ? 'active' : '' }}">
-                            <i class="fas fa-archive"></i>
-                            <p>Permintaan Barang</p>
+
+                    <li>
+                        <a href="/permintaan"
+                           class="nav-link {{ request()->is('permintaan*') ? 'active' : '' }}">
+                            <i class="fas fa-basket-shopping"></i>
+                            Permintaan
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/riwayat" class="nav-link {{ request()->is('riwayat*') ? 'active' : '' }}">
-                            <i class="fas fa-history"></i>
-                            <p>Riwayat</p>
+
+                    <li>
+                        <a href="/riwayat"
+                           class="nav-link {{ request()->is('riwayat*') ? 'active' : '' }}">
+                            <i class="fas fa-clock-rotate-left"></i>
+                            Riwayat
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/profile" class="nav-link {{ request()->is('profile*') ? 'active' : '' }}">
-                            <i class="far fa-user-circle"></i>
-                            <p>Profile</p>
+
+                    <li>
+                        <a href="/profile"
+                           class="nav-link {{ request()->is('profile*') ? 'active' : '' }}">
+                            <i class="fas fa-user-gear"></i>
+                            Profile
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </div>
 
+            <div class="navbar-right">
 
-                <div class="sidebar-user-panel mb-2">
-                    @if(auth()->user()->profile_photo)
-                        <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="user-avatar" alt="User">
-                    @else
-                        <div class="user-avatar bg-secondary d-flex align-items-center justify-content-center">
-                            <i class="fas fa-user text-white-50" style="font-size: 0.8rem;"></i>
+                <div class="dropdown user-dropdown-wrap">
+                    <button class="user-dropdown-btn dropdown-toggle"
+                            type="button"
+                            id="userDropdown"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}"
+                                 class="user-avatar"
+                                 alt="User">
+                        @else
+                            <img
+                                src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2ecc71&color=fff&bold=true"
+                                class="user-avatar"
+                                alt="User">
+                        @endif
+
+                        <span class="user-info">
+                            <span class="user-name">
+                                {{ auth()->user()->name }}
+                            </span>
+
+                            <span class="user-role">
+                                {{ auth()->user()->role }}
+                            </span>
+                        </span>
+
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-right rebox-dropdown-menu"
+                         aria-labelledby="userDropdown">
+
+                        <div class="dropdown-header-box">
+                            <div class="dropdown-name">
+                                {{ auth()->user()->name }}
+                            </div>
+
+                            <div class="dropdown-role">
+                                {{ auth()->user()->role }}
+                            </div>
                         </div>
-                    @endif
-                    <div class="user-info">
-                        <p class="user-name">{{ auth()->user()->name }}</p>
-                        <p class="user-role text-success" style="font-size: 0.65rem;">{{ auth()->user()->role }}</p>
+
+                        <a href="/profile" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            Lihat Profile
+                        </a>
+
+                        <a href="/riwayat" class="dropdown-item">
+                            <i class="fas fa-clock-rotate-left"></i>
+                            Riwayat Donasi
+                        </a>
+
+                        <form action="{{ route('logout') }}" method="POST" class="m-0">
+                            @csrf
+
+                            <button type="submit" class="dropdown-item logout-item">
+                                <i class="fas fa-right-from-bracket"></i>
+                                Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-                <div class="px-2">
-                    @livewire('logout')
-                </div>
             </div>
-    </aside>
+
+        </nav>
+    </div>
     @endauth
 
-    <div class="content-wrapper {{ !Auth::check() ? 'ml-0' : '' }}">
+    {{-- CONTENT --}}
+    <div class="content-wrapper">
         <div class="content pt-4">
             <div class="container-fluid">
+
                 {{ $slot }}
+
             </div>
         </div>
     </div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
 @livewireScripts
+
 </body>
 </html>

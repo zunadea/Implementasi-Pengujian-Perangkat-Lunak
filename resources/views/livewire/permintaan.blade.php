@@ -1,132 +1,595 @@
-<div class="container-fluid">
-    @if (session()->has('message'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px;">
-            <i class="fas fa-check-circle mr-2"></i> {{ session('message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+<div class="container-fluid px-3 py-2">
+
+    {{-- HEADER --}}
+    <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+
+        <div>
+            <div class="small text-muted mb-1"
+                style="font-size:12px; font-weight:600;">
+                Requests
+                <i class="fas fa-chevron-right mx-1" style="font-size:8px;"></i>
+                <span style="color:#00743f;">Permintaan Barang</span>
+            </div>
+
+            <h1 style="
+                font-size:28px;
+                font-weight:800;
+                color:#17212b;
+                margin-bottom:6px;
+                line-height:1.2;
+            ">
+                Form Permintaan Barang
+            </h1>
+
+            <p class="text-muted mb-0"
+                style="font-size:14px;">
+                Lengkapi detail kebutuhan Anda untuk mendapatkan dukungan logistik.
+            </p>
+        </div>
+
+        {{-- BUTTON --}}
+        <div class="d-flex align-items-center mt-2 mt-lg-0">
+
+            <button class="btn btn-light mr-2 px-3"
+                style="
+                    height:42px;
+                    border-radius:14px;
+                    border:1px solid #dfe5eb;
+                    font-weight:700;
+                    font-size:13px;
+                    color:#4b5563;
+                ">
+                <i class="far fa-envelope mr-2"></i>
+                Simpan Draft
             </button>
-        </div>
-    @endif
 
-    <div class="row">
-        <!-- Area Form Utama -->
-        <div class="col-lg-8">
-            <h2 class="font-weight-bold">Buat Permintaan Barang</h2>
-            <p class="text-muted">Lengkapi detail kebutuhan Anda agar para donatur dapat membantu dengan tepat.</p>
+            <button class="btn text-white px-4"
+                style="
+                    height:42px;
+                    border-radius:14px;
+                    background:#00743f;
+                    border:none;
+                    font-weight:700;
+                    font-size:13px;
+                    box-shadow:0 6px 14px rgba(0,116,63,.16);
+                ">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Kirim Permintaan
+            </button>
 
-            <div class="card shadow-sm mt-4" style="border-radius: 20px; border: none;">
-                <div class="card-body p-4">
-                    <form wire:submit.prevent="submit">
-                        <!-- Nama Barang -->
-                        <div class="form-group mb-4">
-                            <label class="font-weight-bold">Nama Barang</label>
-                            <input type="text" wire:model="nama_barang" class="form-control" 
-                                placeholder="Contoh: Alat Tulis Kantor, Pakaian Anak"
-                                style="border-radius: 12px; background-color: #f8fafb; border: 1px solid #e9ecef; padding: 25px 15px;">
-                            @error('nama_barang') <span class="text-danger small">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="row">
-                            <!-- Kategori -->
-                            <div class="col-md-6 mb-4">
-                                <label class="font-weight-bold">Kategori</label>
-                                <select wire:model="kategori" class="form-control" 
-                                    style="border-radius: 12px; background-color: #f8fafb; height: 50px; border: 1px solid #e9ecef;">
-                                    <option value="">Pilih Kategori</option>
-                                    <option value="Pakaian">Pakaian</option>
-                                    <option value="Edukasi">Edukasi</option>
-                                    <option value="Pokok">Kebutuhan Pokok</option>
-                                </select>
-                                @error('kategori') <span class="text-danger small">{{ $message }}</span> @enderror
-                            </div>
-                            <!-- Jumlah -->
-                            <div class="col-md-6 mb-4">
-                                <label class="font-weight-bold">Jumlah (pcs)</label>
-                                <input type="number" wire:model="jumlah" class="form-control" 
-                                    placeholder="0"
-                                    style="border-radius: 12px; background-color: #f8fafb; height: 50px; border: 1px solid #e9ecef;">
-                                @error('jumlah') <span class="text-danger small">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-
-                        <!-- Deskripsi -->
-                        <div class="form-group mb-4">
-                            <label class="font-weight-bold">Deskripsi Kebutuhan</label>
-                            <textarea wire:model="deskripsi" class="form-control" rows="4" 
-                                placeholder="Jelaskan secara rinci barang yang dibutuhkan dan tujuannya..."
-                                style="border-radius: 12px; background-color: #f8fafb; border: 1px solid #e9ecef;"></textarea>
-                            @error('deskripsi') <span class="text-danger small">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Lokasi Hub -->
-                        <div class="form-group mb-4">
-                            <label class="font-weight-bold">Lokasi Drop-off Rebox Pilihan</label>
-                            <select wire:model="lokasi_hub" class="form-control" 
-                                style="border-radius: 12px; background-color: #f8fafb; height: 50px; border: 1px solid #e9ecef;">
-                                <option value="">Pilih Hub Terdekat</option>
-                                <option value="Dago">Rebox Dago, Bandung</option>
-                                <option value="SCBD">Rebox SCBD, Jakarta</option>
-                            </select>
-                            @error('lokasi_hub') <span class="text-danger small">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="d-flex justify-content-end align-items-center mt-5">
-                            <button type="button" class="btn btn-link text-muted mr-4 font-weight-bold" style="text-decoration: none;">Batal</button>
-                            <button type="submit" class="btn btn-success px-5 py-3 font-weight-bold" 
-                                style="border-radius: 12px; background-color: #006642; border: none; min-width: 200px;">
-                                Kirim Permintaan
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
 
-        <!-- Panel Samping (Tips & Bantuan) -->
-        <div class="col-lg-4">
-            <!-- Tips Menulis -->
-            <div class="card p-4 mb-4" style="border-radius: 20px; border: none;">
-                <h5 class="font-weight-bold mb-3"><i class="far fa-lightbulb text-warning mr-2"></i> Tips Menulis</h5>
-                <ul class="list-unstyled">
-                    <li class="d-flex mb-3">
-                        <span class="badge badge-light rounded-circle mr-3 d-flex align-items-center justify-content-center" style="width: 25px; height: 25px; background: #e8f5e9; color: #006642;">1</span>
-                        <small class="text-muted">Sebutkan merk atau spesifikasi khusus jika diperlukan.</small>
-                    </li>
-                    <li class="d-flex mb-3">
-                        <span class="badge badge-light rounded-circle mr-3 d-flex align-items-center justify-content-center" style="width: 25px; height: 25px; background: #e8f5e9; color: #006642;">2</span>
-                        <small class="text-muted">Jelaskan kondisi barang (baru atau layak pakai).</small>
-                    </li>
-                    <li class="d-flex">
-                        <span class="badge badge-light rounded-circle mr-3 d-flex align-items-center justify-content-center" style="width: 25px; height: 25px; background: #e8f5e9; color: #006642;">3</span>
-                        <small class="text-muted">Sertakan detail lokasi untuk akurasi bantuan.</small>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Peta Lokasi -->
-            <div class="card p-4 mb-4" style="border-radius: 20px; border: none;">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="font-weight-bold mb-0">Data Lokasi Rebox</h5>
-                    <i class="fas fa-map-marked-alt text-muted"></i>
-                </div>
-                <p class="small text-muted">Temukan hub terdekat untuk koordinasi distribusi barang bantuan Anda.</p>
-                <div class="position-relative mt-3 rounded overflow-hidden" style="height: 150px; background: #eee;">
-                    <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2066&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.7);">
-                    <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center" style="top:0; left:0; background: rgba(0,0,0,0.2);">
-                        <button class="btn btn-light btn-sm font-weight-bold px-3 shadow-sm" style="border-radius: 10px;">Lihat Semua Lokasi</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Bantuan -->
-            <div class="card p-4 text-white" style="border-radius: 20px; border: none; background-color: #024d36;">
-                <h5 class="font-weight-bold">Butuh Bantuan?</h5>
-                <p class="small opacity-75">Tim admin kami siap membantu Anda 24/7 untuk setiap pertanyaan terkait operasional Rebox.</p>
-                <button class="btn btn-success btn-block mt-3 font-weight-bold" style="border-radius: 12px; background-color: #007f4e; border: none;">
-                    <i class="fas fa-comment-dots mr-2"></i> Hubungi CS Rebox
-                </button>
-            </div>
-        </div>
     </div>
+
+    {{-- MAIN CARD --}}
+    <div class="card border-0 shadow-sm overflow-hidden"
+        style="
+            border-radius:24px;
+            background:#fff;
+        ">
+
+        <div class="card-body p-4">
+
+            {{-- TOP --}}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h4 style="
+                    font-size:22px;
+                    font-weight:800;
+                    color:#17212b;
+                    margin:0;
+                ">
+                    Pilih Lokasi Drop-off
+                </h4>
+
+                <div class="d-flex">
+
+                    <button class="btn btn-light rounded-circle mr-2"
+                        style="
+                            width:42px;
+                            height:42px;
+                            border:1px solid #dfe5eb;
+                        ">
+                        <i class="fas fa-arrow-left"
+                            style="font-size:13px;"></i>
+                    </button>
+
+                    <button class="btn btn-light rounded-circle"
+                        style="
+                            width:42px;
+                            height:42px;
+                            border:1px solid #dfe5eb;
+                        ">
+                        <i class="fas fa-arrow-right"
+                            style="font-size:13px;"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            {{-- CARD LOKASI --}}
+            <div class="row mb-3">
+
+                {{-- ITEM --}}
+                <div class="col-lg-4 mb-3">
+
+                    <div class="border overflow-hidden h-100"
+                        style="
+                            border-radius:18px;
+                            border:1px solid #e7edf2;
+                        ">
+
+                        <div class="position-relative">
+
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
+                                style="
+                                    height:145px;
+                                    width:100%;
+                                    object-fit:cover;
+                                ">
+
+                            {{-- DISTANCE --}}
+                            <div class="position-absolute"
+                                style="top:12px; left:12px;">
+
+                                <div class="bg-white px-2 py-1 d-flex align-items-center"
+                                    style="
+                                        border-radius:999px;
+                                        font-size:11px;
+                                        font-weight:700;
+                                        box-shadow:0 4px 10px rgba(0,0,0,.08);
+                                    ">
+
+                                    <i class="fas fa-location-dot text-success mr-1"></i>
+                                    0.8 km
+
+                                </div>
+
+                            </div>
+
+                            {{-- PLUS --}}
+                            <button class="btn rounded-circle text-white position-absolute"
+                                style="
+                                    right:14px;
+                                    bottom:14px;
+                                    width:48px;
+                                    height:48px;
+                                    background:#00743f;
+                                    border:none;
+                                    font-size:22px;
+                                    line-height:1;
+                                ">
+                                +
+                            </button>
+
+                        </div>
+
+                        <div class="p-3">
+
+                            <h5 style="
+                                font-size:18px;
+                                font-weight:800;
+                                color:#17212b;
+                                margin-bottom:6px;
+                            ">
+                                Rebox Sudirman Central
+                            </h5>
+
+                            <p class="text-muted mb-0"
+                                style="
+                                    font-size:12px;
+                                    line-height:1.5;
+                                ">
+                                Jl. Jend. Sudirman No. 52, Jakarta Selatan
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {{-- ITEM --}}
+                <div class="col-lg-4 mb-3">
+
+                    <div class="border overflow-hidden h-100"
+                        style="
+                            border-radius:18px;
+                            border:1px solid #e7edf2;
+                        ">
+
+                        <div class="position-relative">
+
+                            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop"
+                                style="
+                                    height:145px;
+                                    width:100%;
+                                    object-fit:cover;
+                                ">
+
+                            <div class="position-absolute"
+                                style="top:12px; left:12px;">
+
+                                <div class="bg-white px-2 py-1 d-flex align-items-center"
+                                    style="
+                                        border-radius:999px;
+                                        font-size:11px;
+                                        font-weight:700;
+                                        box-shadow:0 4px 10px rgba(0,0,0,.08);
+                                    ">
+
+                                    <i class="fas fa-location-dot text-success mr-1"></i>
+                                    1.2 km
+
+                                </div>
+
+                            </div>
+
+                            <button class="btn rounded-circle text-white position-absolute"
+                                style="
+                                    right:14px;
+                                    bottom:14px;
+                                    width:48px;
+                                    height:48px;
+                                    background:#00743f;
+                                    border:none;
+                                    font-size:22px;
+                                ">
+                                +
+                            </button>
+
+                        </div>
+
+                        <div class="p-3">
+
+                            <h5 style="
+                                font-size:18px;
+                                font-weight:800;
+                                color:#17212b;
+                                margin-bottom:6px;
+                            ">
+                                Grand Indonesia Hub
+                            </h5>
+
+                            <p class="text-muted mb-0"
+                                style="
+                                    font-size:12px;
+                                    line-height:1.5;
+                                ">
+                                Lantai LG Barat, Menteng, Jakarta Pusat
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {{-- ITEM --}}
+                <div class="col-lg-4 mb-3">
+
+                    <div class="border overflow-hidden h-100"
+                        style="
+                            border-radius:18px;
+                            border:1px solid #e7edf2;
+                        ">
+
+                        <div class="position-relative">
+
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop"
+                                style="
+                                    height:145px;
+                                    width:100%;
+                                    object-fit:cover;
+                                ">
+
+                            <div class="position-absolute"
+                                style="top:12px; left:12px;">
+
+                                <div class="bg-white px-2 py-1 d-flex align-items-center"
+                                    style="
+                                        border-radius:999px;
+                                        font-size:11px;
+                                        font-weight:700;
+                                        box-shadow:0 4px 10px rgba(0,0,0,.08);
+                                    ">
+
+                                    <i class="fas fa-location-dot text-success mr-1"></i>
+                                    2.5 km
+
+                                </div>
+
+                            </div>
+
+                            <button class="btn rounded-circle text-white position-absolute"
+                                style="
+                                    right:14px;
+                                    bottom:14px;
+                                    width:48px;
+                                    height:48px;
+                                    background:#00743f;
+                                    border:none;
+                                    font-size:22px;
+                                ">
+                                +
+                            </button>
+
+                        </div>
+
+                        <div class="p-3">
+
+                            <h5 style="
+                                font-size:18px;
+                                font-weight:800;
+                                color:#17212b;
+                                margin-bottom:6px;
+                            ">
+                                SCBD Office Park
+                            </h5>
+
+                            <p class="text-muted mb-0"
+                                style="
+                                    font-size:12px;
+                                    line-height:1.5;
+                                ">
+                                Gedung Artha Graha Lobby, Jakarta
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            {{-- FORM --}}
+            <form wire:submit.prevent="submit">
+
+                <div class="row mt-3">
+
+                    {{-- NAMA --}}
+                    <div class="col-lg-6 mb-3">
+
+                        <label class="mb-2"
+                            style="
+                                font-size:14px;
+                                font-weight:800;
+                                color:#374151;
+                            ">
+                            <i class="far fa-clipboard text-success mr-2"></i>
+                            Nama Barang
+                        </label>
+
+                        <input type="text"
+                            wire:model="nama_barang"
+                            class="form-control"
+                            placeholder="Contoh: Beras, Kaos Layak Pakai, dll"
+                            style="
+                                height:54px;
+                                border-radius:16px;
+                                background:#f7f9fb;
+                                border:1px solid #e4e9ef;
+                                font-size:14px;
+                                padding:0 18px;
+                            ">
+
+                    </div>
+
+                    {{-- KATEGORI --}}
+                    <div class="col-lg-6 mb-3">
+
+                        <label class="mb-2"
+                            style="
+                                font-size:14px;
+                                font-weight:800;
+                                color:#374151;
+                            ">
+                            <i class="fas fa-shapes text-success mr-2"></i>
+                            Kategori Barang
+                        </label>
+
+                        <select class="form-control"
+                            style="
+                                height:54px;
+                                border-radius:16px;
+                                background:#f7f9fb;
+                                border:1px solid #e4e9ef;
+                                font-size:14px;
+                                padding:0 18px;
+                            ">
+
+                            <option>Pilih kategori...</option>
+                            <option>Pakaian</option>
+                            <option>Edukasi</option>
+                            <option>Kebutuhan Pokok</option>
+
+                        </select>
+
+                    </div>
+
+                    {{-- JUMLAH --}}
+                    <div class="col-lg-6 mb-3">
+
+                        <label class="mb-2"
+                            style="
+                                font-size:14px;
+                                font-weight:800;
+                                color:#374151;
+                            ">
+                            <i class="fas fa-list-ol text-success mr-2"></i>
+                            Jumlah
+                        </label>
+
+                        <div class="position-relative">
+
+                            <input type="number"
+                                class="form-control"
+                                placeholder="0"
+                                style="
+                                    height:54px;
+                                    border-radius:16px;
+                                    background:#f7f9fb;
+                                    border:1px solid #e4e9ef;
+                                    font-size:14px;
+                                    padding:0 18px;
+                                ">
+
+                            <div class="position-absolute"
+                                style="
+                                    right:12px;
+                                    top:50%;
+                                    transform:translateY(-50%);
+                                ">
+
+                                <div class="px-2 py-1"
+                                    style="
+                                        border-radius:8px;
+                                        background:#fff;
+                                        border:1px solid #e4e9ef;
+                                        font-size:11px;
+                                        font-weight:700;
+                                        color:#94a3b8;
+                                    ">
+                                    pcs
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {{-- DESKRIPSI --}}
+                <div class="mt-1">
+
+                    <label class="mb-2"
+                        style="
+                            font-size:14px;
+                            font-weight:800;
+                            color:#374151;
+                        ">
+                        <i class="far fa-file-lines text-success mr-2"></i>
+                        Deskripsi Kebutuhan
+                    </label>
+
+                    <textarea class="form-control"
+                        rows="5"
+                        placeholder="Jelaskan secara detail barang yang dibutuhkan dan tujuan penggunaan..."
+                        style="
+                            border-radius:18px;
+                            background:#f7f9fb;
+                            border:1px solid #e4e9ef;
+                            font-size:14px;
+                            padding:18px;
+                        "></textarea>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        {{-- INFO --}}
+        <div class="px-4 py-3"
+            style="
+                background:#fafcfd;
+                border-top:1px solid #edf1f5;
+            ">
+
+            <div class="d-flex align-items-start">
+
+                <div class="mr-3">
+                    <i class="fas fa-circle-info text-success"
+                        style="font-size:20px;"></i>
+                </div>
+
+                <div>
+
+                    <h5 style="
+                        font-size:15px;
+                        font-weight:800;
+                        color:#374151;
+                        margin-bottom:4px;
+                    ">
+                        Informasi Penting
+                    </h5>
+
+                    <p class="text-muted mb-0"
+                        style="
+                            font-size:12px;
+                            line-height:1.7;
+                        ">
+                        Permintaan Anda akan diproses dalam 1-2 hari kerja.
+                        Pastikan barang sesuai kategori untuk mempercepat proses logistik.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- BOTTOM --}}
+    <div class="mt-3 p-3 d-flex justify-content-between align-items-center flex-wrap"
+        style="
+            background:#eefbf2;
+            border:1px solid #d7f2df;
+            border-radius:18px;
+        ">
+
+        <div class="d-flex align-items-center">
+
+            <div class="mr-3 d-flex align-items-center justify-content-center"
+                style="
+                    width:48px;
+                    height:48px;
+                    border-radius:50%;
+                    background:#d5f4de;
+                ">
+                <i class="fas fa-check text-success"
+                    style="font-size:16px;"></i>
+            </div>
+
+            <div>
+
+                <h5 class="mb-1"
+                    style="
+                        font-size:15px;
+                        font-weight:800;
+                        color:#14532d;
+                    ">
+                    Ingin melacak permintaan sebelumnya?
+                </h5>
+
+                <div style="
+                    color:#198754;
+                    font-size:12px;
+                ">
+                    Anda memiliki 2 permintaan aktif yang sedang diproses.
+                </div>
+
+            </div>
+
+        </div>
+
+        <a href="#"
+            class="font-weight-bold mt-2 mt-lg-0"
+            style="
+                font-size:13px;
+                color:#00743f;
+                text-decoration:none;
+            ">
+            Lihat Aktivitas Saya
+        </a>
+
+    </div>
+
 </div>
