@@ -29,6 +29,11 @@
             margin: 0;
         }
 
+        /* Menghilangkan panah bawaan Bootstrap agar tidak double */
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+
         /* NAVBAR AREA */
         .rebox-navbar-area {
             background: var(--bg-body);
@@ -232,6 +237,7 @@
             align-items: center;
             gap: 10px;
             transition: 0.2s ease;
+            text-decoration: none;
         }
 
         .rebox-dropdown-menu .dropdown-item:hover {
@@ -287,26 +293,6 @@
             .user-dropdown-btn {
                 width: 100%;
                 min-width: 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .rebox-navbar-area {
-                padding: 10px 10px 0;
-            }
-
-            .brand-rebox {
-                font-size: 23px;
-            }
-
-            .rebox-menu {
-                width: 100%;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .rebox-menu .nav-link {
-                justify-content: center;
             }
         }
     </style>
@@ -419,15 +405,10 @@
                             Riwayat Donasi
                         </a>
 
-                        <form action="{{ route('logout') }}" method="POST" class="m-0">
-                            @csrf
-
-                            <a href="{{ route('logout') }}" class="dropdown-item logout-item">
-                                 <i class="fas fa-right-from-bracket"></i>
-                                 Logout
-                                </a>
-                            </button>
-                        </form>
+                        <a href="{{ route('logout') }}" class="dropdown-item logout-item">
+                             <i class="fas fa-right-from-bracket"></i>
+                             Logout
+                        </a>
                     </div>
                 </div>
 

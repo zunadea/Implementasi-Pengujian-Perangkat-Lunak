@@ -7,6 +7,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Logout;
 use App\Livewire\Permintaan;
 use App\Livewire\Riwayat;
+use App\Livewire\FormDonasi;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/permintaan', Permintaan::class)->name('permintaan');
     Route::get('/riwayat', Riwayat::class)->name('riwayat');
     Route::get('/profile', \App\Livewire\Profile::class)->name('profile');
+    Route::get('/form-donasi/{name}', FormDonasi::class)
+    ->name('form-donasi');
 });
 
 

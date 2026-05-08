@@ -21,7 +21,6 @@
             color: var(--text-dark);
         }
 
-        /* HERO */
         .hero-donation {
             background:
                 radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 30%),
@@ -135,7 +134,6 @@
             transform: translateY(-2px);
         }
 
-        /* SECTION */
         .section-row {
             display: flex;
             justify-content: space-between;
@@ -175,7 +173,6 @@
             transform: translateY(-2px);
         }
 
-        /* RECEIVER CARD */
         .receiver-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -239,7 +236,6 @@
             margin: 0;
         }
 
-        /* LOCATION CARDS */
         .location-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -273,7 +269,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
         .rating-pill {
@@ -286,12 +281,6 @@
             border-radius: 999px;
             font-size: 11px;
             font-weight: 800;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.10);
-        }
-
-        .rating-pill i {
-            color: #f59e0b;
-            margin-right: 3px;
         }
 
         .add-circle {
@@ -307,13 +296,6 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            box-shadow: 0 8px 18px rgba(0, 73, 52, 0.35);
-            transition: 0.25s ease;
-        }
-
-        .add-circle:hover {
-            color: #fff;
-            transform: scale(1.08);
         }
 
         .location-body {
@@ -329,16 +311,8 @@
         .location-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 10px;
             font-size: 11px;
             color: var(--text-muted);
-        }
-
-        .location-meta span {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .distance {
@@ -349,117 +323,6 @@
             font-weight: 800;
         }
 
-        /* POPULAR */
-        .popular-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-        }
-
-        .popular-card {
-            background: #fff;
-            border: 1px solid var(--card-border);
-            border-radius: 18px;
-            overflow: hidden;
-            display: flex;
-            gap: 14px;
-            padding: 12px;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
-            transition: 0.25s ease;
-            position: relative;
-        }
-
-        .popular-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.10);
-        }
-
-        .popular-img {
-            width: 116px;
-            min-width: 116px;
-            height: 116px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: var(--green-soft);
-            position: relative;
-        }
-
-        .popular-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .popular-add {
-            position: absolute;
-            right: 7px;
-            bottom: 7px;
-            width: 28px;
-            height: 28px;
-            background: var(--green-dark);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            text-decoration: none;
-        }
-
-        .popular-add:hover {
-            color: #fff;
-        }
-
-        .popular-content {
-            flex: 1;
-            padding: 4px 4px 0 0;
-        }
-
-        .popular-label {
-            font-size: 9px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--green-main);
-            margin-bottom: 5px;
-        }
-
-        .popular-label.orange {
-            color: #f97316;
-        }
-
-        .popular-label.blue {
-            color: #2563eb;
-        }
-
-        .popular-content h5 {
-            font-size: 14px;
-            font-weight: 800;
-            margin: 0 0 6px;
-            line-height: 1.3;
-        }
-
-        .popular-content p {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.45;
-            margin-bottom: 10px;
-        }
-
-        .popular-footer {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            font-size: 10px;
-            color: var(--text-muted);
-        }
-
-        .popular-footer i {
-            color: #f59e0b;
-            margin-right: 3px;
-        }
-
-        /* HELP BOX */
         .help-box {
             margin-top: 28px;
             background: linear-gradient(135deg, #004934, #006b43);
@@ -470,7 +333,6 @@
             justify-content: space-between;
             align-items: center;
             gap: 18px;
-            box-shadow: 0 14px 30px rgba(0, 73, 52, 0.18);
         }
 
         .help-box h4 {
@@ -493,69 +355,20 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 900;
-            white-space: nowrap;
-        }
-
-        .help-box a:hover {
-            color: var(--green-main);
-        }
-
-        @media (max-width: 1200px) {
-            .location-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .popular-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .rebox-dashboard {
-                padding: 20px 16px 40px;
-            }
-
-            .hero-donation {
-                padding: 28px 24px;
-                border-radius: 20px;
-            }
-
-            .hero-donation h1 {
-                font-size: 23px;
-            }
-
-            .receiver-grid,
-            .location-grid,
-            .popular-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .popular-card {
-                flex-direction: column;
-            }
-
-            .popular-img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .help-box {
-                flex-direction: column;
-                align-items: flex-start;
-            }
         }
     </style>
 
     {{-- HERO --}}
     <div class="hero-donation">
         <div class="hero-content">
+
             <span class="hero-badge">
                 <i class="fas fa-leaf"></i>
                 Available Now
             </span>
 
             <h1>
-                Halo {{ explode(' ', auth()->user()->name ?? 'Azumardi')[0] }},
+                Halo {{ explode(' ', auth()->user()->name ?? 'User')[0] }},
                 Mau Donasi Apa Hari Ini?
             </h1>
 
@@ -565,15 +378,21 @@
             </p>
 
             <div class="hero-actions">
-                <a href="/form-donasi" class="btn-hero-primary">
+                <a href="{{ route('form-donasi', ['name' => 'Rebox BuahBatu']) }}"
+                   class="btn-hero-primary"
+                   wire:navigate>
                     <i class="fas fa-hand-holding-heart"></i>
                     Donasi Sekarang
                 </a>
 
-                <a href="/riwayat" class="btn-hero-secondary">
+                <a href="/riwayat"
+                   class="btn-hero-secondary"
+                   wire:navigate>
+                    <i class="fas fa-clock-rotate-left"></i>
                     Lihat Riwayat
                 </a>
             </div>
+
         </div>
     </div>
 
@@ -583,11 +402,10 @@
             <i class="fas fa-hand-holding-heart"></i>
             Daftar Penerima
         </h3>
-
-        
     </div>
 
     <div class="receiver-grid">
+
         <div class="receiver-card">
             <div class="receiver-icon green">
                 <i class="fas fa-users"></i>
@@ -617,147 +435,154 @@
                 <p>Memberi kenyamanan dan perawatan bagi lansia yang membutuhkan.</p>
             </div>
         </div>
+
     </div>
 
     {{-- TERDEKAT --}}
     <div class="section-row">
-        <h3 class="section-title">Terdekat</h3>
-
-        <a href="#" class="view-all-btn">
-            View all <i class="fas fa-arrow-right ml-1"></i>
-        </a>
+        <h3 class="section-title">
+            <i class="fas fa-location-dot"></i>
+            Titik Rebox Terdekat
+        </h3>
     </div>
 
     <div class="location-grid">
+
+        {{-- CARD 1 --}}
         <div class="location-card">
             <div class="location-image">
-                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80" alt="Rebox Cianjur">
-                <div class="rating-pill"><i class="fas fa-star"></i>4.8</div>
-                <a href="/form-donasi" class="add-circle"><i class="fas fa-plus"></i></a>
+                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80">
+
+                <div class="rating-pill">
+                    <i class="fas fa-star text-warning"></i> 4.8
+                </div>
+
+                <a href="{{ route('form-donasi', ['name' => 'Rebox Cianjur']) }}"
+                   class="add-circle"
+                   wire:navigate>
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
+
             <div class="location-body">
                 <h5>Rebox Cianjur</h5>
+
                 <div class="location-meta">
-                    <span><i class="fas fa-map-marker-alt"></i> Cianjur</span>
+                    <span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        Cianjur
+                    </span>
+
                     <span class="distance">4 km</span>
                 </div>
             </div>
         </div>
 
+        {{-- CARD 2 --}}
         <div class="location-card">
             <div class="location-image">
-                <img src="https://images.unsplash.com/photo-1591196131703-9b636d6901d6?auto=format&fit=crop&w=700&q=80" alt="Rebox BuahBatu">
-                <div class="rating-pill"><i class="fas fa-star"></i>4.5</div>
-                <a href="/form-donasi" class="add-circle"><i class="fas fa-plus"></i></a>
+                <img src="https://images.unsplash.com/photo-1591196131703-9b636d6901d6?auto=format&fit=crop&w=700&q=80">
+
+                <div class="rating-pill">
+                    <i class="fas fa-star text-warning"></i> 4.5
+                </div>
+
+                <a href="{{ route('form-donasi', ['name' => 'Rebox BuahBatu']) }}"
+                   class="add-circle"
+                   wire:navigate>
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
+
             <div class="location-body">
                 <h5>Rebox BuahBatu</h5>
+
                 <div class="location-meta">
-                    <span><i class="fas fa-map-marker-alt"></i> BuahBatu</span>
+                    <span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        BuahBatu
+                    </span>
+
                     <span class="distance">1 km</span>
                 </div>
             </div>
         </div>
 
+        {{-- CARD 3 --}}
         <div class="location-card">
             <div class="location-image">
-                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80" alt="Rebox Dago Atas">
-                <div class="rating-pill"><i class="fas fa-star"></i>4.9</div>
-                <a href="/form-donasi" class="add-circle"><i class="fas fa-plus"></i></a>
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80">
+
+                <div class="rating-pill">
+                    <i class="fas fa-star text-warning"></i> 4.9
+                </div>
+
+                <a href="{{ route('form-donasi', ['name' => 'Rebox Dago Atas']) }}"
+                   class="add-circle"
+                   wire:navigate>
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
+
             <div class="location-body">
                 <h5>Rebox Dago Atas</h5>
+
                 <div class="location-meta">
-                    <span><i class="fas fa-map-marker-alt"></i> Dago</span>
+                    <span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        Dago
+                    </span>
+
                     <span class="distance">8 km</span>
                 </div>
             </div>
         </div>
 
+        {{-- CARD 4 --}}
         <div class="location-card">
             <div class="location-image">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="Rebox Pasteuri">
-                <div class="rating-pill"><i class="fas fa-star"></i>4.7</div>
-                <a href="/form-donasi" class="add-circle"><i class="fas fa-plus"></i></a>
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80">
+
+                <div class="rating-pill">
+                    <i class="fas fa-star text-warning"></i> 4.7
+                </div>
+
+                <a href="{{ route('form-donasi', ['name' => 'Rebox Pasteur']) }}"
+                   class="add-circle"
+                   wire:navigate>
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
+
             <div class="location-body">
-                <h5>Rebox Pasteuri</h5>
+                <h5>Rebox Pasteur</h5>
+
                 <div class="location-meta">
-                    <span><i class="fas fa-map-marker-alt"></i> Pasteur</span>
+                    <span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        Pasteur
+                    </span>
+
                     <span class="distance">12 km</span>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- MOST POPULAR --}}
-    <div class="section-row">
-        <h3 class="section-title">Most Populer</h3>
-
-        <a href="#" class="view-all-btn">
-            View all <i class="fas fa-arrow-right ml-1"></i>
-        </a>
-    </div>
-
-    <div class="popular-grid">
-        <div class="popular-card">
-            <div class="popular-img">
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80" alt="Pusat Donasi Thamrin">
-                <a href="/form-donasi" class="popular-add"><i class="fas fa-plus"></i></a>
-            </div>
-            <div class="popular-content">
-                <div class="popular-label">Top Rated</div>
-                <h5>Pusat Donasi Thamrin</h5>
-                <p>Layanan donasi pakaian dan barang layak pakai terpercaya.</p>
-                <div class="popular-footer">
-                    <span><i class="fas fa-star"></i>5.0</span>
-                    <span><i class="fas fa-users"></i>1.2k Donors</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="popular-card">
-            <div class="popular-img">
-                <img src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=700&q=80" alt="Dapur Peduli Rakyat">
-                <a href="/form-donasi" class="popular-add"><i class="fas fa-plus"></i></a>
-            </div>
-            <div class="popular-content">
-                <div class="popular-label orange">Urgent Need</div>
-                <h5>Dapur Peduli Rakyat</h5>
-                <p>Fokus pada distribusi makanan untuk masyarakat kurang mampu.</p>
-                <div class="popular-footer">
-                    <span><i class="fas fa-star"></i>4.9</span>
-                    <span><i class="fas fa-users"></i>850 Donors</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="popular-card">
-            <div class="popular-img">
-                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=80" alt="TechCycle Indonesia">
-                <a href="/form-donasi" class="popular-add"><i class="fas fa-plus"></i></a>
-            </div>
-            <div class="popular-content">
-                <div class="popular-label blue">E-Waste Focus</div>
-                <h5>TechCycle Indonesia</h5>
-                <p>Pusat daur ulang elektronik dan donasi gadget layak pakai.</p>
-                <div class="popular-footer">
-                    <span><i class="fas fa-star"></i>4.8</span>
-                    <span><i class="fas fa-users"></i>3.4k Donors</span>
-                </div>
-            </div>
-        </div>
     </div>
 
     {{-- HELP BOX --}}
     <div class="help-box">
         <div>
             <h4>Pusat Bantuan</h4>
-            <p>Butuh bantuan cara donasi? Buka panduan agar proses donasimu lebih mudah.</p>
+            <p>
+                Butuh bantuan cara donasi?
+                Buka panduan agar proses donasimu lebih mudah.
+            </p>
         </div>
 
         <a href="#">
             Buka Panduan
         </a>
     </div>
+
 </div>
