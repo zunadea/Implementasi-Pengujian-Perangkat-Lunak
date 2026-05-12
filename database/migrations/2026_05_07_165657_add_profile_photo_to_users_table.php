@@ -12,8 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Menambahkan kolom profile_photo tipe string yang boleh kosong (nullable)
-            // diletakkan setelah kolom email agar struktur tabel rapi
             $table->string('profile_photo')->nullable()->after('email');
         });
     }
@@ -24,7 +22,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Menghapus kolom jika migrasi di-rollback
             $table->dropColumn('profile_photo');
         });
     }

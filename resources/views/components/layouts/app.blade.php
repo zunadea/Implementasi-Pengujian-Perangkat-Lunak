@@ -19,9 +19,7 @@
             --bg-body: #f4f7f6;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -29,10 +27,7 @@
             margin: 0;
         }
 
-        /* Menghilangkan panah bawaan Bootstrap agar tidak double */
-        .dropdown-toggle::after {
-            display: none !important;
-        }
+        .dropdown-toggle::after { display: none !important; }
 
         /* NAVBAR AREA */
         .rebox-navbar-area {
@@ -66,14 +61,8 @@
             white-space: nowrap;
         }
 
-        .brand-rebox span {
-            color: var(--rebox-accent);
-        }
-
-        .brand-rebox:hover {
-            color: #ffffff;
-            text-decoration: none;
-        }
+        .brand-rebox span { color: var(--rebox-accent); }
+        .brand-rebox:hover { color: #ffffff; text-decoration: none; }
 
         /* LEFT MENU */
         .navbar-left {
@@ -104,10 +93,7 @@
             text-decoration: none;
         }
 
-        .rebox-menu .nav-link i {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.70);
-        }
+        .rebox-menu .nav-link i { font-size: 16px; color: rgba(255, 255, 255, 0.70); }
 
         .rebox-menu .nav-link:hover,
         .rebox-menu .nav-link.active {
@@ -116,20 +102,12 @@
         }
 
         .rebox-menu .nav-link:hover i,
-        .rebox-menu .nav-link.active i {
-            color: #ffffff;
-        }
+        .rebox-menu .nav-link.active i { color: #ffffff; }
 
         /* RIGHT USER */
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+        .navbar-right { display: flex; align-items: center; gap: 16px; }
 
-        .user-dropdown-wrap {
-            position: relative;
-        }
+        .user-dropdown-wrap { position: relative; }
 
         .user-dropdown-btn {
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -145,9 +123,7 @@
             transition: 0.25s ease;
         }
 
-        .user-dropdown-btn:hover {
-            background: rgba(255, 255, 255, 0.13);
-        }
+        .user-dropdown-btn:hover { background: rgba(255, 255, 255, 0.13); }
 
         .user-avatar {
             width: 38px;
@@ -158,142 +134,53 @@
             background: #ffffff;
         }
 
-        .user-info {
-            text-align: left;
-            line-height: 1.15;
-            flex: 1;
-        }
+        .user-info { text-align: left; line-height: 1.15; flex: 1; }
 
         .user-name {
-            display: block;
-            font-size: 14px;
-            font-weight: 800;
-            color: #ffffff;
-            white-space: nowrap;
-            max-width: 135px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            display: block; font-size: 14px; font-weight: 800; color: #ffffff;
+            white-space: nowrap; max-width: 135px; overflow: hidden; text-overflow: ellipsis;
         }
 
         .user-role {
-            display: block;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 1.2px;
-            color: var(--rebox-accent);
-            text-transform: uppercase;
-            margin-top: 3px;
+            display: block; font-size: 10px; font-weight: 900; letter-spacing: 1.2px;
+            color: var(--rebox-accent); text-transform: uppercase; margin-top: 3px;
         }
 
-        .dropdown-arrow {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.85);
-            transition: 0.25s ease;
-        }
-
-        .show .dropdown-arrow {
-            transform: rotate(180deg);
-        }
+        .dropdown-arrow { font-size: 13px; color: rgba(255, 255, 255, 0.85); transition: 0.25s ease; }
+        .show .dropdown-arrow { transform: rotate(180deg); }
 
         /* DROPDOWN */
         .rebox-dropdown-menu {
-            border: none;
-            border-radius: 18px;
-            padding: 10px;
-            margin-top: 12px;
-            min-width: 230px;
-            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
-            overflow: hidden;
+            border: none; border-radius: 18px; padding: 10px; margin-top: 12px;
+            min-width: 230px; box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18); overflow: hidden;
         }
 
         .rebox-dropdown-menu .dropdown-header-box {
-            padding: 12px 12px 10px;
-            border-bottom: 1px solid #eef2f1;
-            margin-bottom: 8px;
+            padding: 12px 12px 10px; border-bottom: 1px solid #eef2f1; margin-bottom: 8px;
         }
 
-        .dropdown-header-box .dropdown-name {
-            font-size: 14px;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 3px;
-        }
-
-        .dropdown-header-box .dropdown-role {
-            font-size: 11px;
-            font-weight: 800;
-            color: #00a85a;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
+        .dropdown-header-box .dropdown-name { font-size: 14px; font-weight: 800; color: #1f2937; margin-bottom: 3px; }
+        .dropdown-header-box .dropdown-role { font-size: 11px; font-weight: 800; color: #00a85a; text-transform: uppercase; letter-spacing: 0.8px; }
 
         .rebox-dropdown-menu .dropdown-item {
-            border-radius: 12px;
-            padding: 11px 12px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #374151;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.2s ease;
-            text-decoration: none;
+            border-radius: 12px; padding: 11px 12px; font-size: 14px; font-weight: 700;
+            color: #374151; display: flex; align-items: center; gap: 10px; transition: 0.2s ease; text-decoration: none;
         }
 
-        .rebox-dropdown-menu .dropdown-item:hover {
-            background: #e9f8ef;
-            color: var(--rebox-primary);
-        }
+        .rebox-dropdown-menu .dropdown-item:hover { background: #e9f8ef; color: var(--rebox-primary); }
 
-        .logout-item {
-            color: #dc2626 !important;
-        }
+        .logout-item { color: #dc2626 !important; }
+        .logout-item:hover { background: #fee2e2 !important; color: #b91c1c !important; }
 
-        .logout-item:hover {
-            background: #fee2e2 !important;
-            color: #b91c1c !important;
-        }
+        .content-wrapper { background: transparent !important; min-height: 100vh; }
 
-        /* CONTENT */
-        .content-wrapper {
-            background: transparent !important;
-            min-height: 100vh;
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 992px) {
-            .rebox-navbar {
-                padding: 18px;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 16px;
-                border-radius: 0 0 22px 22px;
-            }
-
-            .navbar-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 14px;
-            }
-
-            .rebox-menu {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .rebox-menu .nav-link {
-                padding: 11px 15px;
-                font-size: 13px;
-            }
-
-            .navbar-right {
-                justify-content: flex-start;
-            }
-
-            .user-dropdown-btn {
-                width: 100%;
-                min-width: 0;
-            }
+            .rebox-navbar { padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; border-radius: 0 0 22px 22px; }
+            .navbar-left { flex-direction: column; align-items: flex-start; gap: 14px; }
+            .rebox-menu { flex-wrap: wrap; gap: 8px; }
+            .rebox-menu .nav-link { padding: 11px 15px; font-size: 13px; }
+            .navbar-right { justify-content: flex-start; }
+            .user-dropdown-btn { width: 100%; min-width: 0; }
         }
     </style>
 
@@ -314,32 +201,46 @@
                 </a>
 
                 <ul class="rebox-menu">
+                    {{-- Menu Utama: Dashboard Donasi --}}
                     <li>
-                        <a href="/dashboard"
+                        <a href="/dashboard" wire:navigate
                            class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                             <i class="fas fa-border-all"></i>
                             Donasi
                         </a>
                     </li>
 
+                    {{-- MENU KHUSUS PENERIMA --}}
+                    @if(auth()->user()->role === 'penerima')
                     <li>
-                        <a href="/permintaan"
+                        <a href="/permintaan" wire:navigate
                            class="nav-link {{ request()->is('permintaan*') ? 'active' : '' }}">
                             <i class="fas fa-basket-shopping"></i>
-                            Permintaan
+                            Minta Barang
                         </a>
                     </li>
-
                     <li>
-                        <a href="/riwayat"
-                           class="nav-link {{ request()->is('riwayat*') ? 'active' : '' }}">
+                        <a href="/riwayat" wire:navigate
+                           class="nav-link {{ request()->is('riwayat') ? 'active' : '' }}">
                             <i class="fas fa-clock-rotate-left"></i>
-                            Riwayat
+                            Riwayat Saya
                         </a>
                     </li>
+                    @endif
+
+                    {{-- MENU KHUSUS DONATUR --}}
+                    @if(auth()->user()->role === 'donatur')
+                    <li>
+                        <a href="/riwayat-permintaan" wire:navigate
+                           class="nav-link {{ request()->is('riwayat-permintaan*') ? 'active' : '' }}">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            Daftar Kebutuhan
+                        </a>
+                    </li>
+                    @endif
 
                     <li>
-                        <a href="/profile"
+                        <a href="/profile" wire:navigate
                            class="nav-link {{ request()->is('profile*') ? 'active' : '' }}">
                             <i class="fas fa-user-gear"></i>
                             Profile
@@ -349,69 +250,51 @@
             </div>
 
             <div class="navbar-right">
-
                 <div class="dropdown user-dropdown-wrap">
                     <button class="user-dropdown-btn dropdown-toggle"
-                            type="button"
-                            id="userDropdown"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
+                            type="button" id="userDropdown" data-toggle="dropdown" 
+                            aria-haspopup="true" aria-expanded="false">
 
                         @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}"
-                                 class="user-avatar"
-                                 alt="User">
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="user-avatar" alt="User">
                         @else
-                            <img
-                                src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2ecc71&color=fff&bold=true"
-                                class="user-avatar"
-                                alt="User">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2ecc71&color=fff&bold=true"
+                                 class="user-avatar" alt="User">
                         @endif
 
                         <span class="user-info">
-                            <span class="user-name">
-                                {{ auth()->user()->name }}
-                            </span>
-
-                            <span class="user-role">
-                                {{ auth()->user()->role }}
-                            </span>
+                            <span class="user-name">{{ auth()->user()->name }}</span>
+                            <span class="user-role">{{ auth()->user()->role }}</span>
                         </span>
 
                         <i class="fas fa-chevron-down dropdown-arrow"></i>
                     </button>
 
-                    <div class="dropdown-menu dropdown-menu-right rebox-dropdown-menu"
-                         aria-labelledby="userDropdown">
-
+                    <div class="dropdown-menu dropdown-menu-right rebox-dropdown-menu" aria-labelledby="userDropdown">
                         <div class="dropdown-header-box">
-                            <div class="dropdown-name">
-                                {{ auth()->user()->name }}
-                            </div>
-
-                            <div class="dropdown-role">
-                                {{ auth()->user()->role }}
-                            </div>
+                            <div class="dropdown-name">{{ auth()->user()->name }}</div>
+                            <div class="dropdown-role">{{ auth()->user()->role }}</div>
                         </div>
 
-                        <a href="/profile" class="dropdown-item">
-                            <i class="fas fa-user"></i>
-                            Lihat Profile
+                        <a href="/profile" wire:navigate class="dropdown-item">
+                            <i class="fas fa-user"></i> Lihat Profile
                         </a>
 
-                        <a href="/riwayat" class="dropdown-item">
-                            <i class="fas fa-clock-rotate-left"></i>
-                            Riwayat Donasi
+                        @if(auth()->user()->role === 'penerima')
+                        <a href="/riwayat" wire:navigate class="dropdown-item">
+                            <i class="fas fa-clock-rotate-left"></i> Riwayat Permintaan
                         </a>
+                        @else
+                        <a href="/riwayat-permintaan" wire:navigate class="dropdown-item">
+                            <i class="fas fa-heart"></i> Kontribusi Donasi
+                        </a>
+                        @endif
 
                         <a href="{{ route('logout') }}" class="dropdown-item logout-item">
-                             <i class="fas fa-right-from-bracket"></i>
-                             Logout
+                             <i class="fas fa-right-from-bracket"></i> Logout
                         </a>
                     </div>
                 </div>
-
             </div>
 
         </nav>
@@ -422,9 +305,7 @@
     <div class="content-wrapper">
         <div class="content pt-4">
             <div class="container-fluid">
-
                 {{ $slot }}
-
             </div>
         </div>
     </div>

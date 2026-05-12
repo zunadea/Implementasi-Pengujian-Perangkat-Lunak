@@ -132,7 +132,7 @@
             color:var(--muted);
         }
 
-        /* MAIN */
+        /* MAIN CARD */
         .main-card{
             background:white;
             border-radius:30px;
@@ -157,109 +157,94 @@
             color:var(--muted);
         }
 
-        /* LOCATION SLIDER */
-        .location-slider{
-            display:flex;
-            gap:20px;
-            overflow-x:auto;
-            padding-bottom:10px;
-            scroll-behavior:smooth;
-            margin-bottom:32px;
+        /* NEW SEARCH & REGION STYLES */
+        .search-location-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        .location-slider::-webkit-scrollbar{
-            height:8px;
+        .search-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .location-slider::-webkit-scrollbar-thumb{
-            background:#cfe5d8;
-            border-radius:999px;
+        .search-input-group i {
+            position: absolute;
+            left: 18px;
+            color: var(--green-main);
+            font-size: 18px;
         }
 
-        .location-card{
-            min-width:320px;
-            max-width:320px;
-            background:white;
-            border-radius:26px;
-            overflow:hidden;
-            border:2px solid #e6edf5;
-            position:relative;
-            cursor:pointer;
-            transition:.25s ease;
-            flex-shrink:0;
+        .search-input-group .form-control-custom {
+            padding-left: 50px;
+            height: 58px;
+            font-size: 16px;
+            border-radius: 20px;
+            width: 100%;
         }
 
-        .location-card:hover{
-            transform:translateY(-6px) scale(1.01);
-            box-shadow:0 18px 35px rgba(0,122,61,.12);
+        .region-select-group .form-select-custom {
+            height: 58px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
         }
 
-        .location-card.active{
-            border-color:var(--green-main);
-            box-shadow:0 18px 35px rgba(0,122,61,.16);
+        /* SELECTED LOCATION PREVIEW */
+        .selected-location-box {
+            background: var(--green-soft);
+            border: 2px solid var(--green-main);
+            border-radius: 22px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            animation: fadeIn 0.3s ease;
         }
 
-        .location-card.active::after{
-            content:"";
-            position:absolute;
-            inset:0;
-            border-radius:26px;
-            box-shadow:inset 0 0 0 2px rgba(0,132,61,.15);
-            pointer-events:none;
+        .loc-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .location-image{
-            position:relative;
+        .loc-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--green-main);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
-        .location-image img{
-            width:100%;
-            height:220px;
-            object-fit:cover;
+        .loc-details h6 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--green-dark);
         }
 
-        .location-check{
-            position:absolute;
-            top:14px;
-            right:14px;
-            width:44px;
-            height:44px;
-            border-radius:50%;
-            background:var(--green-main);
-            color:white;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:18px;
-            box-shadow:0 10px 18px rgba(0,122,61,.25);
+        .loc-details p {
+            margin: 2px 0 0;
+            font-size: 14px;
+            color: var(--green-main);
+            font-weight: 600;
         }
 
-        .location-content{
-            padding:22px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .location-content h5{
-            font-size:28px;
-            font-weight:800;
-            margin-bottom:14px;
-            color:var(--green-dark);
-        }
-
-        .location-info{
-            display:flex;
-            align-items:center;
-            gap:10px;
-            margin-bottom:10px;
-            color:var(--muted);
-            font-size:15px;
-        }
-
-        .location-open{
-            color:var(--green-main);
-            font-weight:800;
-        }
-
-        /* FORM */
+        /* FORM GRID */
         .form-grid{
             display:grid;
             grid-template-columns:1fr 1fr;
@@ -409,7 +394,7 @@
             box-shadow:0 10px 20px rgba(0,122,61,.2);
         }
 
-        /* INFO */
+        /* INFO BOX */
         .info-box{
             margin-top:26px;
             background:#ebf8ef;
@@ -488,6 +473,7 @@
             background:white;
             border:1px solid var(--green-main);
             color:var(--green-main);
+            text-decoration:none;
         }
 
         .btn-submit{
@@ -495,32 +481,25 @@
             color:white;
             border:none;
             box-shadow:0 10px 20px rgba(0,122,61,.2);
+            cursor: pointer;
         }
 
         .btn-submit:hover{
             transform:translateY(-2px);
         }
 
-        .text-danger{
-            font-size:13px;
-        }
-
         @media(max-width:992px){
-
             .form-grid{
                 grid-template-columns:1fr;
             }
-
             .bottom-submit{
                 flex-direction:column;
                 align-items:flex-start;
             }
-
             .submit-actions{
                 width:100%;
                 flex-direction:column;
             }
-
             .btn-draft,
             .btn-submit{
                 width:100%;
@@ -528,25 +507,20 @@
         }
 
         @media(max-width:768px){
-
             .rebox-form-page{
                 padding:20px 16px 50px;
             }
-
             .form-hero{
                 padding:28px;
             }
-
             .form-hero h1{
                 font-size:28px;
             }
-
-            .location-card{
-                min-width:280px;
-            }
-
             .section-title h2{
                 font-size:26px;
+            }
+            .search-location-wrapper {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -558,24 +532,19 @@
 
     {{-- HERO --}}
     <div class="form-hero">
-
         <span class="hero-badge">
             <i class="fas fa-hand-holding-heart"></i>
             Form Donasi Rebox
         </span>
-
         <h1>Donasi Barang Jadi Lebih Mudah</h1>
-
         <p>
             Lengkapi informasi barang dengan jelas agar proses verifikasi,
             penjemputan, dan penyaluran berjalan lebih cepat.
         </p>
-
     </div>
 
     {{-- STEP --}}
     <div class="step-wrapper">
-
         <div class="step-card">
             <div class="step-number">1</div>
             <div>
@@ -583,7 +552,6 @@
                 <p>Tentukan titik Rebox terdekat</p>
             </div>
         </div>
-
         <div class="step-card">
             <div class="step-number">2</div>
             <div>
@@ -591,7 +559,6 @@
                 <p>Lengkapi informasi donasi</p>
             </div>
         </div>
-
         <div class="step-card">
             <div class="step-number">3</div>
             <div>
@@ -599,7 +566,6 @@
                 <p>Barang siap diproses admin</p>
             </div>
         </div>
-
     </div>
 
     <form wire:submit.prevent="simpanDonasi">
@@ -612,126 +578,62 @@
                 <p>Tentukan titik pengumpulan barang terdekat dari lokasimu</p>
             </div>
 
-            {{-- LOCATION SLIDER --}}
-            <div class="location-slider">
-
-                {{-- CARD 1 --}}
-                <div class="location-card active">
-
-                    <div class="location-image">
-                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1200&auto=format&fit=crop">
-
-                        <div class="location-check">
-                            <i class="fas fa-check"></i>
-                        </div>
-                    </div>
-
-                    <div class="location-content">
-
-                        <h5>Rebox BuahBatu</h5>
-
-                        <div class="location-info">
-                            <i class="fas fa-location-arrow"></i>
-                            0.8 km dari lokasi Anda
-                        </div>
-
-                        <div class="location-info location-open">
-                            <i class="far fa-clock"></i>
-                            Buka 08:00 - 20:00
-                        </div>
-
-                    </div>
-
+            {{-- NEW SEARCH & REGION SELECTION --}}
+            <div class="search-location-wrapper">
+                
+                {{-- Search Input (Gunakan wire:model sesuai backend kamu) --}}
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" 
+                           wire:model.live="search_lokasi" 
+                           class="form-control-custom" 
+                           placeholder="Cari nama titik Rebox atau alamat...">
                 </div>
 
-                {{-- CARD 2 --}}
-                <div class="location-card">
-
-                    <div class="location-image">
-                        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop">
-                    </div>
-
-                    <div class="location-content">
-
-                        <h5>Rebox Asia Afrika</h5>
-
-                        <div class="location-info">
-                            <i class="fas fa-location-arrow"></i>
-                            1.2 km dari lokasi Anda
-                        </div>
-
-                        <div class="location-info location-open">
-                            <i class="far fa-clock"></i>
-                            Buka 09:00 - 21:00
-                        </div>
-
-                    </div>
-
+                {{-- Manual Region Select --}}
+                <div class="region-select-group">
+                    <select wire:model.live="filter_wilayah" class="form-select-custom">
+                        <option value="">Semua Wilayah</option>
+                        <option value="Bandung Tengah">Bandung Tengah</option>
+                        <option value="Bandung Selatan">Bandung Selatan</option>
+                        <option value="Bandung Utara">Bandung Utara</option>
+                        <option value="Bandung Timur">Bandung Timur</option>
+                        <option value="Bandung Barat">Bandung Barat</option>
+                        <option value="Cimahi">Cimahi</option>
+                    </select>
                 </div>
 
-                {{-- CARD 3 --}}
-                <div class="location-card">
+            </div>
 
-                    <div class="location-image">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop">
+            {{-- SELECTED LOCATION PREVIEW --}}
+            {{-- Bagian ini merepresentasikan lokasi yang sudah aktif/dipilih --}}
+            <div class="selected-location-box">
+                <div class="loc-meta">
+                    <div class="loc-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-
-                    <div class="location-content">
-
-                        <h5>Rebox Antapani</h5>
-
-                        <div class="location-info">
-                            <i class="fas fa-location-arrow"></i>
-                            2.1 km dari lokasi Anda
-                        </div>
-
-                        <div class="location-info location-open">
-                            <i class="far fa-clock"></i>
-                            Buka 08:00 - 19:00
-                        </div>
-
+                    <div class="loc-details">
+                        <h6>Rebox BuahBatu</h6>
+                        <p><i class="far fa-clock"></i> Terpilih • Buka 08:00 - 20:00</p>
                     </div>
-
                 </div>
-
-                {{-- CARD 4 --}}
-                <div class="location-card">
-
-                    <div class="location-image">
-                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop">
-                    </div>
-
-                    <div class="location-content">
-
-                        <h5>Rebox Cimahi</h5>
-
-                        <div class="location-info">
-                            <i class="fas fa-location-arrow"></i>
-                            3.5 km dari lokasi Anda
-                        </div>
-
-                        <div class="location-info location-open">
-                            <i class="far fa-clock"></i>
-                            Buka 08:00 - 22:00
-                        </div>
-
-                    </div>
-
+                <div class="loc-badge">
+                    <span style="background: var(--green-main); padding: 8px 15px; border-radius: 10px; color: white; font-size: 12px; font-weight: 700;">
+                        LOKASI TERDEKAT
+                    </span>
                 </div>
-
             </div>
 
             {{-- FORM --}}
             <div class="form-grid">
 
-                {{-- LEFT --}}
+                {{-- LEFT: INFORMASI BARANG --}}
                 <div class="form-section">
 
                     <div class="mini-title">
                         <div class="icon">
                             <i class="fas fa-box-open"></i>
                         </div>
-
                         <div>
                             <h5>Informasi Barang</h5>
                             <p>Isi detail utama barang donasi</p>
@@ -740,88 +642,63 @@
 
                     {{-- FOTO --}}
                     <div class="form-group">
-
                         <label class="form-label">Foto Barang</label>
-
                         <div class="upload-box">
-
                             @if ($foto)
                                 <img src="{{ $foto->temporaryUrl() }}">
                             @else
-
                                 <div class="upload-placeholder">
-
                                     <i class="fas fa-cloud-upload-alt"></i>
-
                                     <h6>Upload Foto Barang</h6>
-
                                     <p>JPG / PNG maksimal 2MB</p>
-
                                 </div>
-
                             @endif
-
                             <input type="file"
                                    wire:model="foto"
                                    style="position:absolute; inset:0; opacity:0; cursor:pointer;">
-
                         </div>
-
                     </div>
 
                     {{-- NAMA --}}
                     <div class="form-group">
-
                         <label class="form-label">Nama Barang</label>
-
                         <input type="text"
                                wire:model="nama_barang"
                                class="form-control-custom"
                                placeholder="Contoh: Buku Pelajaran, Jaket, Kursi">
-
                     </div>
 
                     {{-- KATEGORI --}}
                     <div class="form-group">
-
                         <label class="form-label">Kategori Barang</label>
-
                         <select wire:model="kategori" class="form-select-custom">
-
                             <option value="">Pilih Kategori</option>
                             <option value="Pakaian">Pakaian</option>
                             <option value="Buku">Buku</option>
                             <option value="Elektronik">Elektronik</option>
                             <option value="Peralatan Rumah">Peralatan Rumah</option>
                             <option value="Lainnya">Lainnya</option>
-
                         </select>
-
                     </div>
 
                     {{-- JUMLAH --}}
                     <div class="form-group">
-
                         <label class="form-label">Jumlah Barang</label>
-
                         <input type="number"
                                wire:model="jumlah"
                                class="form-control-custom"
                                min="1"
                                placeholder="Masukkan jumlah barang">
-
                     </div>
-
                 </div>
 
-                {{-- RIGHT --}}
+                {{-- RIGHT: KONDISI & DESKRIPSI --}}
                 <div class="form-section">
 
                     <div class="mini-title">
                         <div class="icon">
                             <i class="fas fa-circle-info"></i>
                         </div>
-
                         <div>
                             <h5>Kondisi & Deskripsi</h5>
                             <p>Tambahkan detail tambahan barang</p>
@@ -830,102 +707,69 @@
 
                     {{-- KONDISI --}}
                     <div class="form-group">
-
                         <label class="form-label">Kondisi Barang</label>
-
                         <div class="condition-group">
-
                             <button type="button"
                                     wire:click="$set('kondisi', 'Baru')"
                                     class="condition-btn {{ $kondisi == 'Baru' ? 'active' : '' }}">
                                 Baru
                             </button>
-
                             <button type="button"
                                     wire:click="$set('kondisi', 'Seperti Baru')"
                                     class="condition-btn {{ $kondisi == 'Seperti Baru' ? 'active' : '' }}">
                                 Seperti Baru
                             </button>
-
                             <button type="button"
                                     wire:click="$set('kondisi', 'Layak Pakai')"
                                     class="condition-btn {{ $kondisi == 'Layak Pakai' ? 'active' : '' }}">
                                 Layak Pakai
                             </button>
-
                         </div>
-
                     </div>
 
                     {{-- DESKRIPSI --}}
                     <div class="form-group">
-
                         <label class="form-label">Deskripsi Barang</label>
-
                         <textarea
                             wire:model="deskripsi"
                             class="textarea-custom"
-                            placeholder="Contoh: Buku masih lengkap, pakaian bersih dan layak pakai, elektronik masih berfungsi normal..."></textarea>
-
+                            placeholder="Contoh: Buku masih lengkap, pakaian bersih dan layak pakai..."></textarea>
                     </div>
 
-                    {{-- INFO --}}
+                    {{-- INFO BOX --}}
                     <div class="info-box">
-
                         <div class="info-icon">
                             <i class="fas fa-info"></i>
                         </div>
-
                         <div>
-
                             <h6>Informasi Penting</h6>
-
                             <p>
                                 Pastikan barang dalam keadaan bersih,
                                 aman, dan masih layak digunakan agar
                                 proses sortir lebih cepat dan mudah.
                             </p>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
-            {{-- SUBMIT --}}
+            {{-- SUBMIT SECTION --}}
             <div class="bottom-submit">
-
                 <div>
-
                     <h5>Siap Berbagi Kebaikan?</h5>
-
-                    <p>
-                        Donasi Anda akan sangat berarti bagi mereka yang membutuhkan.
-                    </p>
-
+                    <p>Donasi Anda akan sangat berarti bagi mereka yang membutuhkan.</p>
                 </div>
-
                 <div class="submit-actions">
-
-                    <a href="/dashboard"
-                       wire:navigate
-                       class="btn btn-draft">
+                    <a href="/dashboard" wire:navigate class="btn-draft">
                         Simpan Draft
                     </a>
-
                     <button type="submit" class="btn-submit">
                         Kirim Donasi
-                        <i class="fas fa-paper-plane"></i>
+                        <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
                     </button>
-
                 </div>
-
             </div>
 
         </div>
-
     </form>
-
 </div>

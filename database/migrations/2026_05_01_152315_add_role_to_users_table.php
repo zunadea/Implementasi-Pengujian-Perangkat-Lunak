@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Menambahkan kolom role setelah email dengan default 'donatur'
             $table->string('role')->default('donatur')->after('email');
         });
     }
@@ -23,7 +22,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Menghapus kolom role jika migration di-rollback
             $table->dropColumn('role');
         });
     }
