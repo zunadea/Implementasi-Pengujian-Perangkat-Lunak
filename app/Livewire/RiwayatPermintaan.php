@@ -15,7 +15,6 @@ class RiwayatPermintaan extends Component
 
     /**
      * mount() untuk proteksi akses.
-     * Memastikan hanya Donatur yang bisa melihat daftar semua permintaan.
      */
     public function mount()
     {
@@ -32,7 +31,8 @@ class RiwayatPermintaan extends Component
     {
         $permintaan = PermintaanModel::findOrFail($id);
         
-        // Ubah status menjadi 'Disetujui' atau 'Diproses'
+        // Ubah status menjadi 'Disetujui'
+        // Opsional: Kamu bisa menambahkan kolom 'donatur_id' di database jika ingin mencatat siapa yang membantu
         $permintaan->update([
             'status' => 'Disetujui'
         ]);
@@ -42,15 +42,14 @@ class RiwayatPermintaan extends Component
 
     public function render()
     {
-        /** * Mengambil data permintaan dari SEMUA penerima.
-         * Kita filter agar donatur hanya melihat permintaan yang masih 'Pending'.
-         * Diurutkan berdasarkan Urgensi (Mendesak dulu) kemudian waktu terbaru.
+        /** 
+         * PERBAIKAN: Kita ambil SEMUA data (Pending & Disetujui).
+         * Filter pemisahan tampilan dilakukan di file Blade menggunakan @forelse dengan collection filter.
          */
-        $riwayat = PermintaanModel::with('user') // Pastikan ada relasi 'user' di model Anda
-            ->where('status', 'Pending')
+        $riwayat = PermintaanModel::with('user')
             ->orderByRaw("FIELD(urgensi, 'Mendesak', 'Penting', 'Normal')")
             ->latest()
-            ->paginate(10);
+            ->paginate(20); // Naikkan jumlah pagination jika perlu agar riwayat tetap muncul
 
         return view('livewire.riwayat-permintaan', [
             'riwayat' => $riwayat

@@ -37,7 +37,6 @@
             color:var(--green-main);
         }
 
-        /* HERO */
         .form-hero{
             background:
                 radial-gradient(circle at top right, rgba(255,255,255,.15), transparent 30%),
@@ -87,7 +86,6 @@
             line-height:1.7;
         }
 
-        /* STEP */
         .step-wrapper{
             display:flex;
             gap:16px;
@@ -132,7 +130,6 @@
             color:var(--muted);
         }
 
-        /* MAIN CARD */
         .main-card{
             background:white;
             border-radius:30px;
@@ -141,120 +138,165 @@
             box-shadow:0 14px 35px rgba(15,23,42,.05);
         }
 
-        .section-title{
-            margin-bottom:26px;
-        }
-
-        .section-title h2{
-            font-size:32px;
-            font-weight:800;
-            margin-bottom:6px;
-            color:var(--green-dark);
-        }
-
-        .section-title p{
-            margin:0;
-            color:var(--muted);
-        }
-
-        /* NEW SEARCH & REGION STYLES */
-        .search-location-wrapper {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .search-input-group {
-            position: relative;
+        .location-header-flex {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 24px;
+            gap: 20px;
         }
 
-        .search-input-group i {
+        .location-header-flex h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .search-wrapper-new {
+            flex: 1;
+            max-width: 460px;
+            position: relative;
+        }
+
+        .search-wrapper-new i {
             position: absolute;
             left: 18px;
-            color: var(--green-main);
-            font-size: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 16px;
         }
 
-        .search-input-group .form-control-custom {
-            padding-left: 50px;
-            height: 58px;
-            font-size: 16px;
-            border-radius: 20px;
+        .search-wrapper-new .search-input-new {
             width: 100%;
+            padding: 14px 14px 14px 50px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
         }
 
-        .region-select-group .form-select-custom {
-            height: 58px;
-            font-size: 16px;
+        .search-wrapper-new .search-input-new:focus {
+            border-color: var(--green-main);
+            background: white;
+            box-shadow: 0 0 0 4px var(--green-soft);
+        }
+
+        .location-grid-new {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .loc-card-new {
+            background: white;
             border-radius: 20px;
+            border: 1px solid #f1f5f9;
+            overflow: hidden;
+            transition: all 0.3s ease;
             cursor: pointer;
-            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* SELECTED LOCATION PREVIEW */
-        .selected-location-box {
-            background: var(--green-soft);
+        .loc-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+        }
+
+        .loc-card-new.active {
             border: 2px solid var(--green-main);
-            border-radius: 22px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-            animation: fadeIn 0.3s ease;
+            background: var(--green-soft);
         }
 
-        .loc-meta {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .loc-thumb {
+            height: 160px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 15px;
         }
 
-        .loc-icon {
-            width: 50px;
-            height: 50px;
+        .dist-badge {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(4px);
+            padding: 5px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #1e293b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .dist-badge i {
+            color: var(--green-main);
+            font-size: 11px;
+        }
+
+        .floating-plus {
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
             background: var(--green-main);
             color: white;
-            border-radius: 15px;
+            border: 4px solid white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(0,132,61,0.3);
+            transition: transform 0.2s;
+            z-index: 2;
         }
 
-        .loc-details h6 {
-            margin: 0;
-            font-size: 18px;
+        .loc-card-new:hover .floating-plus {
+            transform: scale(1.1);
+        }
+
+        .loc-card-new.active .floating-plus {
+            background: #004934;
+        }
+
+        .loc-body-new {
+            padding: 28px 20px 20px;
+        }
+
+        .loc-body-new h4 {
+            margin: 0 0 6px;
+            font-size: 17px;
             font-weight: 800;
-            color: var(--green-dark);
+            color: #1e293b;
         }
 
-        .loc-details p {
-            margin: 2px 0 0;
-            font-size: 14px;
-            color: var(--green-main);
-            font-weight: 600;
+        .loc-body-new p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* FORM GRID */
-        .form-grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:28px;
+        .form-stack{
+            display:flex;
+            flex-direction:column;
+            gap:26px;
         }
 
         .form-section{
             border:1px solid #edf2f7;
             border-radius:24px;
-            padding:24px;
+            padding:26px;
+            background:#fff;
         }
 
         .mini-title{
@@ -316,19 +358,19 @@
             outline:none;
             background:white;
             border-color:var(--green-main);
+            box-shadow:0 0 0 4px var(--green-soft);
         }
 
         .textarea-custom{
-            min-height:180px;
-            resize:none;
+            min-height:190px;
+            resize:vertical;
         }
 
-        /* UPLOAD */
         .upload-box{
             border:2px dashed #cbd5e1;
             background:#f8fafc;
             border-radius:22px;
-            padding:30px;
+            padding:34px;
             text-align:center;
             position:relative;
             overflow:hidden;
@@ -342,7 +384,7 @@
 
         .upload-box img{
             width:100%;
-            max-height:260px;
+            max-height:320px;
             object-fit:cover;
             border-radius:18px;
         }
@@ -364,16 +406,13 @@
             color:var(--muted);
         }
 
-        /* CONDITION */
         .condition-group{
-            display:flex;
+            display:grid;
+            grid-template-columns:repeat(3, 1fr);
             gap:12px;
-            flex-wrap:wrap;
         }
 
         .condition-btn{
-            flex:1;
-            min-width:120px;
             border:1px solid #d7dee7;
             background:white;
             border-radius:18px;
@@ -394,7 +433,6 @@
             box-shadow:0 10px 20px rgba(0,122,61,.2);
         }
 
-        /* INFO BOX */
         .info-box{
             margin-top:26px;
             background:#ebf8ef;
@@ -430,7 +468,6 @@
             line-height:1.7;
         }
 
-        /* FOOTER */
         .bottom-submit{
             margin-top:30px;
             background:white;
@@ -481,17 +518,20 @@
             color:white;
             border:none;
             box-shadow:0 10px 20px rgba(0,122,61,.2);
-            cursor: pointer;
+            cursor:pointer;
         }
 
         .btn-submit:hover{
             transform:translateY(-2px);
         }
 
-        @media(max-width:992px){
-            .form-grid{
-                grid-template-columns:1fr;
+        @media(max-width:1100px){
+            .location-grid-new {
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
+
+        @media(max-width:992px){
             .bottom-submit{
                 flex-direction:column;
                 align-items:flex-start;
@@ -503,6 +543,7 @@
             .btn-draft,
             .btn-submit{
                 width:100%;
+                text-align:center;
             }
         }
 
@@ -516,11 +557,22 @@
             .form-hero h1{
                 font-size:28px;
             }
-            .section-title h2{
-                font-size:26px;
+            .location-header-flex {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            .search-location-wrapper {
+            .search-wrapper-new{
+                max-width:100%;
+                width:100%;
+            }
+            .location-grid-new {
                 grid-template-columns: 1fr;
+            }
+            .condition-group{
+                grid-template-columns:1fr;
+            }
+            .main-card{
+                padding:22px;
             }
         }
     </style>
@@ -530,7 +582,6 @@
         Kembali ke Dashboard
     </a>
 
-    {{-- HERO --}}
     <div class="form-hero">
         <span class="hero-badge">
             <i class="fas fa-hand-holding-heart"></i>
@@ -543,7 +594,6 @@
         </p>
     </div>
 
-    {{-- STEP --}}
     <div class="step-wrapper">
         <div class="step-card">
             <div class="step-number">1</div>
@@ -569,67 +619,74 @@
     </div>
 
     <form wire:submit.prevent="simpanDonasi">
-
         <div class="main-card">
 
-            {{-- TITLE --}}
-            <div class="section-title">
-                <h2>Pilih Lokasi Rebox</h2>
-                <p>Tentukan titik pengumpulan barang terdekat dari lokasimu</p>
-            </div>
-
-            {{-- NEW SEARCH & REGION SELECTION --}}
-            <div class="search-location-wrapper">
-                
-                {{-- Search Input (Gunakan wire:model sesuai backend kamu) --}}
-                <div class="search-input-group">
+            <div class="location-header-flex">
+                <h2>Pilih Lokasi Drop-off</h2>
+                <div class="search-wrapper-new">
                     <i class="fas fa-search"></i>
-                    <input type="text" 
-                           wire:model.live="search_lokasi" 
-                           class="form-control-custom" 
-                           placeholder="Cari nama titik Rebox atau alamat...">
+                    <input type="text"
+                           wire:model.live="search_lokasi"
+                           class="search-input-new"
+                           placeholder="Ketik nama kecamatan di Bandung...">
+                </div>
+            </div>
+
+            <div class="location-grid-new">
+
+                <div class="loc-card-new {{ $filter_wilayah == 'Sudirman' ? 'active' : '' }}"
+                     wire:click="$set('filter_wilayah', 'Sudirman')">
+                    <div class="loc-thumb" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=500');">
+                        <div class="dist-badge">
+                            <i class="fas fa-location-dot"></i> 0.8 km
+                        </div>
+                        <div class="floating-plus">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="loc-body-new">
+                        <h4>Rebox Sudirman Central</h4>
+                        <p>Jl. Jend. Sudirman No. 52, Jakarta Selatan</p>
+                    </div>
                 </div>
 
-                {{-- Manual Region Select --}}
-                <div class="region-select-group">
-                    <select wire:model.live="filter_wilayah" class="form-select-custom">
-                        <option value="">Semua Wilayah</option>
-                        <option value="Bandung Tengah">Bandung Tengah</option>
-                        <option value="Bandung Selatan">Bandung Selatan</option>
-                        <option value="Bandung Utara">Bandung Utara</option>
-                        <option value="Bandung Timur">Bandung Timur</option>
-                        <option value="Bandung Barat">Bandung Barat</option>
-                        <option value="Cimahi">Cimahi</option>
-                    </select>
+                <div class="loc-card-new {{ $filter_wilayah == 'GrandIndo' ? 'active' : '' }}"
+                     wire:click="$set('filter_wilayah', 'GrandIndo')">
+                    <div class="loc-thumb" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=500');">
+                        <div class="dist-badge">
+                            <i class="fas fa-location-dot"></i> 1.2 km
+                        </div>
+                        <div class="floating-plus">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="loc-body-new">
+                        <h4>Grand Indonesia Hub</h4>
+                        <p>Lantai LG Barat, Menteng, Jakarta Pusat</p>
+                    </div>
+                </div>
+
+                <div class="loc-card-new {{ $filter_wilayah == 'SCBD' ? 'active' : '' }}"
+                     wire:click="$set('filter_wilayah', 'SCBD')">
+                    <div class="loc-thumb" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=500');">
+                        <div class="dist-badge">
+                            <i class="fas fa-location-dot"></i> 2.5 km
+                        </div>
+                        <div class="floating-plus">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="loc-body-new">
+                        <h4>SCBD Office Park</h4>
+                        <p>Gedung Artha Graha Lobby, Jakarta</p>
+                    </div>
                 </div>
 
             </div>
 
-            {{-- SELECTED LOCATION PREVIEW --}}
-            {{-- Bagian ini merepresentasikan lokasi yang sudah aktif/dipilih --}}
-            <div class="selected-location-box">
-                <div class="loc-meta">
-                    <div class="loc-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="loc-details">
-                        <h6>Rebox BuahBatu</h6>
-                        <p><i class="far fa-clock"></i> Terpilih • Buka 08:00 - 20:00</p>
-                    </div>
-                </div>
-                <div class="loc-badge">
-                    <span style="background: var(--green-main); padding: 8px 15px; border-radius: 10px; color: white; font-size: 12px; font-weight: 700;">
-                        LOKASI TERDEKAT
-                    </span>
-                </div>
-            </div>
+            <div class="form-stack">
 
-            {{-- FORM --}}
-            <div class="form-grid">
-
-                {{-- LEFT: INFORMASI BARANG --}}
                 <div class="form-section">
-
                     <div class="mini-title">
                         <div class="icon">
                             <i class="fas fa-box-open"></i>
@@ -640,7 +697,6 @@
                         </div>
                     </div>
 
-                    {{-- FOTO --}}
                     <div class="form-group">
                         <label class="form-label">Foto Barang</label>
                         <div class="upload-box">
@@ -659,7 +715,6 @@
                         </div>
                     </div>
 
-                    {{-- NAMA --}}
                     <div class="form-group">
                         <label class="form-label">Nama Barang</label>
                         <input type="text"
@@ -668,7 +723,6 @@
                                placeholder="Contoh: Buku Pelajaran, Jaket, Kursi">
                     </div>
 
-                    {{-- KATEGORI --}}
                     <div class="form-group">
                         <label class="form-label">Kategori Barang</label>
                         <select wire:model="kategori" class="form-select-custom">
@@ -681,8 +735,7 @@
                         </select>
                     </div>
 
-                    {{-- JUMLAH --}}
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label">Jumlah Barang</label>
                         <input type="number"
                                wire:model="jumlah"
@@ -692,9 +745,7 @@
                     </div>
                 </div>
 
-                {{-- RIGHT: KONDISI & DESKRIPSI --}}
                 <div class="form-section">
-
                     <div class="mini-title">
                         <div class="icon">
                             <i class="fas fa-circle-info"></i>
@@ -705,7 +756,6 @@
                         </div>
                     </div>
 
-                    {{-- KONDISI --}}
                     <div class="form-group">
                         <label class="form-label">Kondisi Barang</label>
                         <div class="condition-group">
@@ -727,7 +777,6 @@
                         </div>
                     </div>
 
-                    {{-- DESKRIPSI --}}
                     <div class="form-group">
                         <label class="form-label">Deskripsi Barang</label>
                         <textarea
@@ -736,7 +785,6 @@
                             placeholder="Contoh: Buku masih lengkap, pakaian bersih dan layak pakai..."></textarea>
                     </div>
 
-                    {{-- INFO BOX --}}
                     <div class="info-box">
                         <div class="info-icon">
                             <i class="fas fa-info"></i>
@@ -751,9 +799,9 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
-            {{-- SUBMIT SECTION --}}
             <div class="bottom-submit">
                 <div>
                     <h5>Siap Berbagi Kebaikan?</h5>

@@ -7,7 +7,7 @@ use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
 
-#[Title('Login')] 
+#[Title('Login')]
 class Login extends Component
 {
     #[Validate('required|email')]
@@ -16,27 +16,38 @@ class Login extends Component
     #[Validate('required')]
     public $password;
 
-    // Default role saat login
-    public $role = 'donatur';
+    #[Validate('required', message: 'Silakan pilih peran terlebih dahulu.')]
+    public $role = '';
 
     public function login()
-{
-    $this->validate();
+    {
+        $this->validate();
 
-    $credentials = [
-        'email' => $this->email,
-        'password' => $this->password,
-        'role' => $this->role, // Menambahkan pengecekan role langsung ke database
-    ];
+        $credentials = [
+            'email' => $this->email,
+            'password' => $this->password,
+            'role' => $this->role,
+        ];
 
-    if (Auth::attempt($credentials)) {
-        session()->flash('message', 'Selamat datang kembali!');
-        return $this->redirectRoute('dashboard', navigate: true);
+        if (Auth::attempt($credentials)) {
+            session()->regenerate();
+
+            session()->flash(
+                'message',
+                'Login berhasil! Selamat datang kembali di Rebox.'
+            );
+
+            return $this->redirectRoute('dashboard', navigate: true);
+        }
+
+        $this->addError('email', ' ');
+        $this->addError('password', ' ');
+
+        session()->flash(
+            'error',
+            'Login gagal. Akun tidak ditemukan atau peran tidak sesuai.'
+        );
     }
-
-    // Jika akun ada tapi role salah, atau password salah
-    session()->flash('error', 'Login gagal. Akun tidak ditemukan atau peran tidak sesuai.');
-}
 
     public function render()
     {

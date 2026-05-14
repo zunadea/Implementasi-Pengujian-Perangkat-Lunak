@@ -10,6 +10,7 @@ use App\Livewire\Riwayat;
 use App\Livewire\FormDonasi;
 use App\Livewire\RiwayatPermintaan;
 use App\Livewire\Profile;
+use App\Livewire\LokasiRebox;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     // --- FITUR DONATUR ---
     Route::get('/riwayat-permintaan', RiwayatPermintaan::class)->name('riwayat.permintaan');
     Route::get('/form-donasi/{name}', FormDonasi::class)->name('form-donasi');
+    Route::get('/lokasi-rebox', LokasiRebox::class)
+    ->middleware('auth')
+    ->name('lokasi-rebox');
 });

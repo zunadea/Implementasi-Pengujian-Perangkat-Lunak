@@ -19,6 +19,9 @@ class Profile extends Component
     public $photo; // Untuk file baru yang diunggah
     public $current_photo; // Untuk menampilkan foto lama
 
+    // Properti untuk toggle tampilan
+    public $isEditing = false; // State untuk mengontrol mode tampilan
+
     /**
      * Inisialisasi data saat halaman dimuat
      */
@@ -68,8 +71,20 @@ class Profile extends Component
 
         $user->save();
 
+        // Setelah berhasil simpan, kembalikan ke mode read-only
+        $this->isEditing = false;
+
         // Kirim pesan sukses ke UI
         session()->flash('message', 'Profil berhasil diperbarui!');
+    }
+
+    /**
+     * Fungsi opsional untuk membatalkan edit dan reset data ke awal
+     */
+    public function cancelEdit()
+    {
+        $this->mount(); // Reset data dari database
+        $this->isEditing = false;
     }
 
     public function render()

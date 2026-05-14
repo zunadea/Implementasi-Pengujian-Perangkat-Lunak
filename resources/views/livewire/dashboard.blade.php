@@ -1,4 +1,24 @@
 <div class="rebox-dashboard">
+
+    @if (session()->has('message'))
+        <div id="successToast" class="glass-toast">
+            <div class="d-flex align-items-center">
+                <div class="toast-icon me-3">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+
+                <div class="flex-grow-1">
+                    <h6 class="toast-title mb-1">Login Berhasil</h6>
+                    <p class="toast-text mb-0">{{ session('message') }}</p>
+                </div>
+            </div>
+
+            <div class="toast-progress">
+                <span></span>
+            </div>
+        </div>
+    @endif
+
     <style>
         :root {
             --green-dark: #004934;
@@ -19,6 +39,100 @@
             padding: 28px 30px 50px;
             font-family: 'Inter', 'Poppins', sans-serif;
             color: var(--text-dark);
+        }
+
+        .glass-toast {
+            position: fixed;
+            top: 24px;
+            right: 28px;
+            z-index: 9999;
+            width: 360px;
+            max-width: calc(100% - 32px);
+            padding: 18px 20px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.45);
+            box-shadow:
+                0 18px 45px rgba(0,0,0,0.10),
+                inset 0 1px 1px rgba(255,255,255,0.45);
+            animation: toastShow 0.45s ease;
+            transition: all 0.4s ease;
+        }
+
+        .glass-toast.hide-toast {
+            opacity: 0;
+            transform: translateY(-18px) scale(0.96);
+            pointer-events: none;
+        }
+
+        .toast-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(0,122,61,0.12);
+            color: #007a3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+            box-shadow:
+                inset 0 1px 1px rgba(255,255,255,0.5),
+                0 8px 20px rgba(0,122,61,0.12);
+        }
+
+        .toast-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .toast-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #6b7280;
+        }
+
+        .toast-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,122,61,0.12);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 16px;
+        }
+
+        .toast-progress span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #007a3d, #00b35c);
+            border-radius: 999px;
+            animation: toastProgress 4s linear forwards;
+        }
+
+        @keyframes toastShow {
+            from {
+                opacity: 0;
+                transform: translateY(-22px) scale(0.94);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes toastProgress {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: 0%;
+            }
         }
 
         .hero-donation {
@@ -139,38 +253,21 @@
             justify-content: space-between;
             align-items: center;
             margin: 28px 0 16px;
+            gap: 14px;
         }
 
         .section-title {
             display: flex;
             align-items: center;
-            gap: 9px;
-            font-size: 18px;
+            gap: 10px;
+            font-size: 22px;
             font-weight: 800;
             margin: 0;
-            color: var(--text-dark);
+            color: #1f2937;
         }
 
         .section-title i {
-            color: var(--green-main);
-            font-size: 16px;
-        }
-
-        .view-all-btn {
-            background: var(--green-dark);
-            color: #fff;
-            border-radius: 9px;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 800;
-            text-decoration: none;
-            transition: 0.25s ease;
-        }
-
-        .view-all-btn:hover {
-            color: #fff;
-            background: #006b38;
-            transform: translateY(-2px);
+            color: #007a3d;
         }
 
         .receiver-grid {
@@ -236,6 +333,53 @@
             margin: 0;
         }
 
+        .view-all-glass {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 18px;
+            background: rgba(233, 248, 239, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 122, 61, 0.18);
+            color: #007a3d !important;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none !important;
+            box-shadow:
+                0 10px 24px rgba(0, 122, 61, 0.10),
+                inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            transition: all 0.25s ease;
+        }
+
+        .view-all-glass i {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0, 122, 61, 0.12);
+            color: #007a3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .view-all-glass:hover {
+            color: #004934 !important;
+            transform: translateY(-2px);
+            box-shadow:
+                0 16px 30px rgba(0, 122, 61, 0.16),
+                inset 0 1px 1px rgba(255, 255, 255, 0.55);
+        }
+
+        .view-all-glass:hover i {
+            background: #007a3d;
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
         .location-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -243,26 +387,31 @@
         }
 
         .location-card {
-            background: #fff;
-            border-radius: 18px;
-            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(18px);
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.75);
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+            box-shadow:
+                0 10px 26px rgba(15, 23, 42, 0.06),
+                inset 0 1px 1px rgba(255, 255, 255, 0.45);
             transition: 0.25s ease;
         }
 
         .location-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.10);
+            box-shadow:
+                0 18px 35px rgba(15, 23, 42, 0.10),
+                inset 0 1px 1px rgba(255, 255, 255, 0.55);
         }
 
         .location-image {
             position: relative;
             height: 142px;
             margin: 12px 12px 0;
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
-            background: var(--green-soft);
+            background: #e9f8ef;
         }
 
         .location-image img {
@@ -275,86 +424,109 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
             color: #111827;
-            padding: 5px 9px;
+            padding: 6px 10px;
             border-radius: 999px;
             font-size: 11px;
             font-weight: 800;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
         }
 
         .add-circle {
             position: absolute;
             right: 10px;
             bottom: 10px;
-            width: 36px;
-            height: 36px;
-            background: var(--green-dark);
-            color: #fff;
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 73, 52, 0.88);
+            backdrop-filter: blur(14px);
+            color: #ffffff !important;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 22px rgba(0, 73, 52, 0.28);
+            transition: 0.25s ease;
+        }
+
+        .add-circle:hover {
+            transform: scale(1.08) rotate(8deg);
+            background: #007a3d;
         }
 
         .location-body {
-            padding: 14px 14px 16px;
+            padding: 15px 16px 18px;
         }
 
         .location-body h5 {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 800;
-            margin: 0 0 8px;
+            margin: 0 0 9px;
+            color: #1f2937;
         }
 
         .location-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-muted);
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .location-meta span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-meta i {
+            color: #6b7280;
         }
 
         .distance {
-            color: var(--green-main);
-            background: #eaf8ef;
-            padding: 4px 8px;
+            color: #007a3d !important;
+            background: rgba(233, 248, 239, 0.9);
+            padding: 5px 10px;
             border-radius: 999px;
             font-weight: 800;
+            white-space: nowrap;
         }
 
-        .help-box {
-            margin-top: 28px;
-            background: linear-gradient(135deg, #004934, #006b43);
-            color: #fff;
-            border-radius: 20px;
-            padding: 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 18px;
+        @media(max-width: 1200px) {
+            .location-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .help-box h4 {
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
+        @media(max-width: 768px) {
+            .glass-toast {
+                left: 16px;
+                right: 16px;
+                width: auto;
+                top: 18px;
+            }
 
-        .help-box p {
-            margin: 0;
-            font-size: 12px;
-            color: rgba(255,255,255,0.72);
-        }
+            .receiver-grid {
+                grid-template-columns: 1fr;
+            }
 
-        .help-box a {
-            background: #fff;
-            color: var(--green-main);
-            padding: 11px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 900;
+            .section-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .view-all-glass {
+                width: 100%;
+            }
+
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 
@@ -444,11 +616,15 @@
             <i class="fas fa-location-dot"></i>
             Titik Rebox Terdekat
         </h3>
+
+        <a href="/lokasi-rebox" wire:navigate class="view-all-glass">
+            <span>Lihat Semua</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
     </div>
 
     <div class="location-grid">
 
-        {{-- CARD 1 --}}
         <div class="location-card">
             <div class="location-image">
                 <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80">
@@ -458,27 +634,21 @@
                 </div>
 
                 <a href="{{ route('form-donasi', ['name' => 'Rebox Cianjur']) }}"
-                   class="add-circle"
-                   wire:navigate>
+                    class="add-circle"
+                    wire:navigate>
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
 
             <div class="location-body">
                 <h5>Rebox Cianjur</h5>
-
                 <div class="location-meta">
-                    <span>
-                        <i class="fas fa-map-marker-alt"></i>
-                        Cianjur
-                    </span>
-
+                    <span><i class="fas fa-map-marker-alt"></i> Cianjur</span>
                     <span class="distance">4 km</span>
                 </div>
             </div>
         </div>
 
-        {{-- CARD 2 --}}
         <div class="location-card">
             <div class="location-image">
                 <img src="https://images.unsplash.com/photo-1591196131703-9b636d6901d6?auto=format&fit=crop&w=700&q=80">
@@ -488,27 +658,21 @@
                 </div>
 
                 <a href="{{ route('form-donasi', ['name' => 'Rebox BuahBatu']) }}"
-                   class="add-circle"
-                   wire:navigate>
+                    class="add-circle"
+                    wire:navigate>
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
 
             <div class="location-body">
                 <h5>Rebox BuahBatu</h5>
-
                 <div class="location-meta">
-                    <span>
-                        <i class="fas fa-map-marker-alt"></i>
-                        BuahBatu
-                    </span>
-
+                    <span><i class="fas fa-map-marker-alt"></i> BuahBatu</span>
                     <span class="distance">1 km</span>
                 </div>
             </div>
         </div>
 
-        {{-- CARD 3 --}}
         <div class="location-card">
             <div class="location-image">
                 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80">
@@ -518,27 +682,21 @@
                 </div>
 
                 <a href="{{ route('form-donasi', ['name' => 'Rebox Dago Atas']) }}"
-                   class="add-circle"
-                   wire:navigate>
+                    class="add-circle"
+                    wire:navigate>
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
 
             <div class="location-body">
                 <h5>Rebox Dago Atas</h5>
-
                 <div class="location-meta">
-                    <span>
-                        <i class="fas fa-map-marker-alt"></i>
-                        Dago
-                    </span>
-
+                    <span><i class="fas fa-map-marker-alt"></i> Dago</span>
                     <span class="distance">8 km</span>
                 </div>
             </div>
         </div>
 
-        {{-- CARD 4 --}}
         <div class="location-card">
             <div class="location-image">
                 <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80">
@@ -548,21 +706,16 @@
                 </div>
 
                 <a href="{{ route('form-donasi', ['name' => 'Rebox Pasteur']) }}"
-                   class="add-circle"
-                   wire:navigate>
+                    class="add-circle"
+                    wire:navigate>
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
 
             <div class="location-body">
                 <h5>Rebox Pasteur</h5>
-
                 <div class="location-meta">
-                    <span>
-                        <i class="fas fa-map-marker-alt"></i>
-                        Pasteur
-                    </span>
-
+                    <span><i class="fas fa-map-marker-alt"></i> Pasteur</span>
                     <span class="distance">12 km</span>
                 </div>
             </div>
@@ -570,19 +723,22 @@
 
     </div>
 
-    {{-- HELP BOX --}}
-    <div class="help-box">
-        <div>
-            <h4>Pusat Bantuan</h4>
-            <p>
-                Butuh bantuan cara donasi?
-                Buka panduan agar proses donasimu lebih mudah.
-            </p>
-        </div>
+    <script>
+        function initDashboardToast() {
+            const toast = document.querySelector('#successToast');
 
-        <a href="#">
-            Buka Panduan
-        </a>
-    </div>
+            if (toast) {
+                setTimeout(() => {
+                    toast.classList.add('hide-toast');
+                }, 4000);
 
+                setTimeout(() => {
+                    toast.remove();
+                }, 4500);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initDashboardToast);
+        document.addEventListener('livewire:navigated', initDashboardToast);
+    </script>
 </div>
