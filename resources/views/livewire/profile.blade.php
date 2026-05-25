@@ -84,7 +84,12 @@
             text-decoration: none;
             line-height: 1;
             justify-self: center;
-            padding: 9px 18px;
+            width: 118px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
             border-radius: 14px;
             transition: transform 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
         }
@@ -254,20 +259,80 @@
             background: #f1f5f2;
             font-size: 54px;
         }
-        .avatar-upload {
-            position: absolute;
-            right: 7px;
-            bottom: 10px;
-            width: 42px;
-            height: 42px;
+        .edit-photo-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            margin-bottom: 22px;
+            border-radius: 20px;
+            background: rgba(0, 134, 0, 0.045);
+            border: 1px solid rgba(0, 134, 0, 0.11);
+        }
+
+        .edit-photo-preview {
+            width: 74px;
+            height: 74px;
             border-radius: 50%;
-            border: 4px solid #ffffff;
-            background: var(--rebox-green);
-            color: #ffffff;
             display: grid;
             place-items: center;
+            overflow: hidden;
+            background: #f1f5f2;
+            color: #29323d;
+            font-size: 28px;
+            font-weight: 700;
+            box-shadow: inset 0 0 18px rgba(0, 134, 0, 0.06);
+            flex: 0 0 auto;
+        }
+
+        .edit-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .edit-photo-copy {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .edit-photo-copy strong {
+            display: block;
+            color: #111111;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .edit-photo-copy span {
+            display: block;
+            color: #737373;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .edit-photo-button {
+            height: 42px;
+            padding: 0 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 134, 0, 0.22);
+            background: #ffffff;
+            color: var(--rebox-green);
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 12px 24px rgba(0, 134, 0, 0.25);
+            transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+        }
+
+        .edit-photo-button:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 134, 0, 0.07);
+            box-shadow: 0 12px 24px rgba(0, 134, 0, 0.10);
         }
 
         .profile-name { margin: 0; color: #111111; font-size: 24px; font-weight: 700; }
@@ -314,6 +379,95 @@
         }
         .stat-row strong { display: block; color: #1f2937; font-size: 18px; font-weight: 800; }
         .stat-row span { color: #737373; font-size: 12px; font-weight: 600; }
+
+        .recipient-profile-visual {
+            margin-top: 24px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(17, 17, 17, 0.08);
+        }
+
+        .donation-scene {
+            min-height: 176px;
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(0, 134, 0, .09), transparent 28%),
+                linear-gradient(145deg, rgba(255, 255, 255, .88), rgba(232, 250, 235, .62));
+            border: 1px solid rgba(0, 134, 0, .12);
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .74);
+            transition: transform .26s ease, box-shadow .26s ease, border-color .26s ease;
+        }
+
+        .donation-scene:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 134, 0, .24);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .82), 0 18px 34px rgba(0, 134, 0, .12);
+        }
+
+        .donation-orbit {
+            position: absolute;
+            width: 132px;
+            height: 132px;
+            border: 1px dashed rgba(0, 134, 0, .18);
+            border-radius: 50%;
+            animation: donationOrbit 12s linear infinite;
+        }
+
+        .floating-gift,
+        .floating-heart {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, .82);
+            color: var(--rebox-green);
+            box-shadow: 0 10px 22px rgba(0, 134, 0, .10);
+            animation: donationFloat 3.8s ease-in-out infinite alternate;
+        }
+
+        .floating-gift { left: 26px; top: 32px; }
+        .floating-heart { right: 28px; bottom: 34px; animation-delay: -1.4s; }
+
+        .donation-box {
+            width: 92px;
+            height: 72px;
+            border-radius: 14px 14px 18px 18px;
+            background: linear-gradient(160deg, #8bd17d, #008600);
+            color: #ffffff;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 18px 34px rgba(0, 134, 0, .22);
+            animation: donationBoxBreath 4s ease-in-out infinite;
+        }
+
+        .donation-box::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            right: 12px;
+            height: 18px;
+            border-radius: 10px 10px 4px 4px;
+            background: rgba(0, 134, 0, .78);
+            transform: rotate(-2deg);
+        }
+
+        .donation-caption {
+            margin: 14px auto 0;
+            max-width: 240px;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
 
         .verify-box {
             margin-top: 24px;
@@ -512,6 +666,17 @@
             from { opacity: 0.56; transform: translateX(-50%) scale(0.96); }
             to { opacity: 0.92; transform: translateX(-50%) scale(1.04); }
         }
+        @keyframes donationOrbit {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes donationFloat {
+            from { transform: translateY(0); }
+            to { transform: translateY(-9px); }
+        }
+        @keyframes donationBoxBreath {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-3px) scale(1.03); }
+        }
 
         @media (max-width: 980px) {
             .profile-inner { padding: 24px 28px 70px; }
@@ -525,6 +690,8 @@
             .profile-hero h1 { font-size: 28px; }
             .form-grid { grid-template-columns: 1fr; }
             .info-head, .form-footer { align-items: stretch; flex-direction: column; }
+            .edit-photo-card { align-items: flex-start; flex-direction: column; }
+            .edit-photo-button { width: 100%; justify-content: center; }
             .edit-button, .save-button, .ghost-button { width: 100%; }
         }
     </style>
@@ -551,7 +718,7 @@
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil">
+                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ $username }}">
                     @else
@@ -560,8 +727,6 @@
                     <span class="profile-caret" aria-hidden="true"></span>
                 </button>
                 <div class="profile-menu">
-                    <a href="/profile" wire:navigate>Profil Saya</a>
-                    <a href="/riwayat" wire:navigate>Riwayat</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit">Logout</button>
@@ -584,10 +749,6 @@
                     @else
                         <div class="avatar-empty">{{ $initial }}</div>
                     @endif
-                    <label for="photo-upload" class="avatar-upload" title="Ganti foto profil">
-                        <i class="fas fa-camera"></i>
-                    </label>
-                    <input type="file" wire:model="photo" id="photo-upload" class="d-none" accept="image/*">
                 </div>
 
                 <h2 class="profile-name">{{ $username }}</h2>
@@ -601,22 +762,36 @@
                     <span class="status-badge unverified"><i class="fas fa-circle-info"></i> Belum Terverifikasi</span>
                 @endif
 
-                <div class="profile-stats">
-                    <div class="stat-row">
-                        <div class="stat-icon"><i class="fas fa-box-open"></i></div>
-                        <div>
-                            <strong>{{ $donation_count }} Donasi</strong>
-                            <span>Jumlah donasi ke Box Rebox</span>
+                @if(auth()->user()?->role === 'penerima')
+                    <div class="recipient-profile-visual">
+                        <div class="donation-scene" aria-label="Ilustrasi donasi untuk penerima">
+                            <span class="donation-orbit" aria-hidden="true"></span>
+                            <span class="floating-gift" aria-hidden="true"><i class="fas fa-gift"></i></span>
+                            <span class="floating-heart" aria-hidden="true"><i class="fas fa-heart"></i></span>
+                            <div class="donation-box" aria-hidden="true">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                        </div>
+                        <p class="donation-caption">Pantau kebutuhan yang Anda ajukan dan dukungan yang akan dipenuhi donatur.</p>
+                    </div>
+                @else
+                    <div class="profile-stats">
+                        <div class="stat-row">
+                            <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                            <div>
+                                <strong>{{ $donation_count }} Donasi</strong>
+                                <span>Jumlah donasi ke Box Rebox</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <div>
+                                <strong>{{ $distribution_count }} Penyaluran</strong>
+                                <span>Donasi tersalurkan ke penerima</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-row">
-                        <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <div>
-                            <strong>{{ $distribution_count }} Penyaluran</strong>
-                            <span>Donasi tersalurkan ke penerima</span>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </aside>
 
             <section class="info-card">
@@ -636,6 +811,26 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <div class="edit-photo-card">
+                                <div class="edit-photo-preview">
+                                    @if($avatarUrl)
+                                        <img src="{{ $avatarUrl }}" alt="{{ $username }}">
+                                    @else
+                                        <span>{{ $initial }}</span>
+                                    @endif
+                                </div>
+                                <div class="edit-photo-copy">
+                                    <strong>Foto Profil</strong>
+                                    <span>Pilih foto baru untuk mengganti tampilan profil akun.</span>
+                                </div>
+                                <label for="photo-upload" class="edit-photo-button">
+                                    <i class="fas fa-camera"></i>
+                                    Ganti Foto
+                                </label>
+                                <input type="file" wire:model="photo" id="photo-upload" class="d-none" accept="image/*">
+                            </div>
+                            @error('photo') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
 
                             <div class="form-grid">
                                 <div class="field full">
@@ -662,7 +857,6 @@
                                 </div>
                             </div>
 
-                            @error('photo') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
                             <div class="form-footer">
                                 <p><i class="fas fa-info-circle"></i> Foto maksimal 5MB. Email dan role bersifat permanen.</p>
                             </div>

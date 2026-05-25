@@ -14,6 +14,11 @@ class Permintaan extends Component
     public string $location_search = '';
     public string $category_filter = 'Semua';
     public string $kode_box_input = '';
+    public int $request_page = 1;
+    public int $request_per_page = 3;
+    public bool $show_code_modal = false;
+    public bool $show_fulfillment_modal = false;
+    public bool $show_success_modal = false;
     public ?int $selectedRequestId = null;
 
     public array $selectedRequest = [];
@@ -27,6 +32,7 @@ class Permintaan extends Component
     public string $request_kategori = '';
     public int|string $request_jumlah = '';
     public string $request_deskripsi = '';
+    public string $request_maps_link = '';
     public bool $show_request_confirm = false;
     public array $submittedRequest = [];
 
@@ -42,6 +48,29 @@ class Permintaan extends Component
     public function setCategory(string $category): void
     {
         $this->category_filter = $category;
+        $this->request_page = 1;
+    }
+
+    public function updatedSearch(): void
+    {
+        $this->request_page = 1;
+    }
+
+    public function setRequestPage(int $page): void
+    {
+        $lastPage = max(1, (int) ceil(count($this->filteredRequests()) / $this->request_per_page));
+
+        $this->request_page = min(max(1, $page), $lastPage);
+    }
+
+    public function previousRequestPage(): void
+    {
+        $this->setRequestPage($this->request_page - 1);
+    }
+
+    public function nextRequestPage(): void
+    {
+        $this->setRequestPage($this->request_page + 1);
     }
 
     public function showDetail(int $id): void
@@ -54,6 +83,9 @@ class Permintaan extends Component
 
         $this->selectedRequestId = $id;
         $this->selectedRequest = $request;
+        $this->show_code_modal = false;
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = false;
         $this->step = 'detail';
     }
 
@@ -86,7 +118,27 @@ class Permintaan extends Component
         }
 
         $this->kode_box_input = '';
-        $this->step = 'code';
+        $this->resetErrorBag('kode_box_input');
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = false;
+        $this->show_code_modal = true;
+    }
+
+    public function closeCodeModal(): void
+    {
+        $this->show_code_modal = false;
+        $this->kode_box_input = '';
+        $this->resetErrorBag('kode_box_input');
+    }
+
+    public function closeFulfillmentModal(): void
+    {
+        $this->show_fulfillment_modal = false;
+    }
+
+    public function closeSuccessModal(): void
+    {
+        $this->show_success_modal = false;
     }
 
     public function openBox(): void
@@ -105,7 +157,9 @@ class Permintaan extends Component
         $this->salurkan_nama_barang = $this->selectedRequest['nama_barang'] ?? '';
         $this->salurkan_kategori = $this->selectedRequest['kategori_barang'] ?? '';
         $this->salurkan_jumlah = $this->selectedRequest['jumlah'] ?? '';
-        $this->step = 'pickup';
+        $this->show_code_modal = false;
+        $this->show_fulfillment_modal = true;
+        $this->step = 'detail';
     }
 
     public function completeFulfillment(): void
@@ -121,12 +175,29 @@ class Permintaan extends Component
             'salurkan_jumlah.integer' => 'Jumlah barang harus berupa angka.',
         ]);
 
-        $this->step = 'success';
+        if (! empty($this->selectedRequest['id'])) {
+            $request = PermintaanModel::find($this->selectedRequest['id']);
+
+            if ($request) {
+                $request->update([
+                    'status' => 'Diproses',
+                    'fulfilled_by_user_id' => Auth::id(),
+                    'fulfilled_at' => now(),
+                ]);
+            }
+        }
+
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = true;
+        $this->step = 'detail';
     }
 
     public function backToList(): void
     {
         $this->reset(['selectedRequestId', 'selectedRequest', 'kode_box_input']);
+        $this->show_code_modal = false;
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = false;
         $this->step = 'list';
     }
 
@@ -153,6 +224,7 @@ class Permintaan extends Component
             'deskripsi' => $this->request_deskripsi,
             'urgensi' => 'Normal',
             'lokasi_hub' => Auth::user()?->name ?? 'Penerima Rebox',
+            'google_maps_link' => $this->request_maps_link,
             'status' => 'Pending',
         ]);
 
@@ -162,10 +234,11 @@ class Permintaan extends Component
             'kategori' => $request->kategori,
             'jumlah' => $request->jumlah,
             'deskripsi' => $request->deskripsi,
+            'maps_url' => $request->google_maps_link,
             'status' => $request->status,
         ];
 
-        $this->reset(['request_nama_barang', 'request_kategori', 'request_jumlah', 'request_deskripsi', 'show_request_confirm']);
+        $this->reset(['request_nama_barang', 'request_kategori', 'request_jumlah', 'request_deskripsi', 'request_maps_link', 'show_request_confirm']);
         $this->step = 'recipient_success';
     }
 
@@ -180,9 +253,10 @@ class Permintaan extends Component
     {
         $this->validate([
             'request_nama_barang' => ['required', 'string', 'min:3', 'max:100'],
-            'request_kategori' => ['required', 'string', 'in:Pakaian,Buku,Elektronik,Peralatan Elektronik,Lainnya'],
+            'request_kategori' => ['required', 'string', 'in:Pakaian,Buku,Elektronik,Lainnya'],
             'request_jumlah' => ['required', 'integer', 'min:1', 'max:1000'],
             'request_deskripsi' => ['required', 'string', 'min:10', 'max:700'],
+            'request_maps_link' => ['required', 'url', 'max:700'],
         ], [
             'request_nama_barang.required' => 'Nama barang wajib diisi.',
             'request_nama_barang.min' => 'Nama barang minimal 3 karakter.',
@@ -192,16 +266,24 @@ class Permintaan extends Component
             'request_jumlah.max' => 'Jumlah kebutuhan maksimal 1000.',
             'request_deskripsi.required' => 'Deskripsi kebutuhan wajib diisi.',
             'request_deskripsi.min' => 'Deskripsi minimal 10 karakter.',
+            'request_maps_link.required' => 'Link Google Maps wajib diisi.',
+            'request_maps_link.url' => 'Link Google Maps harus berupa URL yang valid.',
         ]);
     }
 
     public function backToDetail(): void
     {
+        $this->show_code_modal = false;
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = false;
         $this->step = 'detail';
     }
 
     public function backToLocation(): void
     {
+        $this->show_code_modal = false;
+        $this->show_fulfillment_modal = false;
+        $this->show_success_modal = false;
         $this->step = 'location';
     }
 
@@ -261,12 +343,16 @@ class Permintaan extends Component
             ['nama_barang' => 'Pakaian Muslim', 'kategori' => 'Pakaian', 'jumlah' => 5],
             ['nama_barang' => 'Buku Pelajaran', 'kategori' => 'Buku', 'jumlah' => 12],
             ['nama_barang' => 'Jaket Anak', 'kategori' => 'Pakaian', 'jumlah' => 4],
-            ['nama_barang' => 'Rice Cooker', 'kategori' => 'Peralatan Elektronik', 'jumlah' => 1],
+            ['nama_barang' => 'Rice Cooker', 'kategori' => 'Elektronik', 'jumlah' => 1],
         ];
     }
 
     public function mapsUrl(): string
     {
+        if (! empty($this->selectedRequest['maps_url'])) {
+            return $this->selectedRequest['maps_url'];
+        }
+
         $address = $this->selectedRequest['lokasi'] ?? 'Bandung';
 
         return 'https://www.google.com/maps/search/?api=1&query=' . urlencode($address);
@@ -280,15 +366,18 @@ class Permintaan extends Component
             ->take(8)
             ->get()
             ->map(fn ($item) => [
-                'id' => 1000 + $item->id,
+                'id' => $item->id,
                 'nama_barang' => $item->nama_barang,
                 'kategori_barang' => $item->kategori,
                 'jumlah' => $item->jumlah,
                 'deskripsi' => $item->deskripsi,
                 'penerima' => $item->user?->name ?? 'Penerima Rebox',
+                'penerima_photo' => $item->user?->profile_photo ? asset('storage/' . $item->user->profile_photo) : null,
                 'jenis_penerima' => 'Komunitas',
                 'lokasi' => $item->lokasi_hub ?: 'Bandung',
+                'maps_url' => $item->google_maps_link ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($item->lokasi_hub ?: 'Bandung'),
                 'status' => 'Butuh bantuan',
+                'date_label' => $item->created_at?->diffForHumans() ?? 'Baru saja',
             ])
             ->all();
 
@@ -299,47 +388,55 @@ class Permintaan extends Component
     {
         return [
             [
-                'id' => 1,
+                'id' => 900001,
                 'nama_barang' => 'Pakaian Muslim',
                 'kategori_barang' => 'Pakaian',
                 'jumlah' => 5,
                 'deskripsi' => 'Untuk kebutuhan orang tua mengikuti kegiatan shalat Idul Adha dan kegiatan keagamaan rutin.',
                 'penerima' => 'Panti Asuhan Hijrah',
+                'penerima_photo' => null,
                 'jenis_penerima' => 'Panti Asuhan',
                 'lokasi' => 'Jl. Pandjaitan, Bandung',
+                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Pandjaitan, Bandung'),
                 'status' => 'Prioritas',
             ],
             [
-                'id' => 2,
+                'id' => 900002,
                 'nama_barang' => 'Pakaian Anak',
                 'kategori_barang' => 'Pakaian',
                 'jumlah' => 8,
                 'deskripsi' => 'Dibutuhkan pakaian anak layak pakai untuk anak-anak asuh usia sekolah dasar.',
                 'penerima' => 'Panti Jompo Samiyah',
+                'penerima_photo' => null,
                 'jenis_penerima' => 'Panti Jompo',
                 'lokasi' => 'Jl. Sukajadi, Bandung',
+                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Sukajadi, Bandung'),
                 'status' => 'Butuh bantuan',
             ],
             [
-                'id' => 3,
+                'id' => 900003,
                 'nama_barang' => 'Buku Pelajaran',
                 'kategori_barang' => 'Buku',
                 'jumlah' => 12,
                 'deskripsi' => 'Buku pelajaran dan buku bacaan anak untuk mendukung kegiatan belajar komunitas.',
                 'penerima' => 'Komunitas Cahaya Ilmu',
+                'penerima_photo' => null,
                 'jenis_penerima' => 'Komunitas',
                 'lokasi' => 'Jl. Braga, Bandung',
+                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Braga, Bandung'),
                 'status' => 'Butuh bantuan',
             ],
             [
-                'id' => 4,
+                'id' => 900004,
                 'nama_barang' => 'Selimut Layak Pakai',
                 'kategori_barang' => 'Pakaian',
                 'jumlah' => 6,
                 'deskripsi' => 'Selimut bersih dan layak pakai untuk penerima disabilitas yang tinggal di asrama.',
                 'penerima' => 'Panti Disabilitas Mandiri',
+                'penerima_photo' => null,
                 'jenis_penerima' => 'Panti Disabilitas',
                 'lokasi' => 'Jl. Cihampelas, Bandung',
+                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Cihampelas, Bandung'),
                 'status' => 'Prioritas',
             ],
         ];
@@ -381,8 +478,15 @@ class Permintaan extends Component
 
     public function render()
     {
+        $filteredRequests = $this->filteredRequests();
+        $totalRequests = count($filteredRequests);
+        $requestPageCount = max(1, (int) ceil($totalRequests / $this->request_per_page));
+        $this->request_page = min($this->request_page, $requestPageCount);
+
         return view('livewire.permintaan', [
-            'requests' => $this->filteredRequests(),
+            'requests' => array_slice($filteredRequests, ($this->request_page - 1) * $this->request_per_page, $this->request_per_page),
+            'totalRequests' => $totalRequests,
+            'requestPageCount' => $requestPageCount,
             'locations' => $this->filteredLocations(),
             'inventoryItems' => $this->inventory(),
             'mapsUrl' => $this->mapsUrl(),

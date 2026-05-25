@@ -64,6 +64,7 @@ class FormDonasi extends Component
             'area' => $name . ', Kota Bandung',
             'distance' => ($index % 5) + 1 . '.' . ($index % 8) . ' km',
             'code' => $codes[$index],
+            'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Rebox ' . $name . ' ' . $name . ', Kota Bandung'),
             'image' => asset($images[$index % count($images)]),
         ])->all();
     }

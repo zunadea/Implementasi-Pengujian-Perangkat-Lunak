@@ -129,7 +129,12 @@
             text-decoration: none;
             line-height: 1;
             justify-self: center;
-            padding: 9px 18px;
+            width: 118px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
             border-radius: 14px;
             transition: transform 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
         }
@@ -271,12 +276,14 @@
             left: -278px;
             top: 72px;
             transform: rotate(4deg);
+            animation: handGiveEnter 1.05s cubic-bezier(.16, 1, .3, 1) .15s both, handGiveIdle 4.8s ease-in-out 1.25s infinite;
         }
 
         .hero-hand-receive {
             right: -278px;
             top: 334px;
             transform: rotate(-2deg);
+            animation: handReceiveEnter 1.08s cubic-bezier(.16, 1, .3, 1) .28s both, handReceiveIdle 5.2s ease-in-out 1.42s infinite;
         }
 
         .welcome-text {
@@ -320,6 +327,52 @@
             box-shadow:
                 inset 0 1px 1px rgba(255, 255, 255, 0.65),
                 0 13px 32px rgba(0, 134, 0, 0.10);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0) scale(1);
+            transition:
+                transform .24s cubic-bezier(.2,.8,.2,1),
+                box-shadow .24s ease,
+                background .24s ease,
+                border-color .24s ease,
+                color .24s ease;
+        }
+
+        .donate-cta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.70) 42%, transparent 78%);
+            transform: translateX(-120%);
+            transition: transform .5s ease;
+            pointer-events: none;
+        }
+
+        .donate-cta:hover {
+            transform: translateY(-3px) scale(1.025);
+            background: rgba(255, 255, 255, 0.34);
+            border-color: rgba(0, 134, 0, 0.26);
+            color: var(--rebox-green);
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.78),
+                0 18px 38px rgba(0, 134, 0, 0.16);
+        }
+
+        .donate-cta:focus,
+        .donate-cta:visited {
+            color: var(--rebox-green);
+        }
+
+        .donate-cta:hover::before {
+            transform: translateX(120%);
+        }
+
+        .donate-cta:active,
+        .donate-cta.is-pressing {
+            transform: translateY(0) scale(.97);
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.70),
+                0 9px 18px rgba(0, 134, 0, 0.12);
         }
 
         .category-strip {
@@ -387,6 +440,57 @@
             }
             to {
                 transform: translateX(-50%) translateY(28px) scale(1.02);
+            }
+        }
+
+        @keyframes handGiveEnter {
+            from {
+                opacity: 0;
+                transform: translateX(-110px) translateY(-18px) rotate(-5deg) scale(.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0) rotate(4deg) scale(1);
+            }
+        }
+
+        @keyframes handReceiveEnter {
+            from {
+                opacity: 0;
+                transform: translateX(120px) translateY(18px) rotate(7deg) scale(.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0) rotate(-2deg) scale(1);
+            }
+        }
+
+        @keyframes handGiveIdle {
+            0%, 100% {
+                transform: translateY(0) rotate(4deg);
+            }
+            50% {
+                transform: translateY(10px) rotate(2deg);
+            }
+        }
+
+        @keyframes handReceiveIdle {
+            0%, 100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(-.5deg);
+            }
+        }
+
+        @keyframes numberWindowIn {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -795,16 +899,72 @@
             height: 40px;
             border-radius: 18px;
             border: 1.5px solid rgba(0, 134, 0, 0.72);
-            background: rgba(255, 255, 255, 0.78);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(234, 248, 236, 0.82));
             color: var(--rebox-green);
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 9px;
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 650;
             text-decoration: none;
             box-shadow: 0 16px 30px rgba(0, 134, 0, 0.24);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0) scale(1);
+            transition:
+                transform .22s cubic-bezier(.2,.8,.2,1),
+                color .22s ease,
+                background .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .detail-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.68) 42%, transparent 78%);
+            transform: translateX(-120%);
+            transition: transform .45s ease;
+            pointer-events: none;
+        }
+
+        .detail-button::after {
+            content: "\f107";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            transition: transform .24s ease;
+        }
+
+        .detail-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            background: linear-gradient(135deg, #ffffff, rgba(218, 245, 222, 0.95));
+            border-color: rgba(0, 134, 0, 0.95);
+            box-shadow: 0 20px 38px rgba(0, 134, 0, 0.25);
+        }
+
+        .detail-button:hover::before {
+            transform: translateX(120%);
+        }
+
+        .detail-button:active,
+        .detail-button.is-pressing {
+            transform: translateY(0) scale(.96);
+            box-shadow: 0 10px 20px rgba(0, 134, 0, 0.18);
+        }
+
+        .detail-button.is-open {
+            background: var(--rebox-green);
+            color: #ffffff;
+            border-color: var(--rebox-green);
+            box-shadow: 0 18px 36px rgba(0, 134, 0, 0.24);
+        }
+
+        .detail-button.is-open::after {
+            transform: rotate(180deg);
         }
 
         .all-locations {
@@ -833,6 +993,51 @@
             width: 288px;
             height: 345px;
             justify-self: center;
+            cursor: pointer;
+            will-change: transform, box-shadow;
+            transition:
+                transform .24s cubic-bezier(.2,.8,.2,1),
+                box-shadow .24s ease,
+                border-color .24s ease,
+                background .24s ease;
+        }
+
+        .detail-grid .box-card .box-image img {
+            transition: transform .32s ease, filter .32s ease;
+        }
+
+        .detail-grid .box-card .box-add {
+            transition:
+                transform .22s cubic-bezier(.2,.8,.2,1),
+                box-shadow .22s ease,
+                background .22s ease;
+        }
+
+        .detail-grid .box-card:hover,
+        .detail-grid .box-card:focus-within {
+            transform: translateY(-10px) scale(1.025);
+            box-shadow:
+                0 18px 38px rgba(0, 0, 0, 0.18),
+                0 18px 34px rgba(0, 134, 0, 0.14);
+        }
+
+        .detail-grid .box-card:hover .box-image img,
+        .detail-grid .box-card:focus-within .box-image img {
+            transform: scale(1.045);
+            filter: saturate(1.06) contrast(1.02);
+        }
+
+        .detail-grid .box-card:hover .box-add,
+        .detail-grid .box-card:focus-within .box-add {
+            transform: translateY(-4px) scale(1.08) rotate(90deg);
+            box-shadow:
+                inset 0 5px 9px rgba(255, 255, 255, 0.28),
+                inset 0 -8px 12px rgba(0, 72, 0, 0.28),
+                0 13px 22px rgba(0, 134, 0, 0.30);
+        }
+
+        .detail-grid .box-card:active {
+            transform: translateY(-5px) scale(0.99);
         }
 
         .all-locations.is-open .box-card {
@@ -892,17 +1097,38 @@
 
         .total-number {
             text-align: center;
+            min-height: 150px;
+            display: grid;
+            place-items: center;
             font-size: 96px;
             font-weight: 800;
             line-height: 0.9;
             color: #111111;
         }
 
-        .total-number span {
-            display: block;
-            color: rgba(17, 17, 17, 0.65);
-            font-size: 46px;
+        .total-number-window {
+            display: grid;
+            gap: 8px;
+            place-items: center;
+            animation: numberWindowIn .48s ease both;
+        }
+
+        .total-number-prev,
+        .total-number-next {
+            color: rgba(17, 17, 17, 0.48);
+            font-size: 44px;
+            font-weight: 700;
             line-height: 1.1;
+        }
+
+        .total-number-current {
+            color: #111111;
+            font-size: 96px;
+            font-weight: 800;
+            line-height: .88;
+            min-width: 150px;
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
         }
 
         .quote-box {
@@ -1323,7 +1549,7 @@
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil">
+                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ auth()->user()->name }}">
                     @else
@@ -1333,8 +1559,6 @@
                 </button>
 
                 <div class="profile-menu">
-                    <a href="/profile" wire:navigate>Profil Saya</a>
-                    <a href="/riwayat" wire:navigate>Riwayat</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit">Logout</button>
@@ -1523,11 +1747,13 @@
         @endif
 
         <section class="donation-total reveal" id="detail">
-            <h2>Total Donasi<br>{{ auth()->user()->name ?? 'Muhammad Rheivandy' }}</h2>
-            <div class="total-number">
-                <span>45</span>
-                46
-                <span>47</span>
+            <h2>{{ auth()->user()?->role === 'penerima' ? 'Total Menerima' : 'Total Donasi' }}<br>{{ auth()->user()->name ?? 'Muhammad Rheivandy' }}</h2>
+            <div class="total-number" data-total-counter="{{ $dashboardTotal ?? 0 }}">
+                <div class="total-number-window">
+                    <span class="total-number-prev" data-total-prev>0</span>
+                    <strong class="total-number-current" data-total-current>0</strong>
+                    <span class="total-number-next" data-total-next>1</span>
+                </div>
             </div>
         </section>
 
@@ -1671,6 +1897,50 @@
 
             renderCarousel();
 
+            const totalCounter = root.querySelector('[data-total-counter]');
+            function animateTotalCounter() {
+                if (!totalCounter || totalCounter.dataset.counted === 'true') {
+                    return;
+                }
+
+                totalCounter.dataset.counted = 'true';
+                const target = Math.max(0, Number(totalCounter.dataset.totalCounter || 0));
+                const currentEl = totalCounter.querySelector('[data-total-current]');
+                const prevEl = totalCounter.querySelector('[data-total-prev]');
+                const nextEl = totalCounter.querySelector('[data-total-next]');
+                const duration = 1100;
+                const start = performance.now();
+
+                function renderFrame(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const value = Math.round(eased * target);
+
+                    if (currentEl) currentEl.textContent = value;
+                    if (prevEl) prevEl.textContent = Math.max(0, value - 1);
+                    if (nextEl) nextEl.textContent = value + 1;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(renderFrame);
+                    }
+                }
+
+                requestAnimationFrame(renderFrame);
+            }
+
+            if (totalCounter) {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            animateTotalCounter();
+                            counterObserver.disconnect();
+                        }
+                    });
+                }, { threshold: 0.35 });
+
+                counterObserver.observe(totalCounter);
+            }
+
             const isRecipient = @json(auth()->user()?->role === 'penerima');
             const inventoryModal = root.querySelector('[data-inventory-modal]');
             const inventoryClose = root.querySelector('[data-inventory-close]');
@@ -1765,8 +2035,25 @@
             const detailToggle = root.querySelector('[data-detail-toggle]');
             const detailPanel = root.querySelector('[data-detail-panel]');
 
+            root.querySelectorAll('.donate-cta').forEach((cta) => {
+                if (cta.dataset.pressBound === 'true') {
+                    return;
+                }
+
+                cta.dataset.pressBound = 'true';
+
+                cta.addEventListener('click', () => {
+                    cta.classList.add('is-pressing');
+                    window.setTimeout(() => cta.classList.remove('is-pressing'), 180);
+                });
+            });
+
             detailToggle?.addEventListener('click', () => {
+                detailToggle.classList.add('is-pressing');
+                window.setTimeout(() => detailToggle.classList.remove('is-pressing'), 180);
+
                 const isOpen = detailPanel.classList.toggle('is-open');
+                detailToggle.classList.toggle('is-open', isOpen);
                 detailToggle.textContent = isOpen ? 'Tutup Detail' : 'Lihat Semua';
 
                 if (isOpen) {
