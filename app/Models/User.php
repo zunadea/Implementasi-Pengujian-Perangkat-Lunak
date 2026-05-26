@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role', // TAMBAHKAN INI
+        'google_id',
+        'google_avatar',
+        'email_verified_at',
         'verification_status',
         'verification_username',
         'verification_nik',

@@ -13,6 +13,7 @@ use App\Livewire\Riwayat;
 use App\Livewire\FormDonasi;
 use App\Livewire\RiwayatPermintaan;
 use App\Livewire\Profile;
+use App\Http\Controllers\GoogleAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,10 @@ Route::group(['middleware' => 'guest'], function () {
 
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('login.google');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('login.google.callback');
+    Route::get('/auth/google/role', [GoogleAuthController::class, 'showRoleForm'])->name('google.role');
+    Route::post('/auth/google/role', [GoogleAuthController::class, 'storeRole'])->name('google.role.store');
 });
 
 // Akses Umum (Sudah Login)

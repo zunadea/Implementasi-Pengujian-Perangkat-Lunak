@@ -28,6 +28,7 @@
             background:
                 radial-gradient(circle at center, rgba(124, 255, 124, 0.16), transparent 35%),
                 linear-gradient(to right, #f2f2f2 0%, #eaf5e9 50%, #f2f2f2 100%);
+            perspective: 1200px;
         }
 
         .rebox-auth-page::before,
@@ -67,6 +68,7 @@
             filter: blur(22px);
             pointer-events: none;
             z-index: 0;
+            animation: authAccentFloat 7s ease-in-out infinite;
         }
 
         .left-content {
@@ -74,15 +76,25 @@
             max-width: 610px;
             position: relative;
             z-index: 1;
+            animation: authContentIn 0.72s cubic-bezier(0.19, 1, 0.22, 1) both;
         }
 
         .left-content h1 {
+            width: max-content;
+            max-width: 100%;
             margin: 0 0 10px;
             color: #009400;
             font-size: clamp(42px, 5vw, 58px);
             font-weight: 800;
             line-height: 1.1;
             letter-spacing: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 4px solid rgba(0, 148, 0, 0.82);
+            animation:
+                authTyping 7.5s steps(17, end) infinite,
+                authCaretBlink 0.78s step-end infinite,
+                authTitleGlow 3.4s ease-in-out infinite;
         }
 
         .left-content p {
@@ -107,7 +119,19 @@
             font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            will-change: transform;
+        }
+
+        .auth-tab::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.38) 45%, transparent 72%);
+            transform: translateX(-120%);
+            transition: transform 0.55s ease;
         }
 
         .auth-tab,
@@ -122,6 +146,14 @@
 
         .auth-tab:hover {
             transform: translateY(-2px);
+        }
+
+        .auth-tab:hover::after {
+            transform: translateX(120%);
+        }
+
+        .auth-tab:active {
+            transform: translateY(0) scale(0.98);
         }
 
         .auth-tab-login {
@@ -155,6 +187,24 @@
                 0 0 50px rgba(0, 255, 0, 0.08);
             position: relative;
             z-index: 1;
+            transform-origin: center right;
+            transform-style: preserve-3d;
+            animation: authCardFlipIn 0.72s cubic-bezier(0.19, 1, 0.22, 1) both;
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+            will-change: transform;
+        }
+
+        .login-card:hover {
+            transform: translateY(-8px) rotateX(1.2deg) rotateY(-1.8deg);
+            border-color: rgba(0, 148, 0, 0.70);
+            background: rgba(217, 240, 213, 0.94);
+            box-shadow:
+                0 28px 56px rgba(0, 0, 0, 0.11),
+                0 0 62px rgba(0, 148, 0, 0.16);
+        }
+
+        .rebox-auth-page.is-flipping .login-card {
+            animation: authCardFlipOut 0.34s ease-in both;
         }
 
         .title-role {
@@ -193,7 +243,8 @@
             color: #ffffff;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.25s ease;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+            will-change: transform;
         }
 
         .role-option input:checked + .role-btn,
@@ -202,6 +253,14 @@
             background: #009400;
             color: #ffffff;
             box-shadow: 0 8px 18px rgba(0, 148, 0, 0.24);
+        }
+
+        .role-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .role-btn:active {
+            transform: translateY(0) scale(0.98);
         }
 
         .divider {
@@ -247,12 +306,13 @@
             border: 1.5px solid #20a020;
             border-radius: 14px;
             background: #d9f0d5;
-            transition: 0.2s ease;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
         }
 
         .input-box:focus-within {
             background: #eff8ec;
             box-shadow: 0 0 0 4px rgba(0, 148, 0, 0.10);
+            transform: translateY(-2px);
         }
 
         .input-box.has-error {
@@ -286,6 +346,15 @@
             padding: 0;
             background: transparent;
             cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .toggle-password:hover {
+            transform: scale(1.08);
+        }
+
+        .toggle-password:active {
+            transform: scale(0.94);
         }
 
         .field-error,
@@ -332,12 +401,82 @@
             font-size: 18px;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .signin-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 46%, transparent 72%);
+            transform: translateX(-120%);
+            transition: transform 0.55s ease;
         }
 
         .signin-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 148, 0, 0.35);
+        }
+
+        .signin-btn:hover::after {
+            transform: translateX(120%);
+        }
+
+        .signin-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .google-login-btn {
+            width: 100%;
+            min-height: 52px;
+            margin-top: 12px;
+            border: 1.5px solid rgba(17, 17, 17, 0.10);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.78);
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 8px 18px rgba(17, 17, 17, 0.05);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+        }
+
+        .google-login-btn:visited,
+        .google-login-btn:focus,
+        .google-login-btn:active,
+        .google-login-btn:hover {
+            text-decoration: none;
+        }
+
+        .google-login-btn:hover {
+            color: #009400;
+            background: rgba(255, 255, 255, 0.94);
+            border-color: rgba(0, 148, 0, 0.28);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 148, 0, 0.13);
+        }
+
+        .google-login-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .google-mark {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            color: #4285f4;
+            font-size: 16px;
+            font-weight: 900;
+            box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.08);
         }
 
         .auth-link {
@@ -348,6 +487,7 @@
             font-size: 13px;
             font-weight: 800;
             text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
         }
 
         .auth-link,
@@ -358,6 +498,86 @@
             color: #005f00;
             outline: none;
             text-decoration: none;
+        }
+
+        .auth-link:hover {
+            transform: translateY(-1px);
+        }
+
+        @keyframes authContentIn {
+            from {
+                opacity: 0;
+                transform: translateX(-28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes authTyping {
+            0% {
+                width: 0;
+            }
+            36%, 70% {
+                width: 17ch;
+            }
+            92%, 100% {
+                width: 0;
+            }
+        }
+
+        @keyframes authCaretBlink {
+            0%, 100% {
+                border-color: rgba(0, 148, 0, 0);
+            }
+            50% {
+                border-color: rgba(0, 148, 0, 0.82);
+            }
+        }
+
+        @keyframes authTitleGlow {
+            0%, 100% {
+                text-shadow: 0 0 0 rgba(0, 148, 0, 0);
+            }
+            50% {
+                text-shadow: 0 10px 26px rgba(0, 148, 0, 0.16);
+            }
+        }
+
+        @keyframes authCardFlipIn {
+            0% {
+                opacity: 0;
+                transform: translateX(34px) rotateY(-18deg) scale(0.96);
+            }
+            62% {
+                opacity: 1;
+                transform: translateX(0) rotateY(2.5deg) scale(1.01);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotateY(0) scale(1);
+            }
+        }
+
+        @keyframes authCardFlipOut {
+            from {
+                opacity: 1;
+                transform: translateX(0) rotateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-28px) rotateY(18deg) scale(0.96);
+            }
+        }
+
+        @keyframes authAccentFloat {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(12px, -14px, 0) scale(1.08);
+            }
         }
 
         @media (max-width: 1200px) {
@@ -396,8 +616,13 @@
                 border-radius: 22px;
             }
 
+            .login-card:hover {
+                transform: translateY(-4px);
+            }
+
             .left-content h1 {
                 font-size: 42px;
+                width: 17ch;
             }
 
             .left-content p {
@@ -411,8 +636,8 @@
         <p>Berikan kehidupan kedua untuk barang Anda</p>
 
         <div class="button-group">
-            <a href="/login" wire:navigate class="auth-tab auth-tab-login">Login</a>
-            <a href="/register" wire:navigate class="auth-tab auth-tab-register">Register</a>
+            <a href="/login" wire:navigate class="auth-tab auth-tab-login auth-switch-link">Login</a>
+            <a href="/register" wire:navigate class="auth-tab auth-tab-register auth-switch-link">Register</a>
         </div>
     </div>
 
@@ -477,7 +702,12 @@
             <button type="submit" class="signin-btn">Sign In</button>
         </form>
 
-        <a href="/register" wire:navigate class="auth-link">Belum punya akun? Register</a>
+        <a href="{{ route('login.google') }}" class="google-login-btn">
+            <span class="google-mark">G</span>
+            <span>Login dengan Google</span>
+        </a>
+
+        <a href="/register" wire:navigate class="auth-link auth-switch-link">Belum punya akun? Register</a>
     </div>
 
     <span class="bg-accent"></span>
@@ -509,4 +739,31 @@
 
     document.addEventListener('DOMContentLoaded', bindReboxPasswordToggle);
     document.addEventListener('livewire:navigated', bindReboxPasswordToggle);
+
+    function bindReboxAuthSwitch() {
+        document.querySelectorAll('.auth-switch-link').forEach((link) => {
+            if (link.dataset.switchBound === 'true') {
+                return;
+            }
+
+            link.dataset.switchBound = 'true';
+            link.addEventListener('click', (event) => {
+                const href = link.getAttribute('href');
+
+                if (!href || href === window.location.pathname) {
+                    return;
+                }
+
+                event.preventDefault();
+                document.querySelector('.rebox-auth-page')?.classList.add('is-flipping');
+
+                window.setTimeout(() => {
+                    window.location.href = href;
+                }, 260);
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', bindReboxAuthSwitch);
+    document.addEventListener('livewire:navigated', bindReboxAuthSwitch);
 </script>
