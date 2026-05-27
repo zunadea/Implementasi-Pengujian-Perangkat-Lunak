@@ -3,7 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Donation;
+use App\Models\ReboxOpening;
+use App\Support\ReboxLocations;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -36,37 +39,11 @@ class FormDonasi extends Component
 
     public function locations(): array
     {
-        $images = [
-            'images/GambarcardRebox1.png',
-            'images/GambarcardRebox2.png',
-            'images/GambarcardRebox3.png',
-            'images/GambarcardRebox4.png',
-        ];
-
-        $names = [
-            'Dago', 'Lembang', 'Braga', 'Cihampelas', 'Gedebage',
-            'Cibaduyut', 'Ciwidey', 'Pangalengan', 'Bojongsoang', 'Setiabudi',
-            'Pasteur', 'Antapani', 'Arcamanik', 'Ujungberung', 'Soreang',
-            'Padalarang', 'Cimahi', 'Jatinangor', 'Dayeuhkolot', 'Cileunyi',
-        ];
-
-        $codes = [
-            'DG-01', 'LB-02', 'BR-03', 'CH-04', 'GD-05',
-            'CB-06', 'CW-07', 'PG-08', 'BS-09', 'SB-10',
-            'PS-11', 'AP-12', 'AM-13', 'UB-14', 'SR-15',
-            'PD-16', 'CM-17', 'JT-18', 'DK-19', 'CL-20',
-        ];
-
-        return collect($names)->map(fn ($name, $index) => [
-            'id' => $index + 1,
-            'name' => $name,
-            'title' => 'Rebox ' . $name,
-            'area' => $name . ', Kota Bandung',
-            'distance' => ($index % 5) + 1 . '.' . ($index % 8) . ' km',
-            'code' => $codes[$index],
-            'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Rebox ' . $name . ' ' . $name . ', Kota Bandung'),
-            'image' => asset($images[$index % count($images)]),
-        ])->all();
+        return collect(ReboxLocations::all())
+            ->map(fn ($location) => array_merge($location, [
+                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode($location['title'] . ' ' . $location['area']),
+            ]))
+            ->all();
     }
 
     public function filteredLocations(): array
@@ -114,9 +91,24 @@ class FormDonasi extends Component
             'kode_box_input.required' => 'Kode box wajib diisi.',
         ]);
 
-        if (strtoupper(trim($this->kode_box_input)) !== $this->selectedLocation['code']) {
+        $scannedCode = ReboxLocations::extractCode((string) $this->kode_box_input);
+
+        if ($scannedCode !== $this->selectedLocation['code']) {
             $this->addError('kode_box_input', 'Kode box tidak sesuai dengan lokasi yang dipilih.');
             return;
+        }
+
+        $this->kode_box_input = $scannedCode;
+
+        if (Schema::hasTable('rebox_openings')) {
+            ReboxOpening::create([
+                'user_id' => Auth::id(),
+                'rebox_id' => $this->selectedLocation['id'],
+                'rebox_code' => $this->selectedLocation['code'],
+                'rebox_name' => $this->selectedLocation['title'],
+                'opened_by' => 'qr-donation-camera',
+                'status' => 'Terbuka',
+            ]);
         }
 
         $this->step = 'open';

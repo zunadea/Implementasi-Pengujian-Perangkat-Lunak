@@ -795,14 +795,105 @@
             width: min(100%, 590px);
         }
 
+        .donation-flow-card.is-code {
+            width: min(1180px, calc(100vw - 80px));
+            padding: 0;
+            overflow: hidden;
+            border-radius: 24px;
+            border-color: rgba(15, 23, 42, .05);
+            background: #ffffff;
+            box-shadow: 0 26px 88px rgba(15, 23, 42, .13);
+        }
+
         .donation-flow-card.is-success {
             width: min(100%, 560px);
             text-align: center;
         }
 
+        .scan-shell {
+            display: grid;
+            grid-template-columns: minmax(0, 52.2%) minmax(0, 47.8%);
+            min-height: 690px;
+        }
+
+        .scan-visual {
+            padding: 26px 32px;
+            background:
+                radial-gradient(circle at 72% 74%, rgba(22, 163, 74, .18), transparent 30%),
+                radial-gradient(circle at 18% 20%, rgba(34, 197, 94, .18), transparent 31%),
+                linear-gradient(145deg, #06150f 0%, #062116 50%, #07381e 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .scan-content {
+            padding: 28px 40px 28px 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 10% 50%, rgba(0, 134, 0, .045), transparent 34%),
+                radial-gradient(circle at 84% 8%, rgba(15, 23, 42, .045), transparent 28%),
+                linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+        }
+
+        .scan-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 850;
+        }
+
+        .scan-safe {
+            margin-left: auto;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, .075);
+            border: 1px solid rgba(255, 255, 255, .13);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 12px 28px rgba(0, 0, 0, .13);
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .scan-safe i {
+            color: #65f083;
+            font-size: 16px;
+        }
+
+        .scan-brand-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(145deg, #15c84b, #008c28);
+            color: #ffffff;
+            box-shadow: 0 20px 46px rgba(0, 170, 48, 0.30);
+            font-size: 22px;
+        }
+
         .flow-head {
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        .scan-content .flow-head {
+            text-align: left;
+            margin-bottom: 0;
+        }
+
+        .scan-content .flow-head p {
+            max-width: 390px;
+            margin: 0 0 20px;
         }
 
         .modal-icon {
@@ -819,11 +910,22 @@
             animation: floatBox 3.6s ease-in-out infinite;
         }
 
-        .donation-flow-card h2 {
-            margin: 0 0 9px;
+        .scan-content .modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 0 22px;
+            border-radius: 16px;
             font-size: 24px;
+            background: linear-gradient(145deg, #f4fbf6, #ffffff);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, .07);
+            animation: none;
+        }
+
+        .donation-flow-card h2 {
+            margin: 0 0 10px;
+            font-size: 30px;
             line-height: 1.15;
-            font-weight: 620;
+            font-weight: 850;
             letter-spacing: 0;
             color: #14202b;
         }
@@ -831,9 +933,9 @@
         .donation-flow-card p {
             margin: 0;
             color: rgba(102, 112, 133, 0.86);
-            font-size: 13px;
-            font-weight: 430;
-            line-height: 1.55;
+            font-size: 14px;
+            font-weight: 520;
+            line-height: 1.6;
         }
 
         .modal-info {
@@ -846,6 +948,120 @@
             font-weight: 500;
             line-height: 1.7;
             margin: 18px 0 18px;
+        }
+
+        .scan-location-card {
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            border-radius: 18px;
+            padding: 18px;
+            background: #ffffff;
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, .07);
+        }
+
+        .scan-location-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 50px;
+        }
+
+        .scan-location-main > div {
+            position: relative;
+            min-width: 0;
+            min-height: 42px;
+            padding-left: 58px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .scan-location-main > div::before {
+            content: "\f3c5";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            color: #111827;
+            background: linear-gradient(145deg, #eaf9ee, #f8fffa);
+            box-shadow: 0 14px 28px rgba(0, 134, 0, .07);
+        }
+
+        .scan-location-main strong {
+            display: block;
+            color: #111827;
+            font-size: 15px;
+            font-weight: 850;
+            line-height: 1.2;
+        }
+
+        .scan-location-main span {
+            display: block;
+            color: #667085;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 7px;
+        }
+
+        .scan-code-pill {
+            display: none;
+        }
+
+        .scan-location-main .scan-box-code-pill {
+            min-width: 78px;
+            max-width: 116px;
+            height: 36px;
+            margin-top: 0;
+            padding: 0 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #008600;
+            background: #effaf1;
+            font-size: 13px;
+            font-weight: 850;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 0 0 auto;
+        }
+
+        .scan-location-main .scan-box-code-pill::before {
+            display: none;
+        }
+
+        .scan-hint {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #06701c;
+            background: linear-gradient(135deg, #e3f7e6, #edf8ef);
+            font-size: 13px;
+            font-weight: 750;
+            line-height: 1.35;
+        }
+
+        .scan-hint-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
         }
 
         .modal-info strong {
@@ -873,10 +1089,14 @@
         }
 
         .modal-input i {
-            color: #98a2b3;
-            font-size: 20px;
-            width: 26px;
-            text-align: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            color: #008600;
+            background: #eef9f0;
+            font-size: 16px;
         }
 
         .modal-input input {
@@ -895,6 +1115,327 @@
             font-weight: 520;
         }
 
+        .qr-scanner-box {
+            margin: 0;
+            border-radius: 0;
+            border: 0;
+            background: transparent;
+            overflow: hidden;
+            box-shadow: none;
+            backdrop-filter: blur(14px);
+        }
+
+        .qr-camera-wrap {
+            min-height: 420px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+            background:
+                radial-gradient(circle at center, rgba(74, 222, 128, .08), transparent 35%),
+                linear-gradient(145deg, #082719, #06341e);
+        }
+
+        .qr-camera-wrap::before {
+            content: "Arahkan kamera ke kode QR";
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            top: 26px;
+            transform: translateX(-50%);
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 22px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.90);
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, .16);
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .qr-camera-wrap video {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .qr-camera-empty {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: #ffffff;
+            text-align: center;
+            background:
+                radial-gradient(circle at center, rgba(0, 0, 0, .18), transparent 28%),
+                linear-gradient(135deg, rgba(0, 38, 23, .78), rgba(0, 69, 38, .52));
+        }
+
+        .qr-camera-empty::before {
+            display: none;
+        }
+
+        .qr-camera-empty.is-hidden {
+            display: none;
+        }
+
+        .qr-camera-empty i {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: 86px;
+            height: 74px;
+            margin: 0 auto 34px;
+            border-radius: 18px;
+            background: transparent;
+            color: #ffffff;
+            font-size: 58px;
+            box-shadow: none;
+        }
+
+        .qr-camera-empty strong {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .qr-camera-empty p {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 520;
+        }
+
+        .qr-glass-code {
+            --qr-glass-size: 156px;
+            --qr-scan-distance: calc(var(--qr-glass-size) - 28px);
+            position: absolute;
+            z-index: 3;
+            left: 50%;
+            top: 50%;
+            width: var(--qr-glass-size);
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 22px;
+            color: rgba(255, 255, 255, .42);
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .22);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .20),
+                0 18px 44px rgba(0, 0, 0, .18);
+            backdrop-filter: blur(8px) saturate(110%);
+            -webkit-backdrop-filter: blur(8px) saturate(110%);
+            contain: layout paint;
+            pointer-events: none;
+        }
+
+        .qr-camera-wrap:not(.is-scanning) .qr-glass-code {
+            display: none;
+        }
+
+        .qr-glass-code i {
+            font-size: clamp(90px, 78%, 124px);
+            opacity: .58;
+            filter: drop-shadow(0 2px 8px rgba(255, 255, 255, .14));
+        }
+
+        .qr-glass-code::after {
+            content: "";
+            position: absolute;
+            left: -18%;
+            right: -18%;
+            top: 12px;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, transparent, rgba(101, 240, 131, .96), transparent);
+            box-shadow:
+                0 0 12px rgba(101, 240, 131, .78),
+                0 0 28px rgba(101, 240, 131, .32);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
+            animation: qrGlassScan 2.2s ease-in-out infinite alternate;
+        }
+
+        .qr-glass-code::before {
+            content: "";
+            position: absolute;
+            left: -8%;
+            right: -8%;
+            top: 0;
+            height: 42px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(101, 240, 131, .18), transparent);
+            opacity: .72;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
+            animation: qrGlassScanGlow 2.2s ease-in-out infinite alternate;
+        }
+
+        .qr-scan-frame {
+            position: absolute;
+            z-index: 4;
+            inset: 54px 28px 22px;
+            border: 0;
+            border-radius: 10px;
+            pointer-events: none;
+            box-shadow: none;
+        }
+
+        .qr-scan-frame::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background:
+                linear-gradient(#5cff74, #5cff74) left top / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left top / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right top / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right top / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left bottom / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left bottom / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right bottom / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right bottom / 6px 38px no-repeat;
+        }
+
+        .qr-scan-frame::after {
+            display: none;
+        }
+
+        .qr-scanner-actions {
+            display: flex;
+            gap: 14px;
+            padding: 0;
+            margin: 16px 0 0;
+            background: transparent;
+        }
+
+        .qr-scanner-actions .btn-main,
+        .qr-scanner-actions .btn-soft {
+            flex: 1;
+            min-width: 145px;
+            height: 50px;
+            border-radius: 13px;
+            font-size: 15px;
+        }
+
+        .qr-scanner-actions .btn-main {
+            background: linear-gradient(135deg, #18cf3c, #00a522);
+            box-shadow: 0 18px 38px rgba(0, 134, 0, 0.32);
+        }
+
+        .qr-scanner-actions .btn-soft {
+            color: rgba(255, 255, 255, 0.84);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .qr-scan-status {
+            margin: 16px 0 0;
+            border-radius: 16px;
+            padding: 16px 18px 16px 54px;
+            position: relative;
+            color: rgba(255, 255, 255, .92);
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .09);
+            font-size: 13px;
+            font-weight: 650;
+            line-height: 1.4;
+        }
+
+        .qr-scan-status::before {
+            content: "\f05a";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #72f087;
+            background: transparent;
+            font-size: 18px;
+        }
+
+        .qr-scan-status.is-error {
+            color: #dc2626;
+        }
+
+        .open-method-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .open-method-divider::before,
+        .open-method-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(102, 112, 133, 0.18);
+        }
+
+        .manual-code-title {
+            margin: 0 0 12px;
+            color: #111827;
+            font-size: 15px;
+            font-weight: 850;
+        }
+
+        .manual-code-card {
+            border-radius: 18px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(20, 32, 43, 0.08);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.05);
+        }
+
+        .manual-code-card .modal-input {
+            min-height: 56px;
+            border-radius: 13px;
+            background: #ffffff;
+        }
+
+        @keyframes qrLine {
+            from { transform: translateY(-44px); }
+            to { transform: translateY(116px); }
+        }
+
+        @keyframes qrGlassScan {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, var(--qr-scan-distance), 0); }
+        }
+
+        @keyframes qrGlassScanGlow {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, calc(var(--qr-scan-distance) - 20px), 0); }
+        }
+
         .modal-actions {
             display: flex;
             justify-content: flex-end;
@@ -910,6 +1451,32 @@
             font-size: 14px;
             font-weight: 620;
             padding: 0 22px;
+        }
+
+        .scan-content .modal-actions {
+            margin-top: 22px;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .scan-content .modal-actions .btn-main,
+        .scan-content .modal-actions .btn-soft {
+            min-width: 96px;
+            border-radius: 12px;
+            font-weight: 800;
+            padding: 0 24px;
+        }
+
+        .scan-content .modal-actions .btn-soft {
+            background: #f5f6f5;
+            color: #111827;
+            box-shadow: none;
+        }
+
+        .scan-content .modal-actions .btn-main {
+            min-width: 176px;
+            background: linear-gradient(135deg, #17c43e, #00941e);
+            box-shadow: 0 16px 30px rgba(0, 134, 0, .26);
         }
 
         .open-status-pill {
@@ -1043,6 +1610,13 @@
             .btn-main, .btn-soft { width: 100%; }
             .modal-actions { flex-direction: column; }
             .donation-flow-card { padding: 24px; }
+            .donation-flow-card.is-code { padding: 0; }
+            .scan-shell { grid-template-columns: 1fr; max-height: calc(100vh - 48px); overflow-y: auto; }
+            .scan-visual, .scan-content { padding: 20px; }
+            .qr-camera-wrap { min-height: 260px; aspect-ratio: 16 / 10; }
+            .qr-glass-code {
+                --qr-glass-size: 132px;
+            }
             .selected-preview-card { grid-template-columns: 1fr; }
         }
     </style>
@@ -1220,32 +1794,87 @@
             @if($step === 'code')
                 <div class="donation-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="code-box-title" wire:key="donation-code-overlay">
                     <section class="donation-flow-card is-code" wire:key="donation-code-card">
-                        <div class="flow-head">
-                            <div class="modal-icon"><i class="fas fa-key"></i></div>
-                            <h2 id="code-box-title">Masukkan Kode Box</h2>
-                            <p>Masukkan kode box untuk membuka akses drop-off di lokasi Rebox yang dipilih.</p>
-                        </div>
-
-                        @if (session()->has('message'))
-                            <div class="success-alert" style="margin-bottom: 16px;"><i class="fas fa-circle-info"></i>{{ session('message') }}</div>
-                        @endif
-
-                        <div class="modal-info">
-                            Lokasi: <strong>{{ $selectedLocation['title'] }}</strong><br>
-                            Area: <strong>{{ $selectedLocation['area'] }}</strong><br>
-                            Format kode: <strong>XX-00</strong>
-                        </div>
-
                         <form wire:submit.prevent="bukaBox">
-                            <label class="modal-input" aria-label="Kode box area">
-                                <i class="fas fa-lock-open"></i>
-                                <input type="text" wire:model="kode_box_input" placeholder="CONTOH: {{ $selectedLocation['code'] }}">
-                            </label>
-                            @error('kode_box_input') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
+                            <div class="scan-shell">
+                                <div class="scan-visual">
+                                    <div class="scan-brand">
+                                        <span class="scan-brand-icon"><i class="fas fa-qrcode"></i></span>
+                                        <span>QR Box</span>
+                                        <span class="scan-safe"><i class="fas fa-shield-heart"></i> Aman</span>
+                                    </div>
+                                    <div class="qr-scanner-box" data-donation-qr-scanner data-expected-code="{{ $selectedLocation['code'] }}">
+                                        <div class="qr-camera-wrap">
+                                            <video data-donation-qr-video autoplay muted playsinline></video>
+                                            <div class="qr-glass-code" aria-hidden="true">
+                                                <i class="fas fa-qrcode"></i>
+                                            </div>
+                                            <div class="qr-scan-frame" aria-hidden="true"></div>
+                                            <div class="qr-camera-empty" data-donation-qr-empty>
+                                                <div>
+                                                    <i class="fas fa-camera"></i>
+                                                    <strong>Kamera laptop belum aktif</strong>
+                                                    <p>Klik aktifkan kamera, lalu izinkan akses kamera di browser.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="qr-scanner-actions">
+                                            <button type="button" class="btn-main" data-donation-qr-start>
+                                                <i class="fas fa-camera"></i> Aktifkan Kamera
+                                            </button>
+                                            <button type="button" class="btn-soft" data-donation-qr-stop>
+                                                Matikan Kamera
+                                            </button>
+                                        </div>
+                                        <div class="qr-scan-status" data-donation-qr-status>
+                                            Kamera dimatikan.
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="modal-actions">
-                                <button type="button" class="btn-soft" wire:click="resetToForm">Batal</button>
-                                <button type="submit" class="btn-main">Buka Box</button>
+                                <div class="scan-content">
+                                    <div class="flow-head">
+                                        <div class="modal-icon"><i class="fas fa-qrcode"></i></div>
+                                        <h2 id="code-box-title">Scan QR Box</h2>
+                                        <p>Arahkan QR ke kamera untuk membuka akses pengambilan barang. Input manual hanya dipakai kalau QR tidak terbaca.</p>
+                                    </div>
+
+                                    @if (session()->has('message'))
+                                        <div class="success-alert" style="margin-bottom: 16px;"><i class="fas fa-circle-info"></i>{{ session('message') }}</div>
+                                    @endif
+
+                                    <div class="scan-location-card">
+                                        <div class="scan-location-main">
+                                            <div>
+                                                <strong>{{ $selectedLocation['title'] }}</strong>
+                                                <span>{{ $selectedLocation['area'] }}</span>
+                                            </div>
+                                            <span class="scan-box-code-pill">{{ $selectedLocation['code'] }}</span>
+                                        </div>
+                                        <div class="scan-hint">
+                                            <span class="scan-hint-text">
+                                                <i class="fas fa-shield-heart"></i>
+                                                QR harus berisi kode lokasi ini agar box bisa dibuka.
+                                            </span>
+                                            <span class="scan-code-pill">{{ $selectedLocation['code'] }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="open-method-divider">atau</div>
+
+                                    <div class="manual-code-card">
+                                        <p class="manual-code-title">Masukkan kode manual</p>
+                                        <label class="modal-input" aria-label="Kode box area">
+                                            <i class="fas fa-lock-open"></i>
+                                            <input type="text" wire:model="kode_box_input" data-donation-qr-input placeholder="Contoh: {{ $selectedLocation['code'] }}">
+                                        </label>
+                                        @error('kode_box_input') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <div class="modal-actions">
+                                        <button type="button" class="btn-soft" wire:click="resetToForm">Batal</button>
+                                        <button type="submit" class="btn-main" data-donation-open-submit><i class="fas fa-lock-open"></i> Buka Box</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </section>
@@ -1314,6 +1943,7 @@
         @endif
     </div>
 
+    <script src="{{ asset('jsQR.min.js') }}"></script>
     <script>
         function initDonationPage() {
             const root = document.querySelector('[data-donation-root]');
@@ -1329,6 +1959,8 @@
                     profileDropdown.classList.toggle('is-open');
                 });
             }
+
+            initDonationQrScanner(root);
 
             const isOpenStep = root.dataset.step === 'open' || !!root.querySelector('[data-open-step]');
 
@@ -1381,9 +2013,282 @@
             }
         }
 
+        function setDonationQrStatus(scanner, message, isError = false) {
+            const status = scanner?.querySelector('[data-donation-qr-status]');
+            if (!status) return;
+            status.textContent = message;
+            status.classList.toggle('is-error', isError);
+        }
+
+        function stopDonationQrScanner() {
+            window.reboxDonationQrScanning = false;
+
+            if (window.reboxDonationQrFrame) {
+                window.cancelAnimationFrame(window.reboxDonationQrFrame);
+            }
+
+            window.reboxDonationQrFrame = null;
+            window.reboxDonationQrLastValue = '';
+
+            if (window.reboxDonationQrStream) {
+                window.reboxDonationQrStream.getTracks().forEach((track) => track.stop());
+                window.reboxDonationQrStream = null;
+            }
+
+            const scanner = document.querySelector('[data-donation-qr-scanner]');
+            const video = scanner?.querySelector('[data-donation-qr-video]');
+            const empty = scanner?.querySelector('[data-donation-qr-empty]');
+            const cameraWrap = scanner?.querySelector('.qr-camera-wrap');
+
+            if (video) {
+                video.srcObject = null;
+            }
+
+            empty?.classList.remove('is-hidden');
+            cameraWrap?.classList.remove('is-scanning');
+        }
+
+        function extractDonationQrCode(value) {
+            const match = String(value || '').toUpperCase().match(/[A-Z]{2}-\d{2}/);
+            return match ? match[0] : String(value || '').trim().toUpperCase();
+        }
+
+        async function initDonationQrScanner(root) {
+            const scanner = root.querySelector('[data-donation-qr-scanner]');
+
+            if (!scanner) {
+                stopDonationQrScanner();
+                return;
+            }
+
+            const video = scanner.querySelector('[data-donation-qr-video]');
+            const empty = scanner.querySelector('[data-donation-qr-empty]');
+            const startButton = scanner.querySelector('[data-donation-qr-start]');
+            const stopButton = scanner.querySelector('[data-donation-qr-stop]');
+            const input = root.querySelector('[data-donation-qr-input]');
+            const submitButton = root.querySelector('[data-donation-open-submit]');
+            const expectedCode = scanner.dataset.expectedCode || '';
+            let scanFrameCount = 0;
+            let lastScanAt = 0;
+
+            if (scanner.dataset.bound === 'true') {
+                return;
+            }
+
+            scanner.dataset.bound = 'true';
+
+            const handleScanValue = (rawValue) => {
+                const code = extractDonationQrCode(rawValue);
+
+                if (!code) {
+                    setDonationQrStatus(scanner, 'QR terbaca, tetapi kode Rebox tidak ditemukan.', true);
+                    return;
+                }
+
+                if (!input || !submitButton) {
+                    setDonationQrStatus(scanner, 'Input kode box belum siap. Tutup modal lalu buka lagi.', true);
+                    return;
+                }
+
+                if (code !== expectedCode) {
+                    setDonationQrStatus(scanner, `QR terbaca ${code}, tetapi lokasi ini membutuhkan ${expectedCode}.`, true);
+                    window.reboxDonationQrLastValue = '';
+                    return;
+                }
+
+                input.value = code;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+
+                setDonationQrStatus(scanner, `QR ${code} cocok. Membuka box...`);
+                stopDonationQrScanner();
+
+                const livewireRoot = root.closest('[wire\\:id]') || root;
+                const livewireId = livewireRoot?.getAttribute('wire:id');
+                const component = livewireId && window.Livewire ? window.Livewire.find(livewireId) : null;
+
+                if (component) {
+                    component.set('kode_box_input', code).then(() => submitButton?.click());
+                    return;
+                }
+
+                window.setTimeout(() => submitButton?.click(), 350);
+            };
+
+            const decodeCanvas = (sourceCanvas, crop = null) => {
+                const sourceContext = sourceCanvas.getContext('2d', { willReadFrequently: true });
+
+                if (!sourceContext || typeof window.jsQR !== 'function') {
+                    return null;
+                }
+
+                if (!crop) {
+                    const imageData = sourceContext.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+                    return window.jsQR(imageData.data, sourceCanvas.width, sourceCanvas.height, {
+                        inversionAttempts: 'attemptBoth',
+                    });
+                }
+
+                const cropCanvas = window.reboxDonationQrCropCanvas || document.createElement('canvas');
+                const cropContext = cropCanvas.getContext('2d', { willReadFrequently: true });
+
+                window.reboxDonationQrCropCanvas = cropCanvas;
+
+                if (!cropContext) {
+                    return null;
+                }
+
+                cropCanvas.width = crop.width;
+                cropCanvas.height = crop.height;
+                cropContext.drawImage(
+                    sourceCanvas,
+                    crop.x,
+                    crop.y,
+                    crop.width,
+                    crop.height,
+                    0,
+                    0,
+                    crop.width,
+                    crop.height
+                );
+
+                const imageData = cropContext.getImageData(0, 0, crop.width, crop.height);
+                return window.jsQR(imageData.data, crop.width, crop.height, {
+                    inversionAttempts: 'attemptBoth',
+                });
+            };
+
+            const scanLoop = () => {
+                if (!window.reboxDonationQrScanning || !video) {
+                    return;
+                }
+
+                const now = performance.now();
+
+                if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && now - lastScanAt >= 90) {
+                    try {
+                        const canvas = window.reboxDonationQrCanvas || document.createElement('canvas');
+                        const context = canvas.getContext('2d', { willReadFrequently: true });
+                        const sourceWidth = video.videoWidth;
+                        const sourceHeight = video.videoHeight;
+                        const scale = Math.min(1, 720 / Math.max(sourceWidth || 1, sourceHeight || 1));
+                        const width = Math.max(1, Math.floor(sourceWidth * scale));
+                        const height = Math.max(1, Math.floor(sourceHeight * scale));
+
+                        window.reboxDonationQrCanvas = canvas;
+
+                        if (sourceWidth && sourceHeight && width && height && context && typeof window.jsQR === 'function') {
+                            lastScanAt = now;
+                            canvas.width = width;
+                            canvas.height = height;
+                            context.drawImage(video, 0, 0, sourceWidth, sourceHeight, 0, 0, width, height);
+
+                            const centerSize = Math.floor(Math.min(width, height) * 0.86);
+                            const centerCrop = {
+                                x: Math.max(0, Math.floor((width - centerSize) / 2)),
+                                y: Math.max(0, Math.floor((height - centerSize) / 2)),
+                                width: centerSize,
+                                height: centerSize,
+                            };
+                            const wideHeight = Math.floor(height * 0.82);
+                            const wideCrop = {
+                                x: 0,
+                                y: Math.max(0, Math.floor((height - wideHeight) / 2)),
+                                width,
+                                height: wideHeight,
+                            };
+
+                            const qr = decodeCanvas(canvas, centerCrop)
+                                || (scanFrameCount % 2 === 0 ? decodeCanvas(canvas) : null)
+                                || (scanFrameCount % 3 === 0 ? decodeCanvas(canvas, wideCrop) : null);
+
+                            if (qr?.data) {
+                                const scannedValue = String(qr.data);
+
+                                if (scannedValue === window.reboxDonationQrLastValue && performance.now() - (window.reboxDonationQrLastSeenAt || 0) < 450) {
+                                    scanFrameCount += 1;
+                                    window.reboxDonationQrFrame = window.requestAnimationFrame(scanLoop);
+                                    return;
+                                }
+
+                                window.reboxDonationQrLastValue = scannedValue;
+                                window.reboxDonationQrLastSeenAt = performance.now();
+                                handleScanValue(scannedValue);
+                            }
+                        } else if (typeof window.jsQR !== 'function') {
+                            setDonationQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
+                        }
+                    } catch (error) {
+                        if (scanFrameCount % 45 === 0) {
+                            setDonationQrStatus(scanner, 'Kamera aktif. Arahkan QR lebih dekat dan pastikan gambar tidak blur.', false);
+                        }
+                    }
+                }
+
+                scanFrameCount += 1;
+
+                if (window.reboxDonationQrScanning) {
+                    window.reboxDonationQrFrame = window.requestAnimationFrame(scanLoop);
+                }
+            };
+
+            startButton?.addEventListener('click', async () => {
+                if (!navigator.mediaDevices?.getUserMedia) {
+                    setDonationQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
+                    return;
+                }
+
+                if (typeof window.jsQR !== 'function') {
+                    setDonationQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
+                    return;
+                }
+
+                try {
+                    stopDonationQrScanner();
+
+                    try {
+                        window.reboxDonationQrStream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 960 },
+                                height: { ideal: 540 },
+                                facingMode: 'environment',
+                            },
+                            audio: false,
+                        });
+                    } catch (cameraError) {
+                        window.reboxDonationQrStream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 960 },
+                                height: { ideal: 540 },
+                            },
+                            audio: false,
+                        });
+                    }
+
+                    video.srcObject = window.reboxDonationQrStream;
+                    empty?.classList.add('is-hidden');
+                    video.closest('.qr-camera-wrap')?.classList.add('is-scanning');
+                    window.reboxDonationQrScanning = true;
+                    scanFrameCount = 0;
+                    setDonationQrStatus(scanner, 'Kamera laptop aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.');
+                    await video.play();
+                    scanLoop();
+                } catch (error) {
+                    setDonationQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                }
+            });
+
+            stopButton?.addEventListener('click', () => {
+                stopDonationQrScanner();
+                setDonationQrStatus(scanner, 'Kamera dimatikan.');
+            });
+        }
+
         function queueDonationInit() {
             window.requestAnimationFrame(() => window.setTimeout(initDonationPage, 0));
         }
+
+        window.addEventListener('beforeunload', stopDonationQrScanner);
 
         document.addEventListener('click', (event) => {
             const dropdown = document.querySelector('[data-profile-dropdown]');

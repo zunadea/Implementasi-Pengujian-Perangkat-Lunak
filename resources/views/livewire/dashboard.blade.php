@@ -100,6 +100,8 @@
         }
 
         .top-shell {
+            position: relative;
+            z-index: 120;
             display: grid;
             grid-template-columns: 1fr 142px;
             align-items: center;
@@ -151,6 +153,7 @@
 
         .profile-dropdown {
             position: relative;
+            z-index: 130;
         }
 
         .profile-pill {
@@ -220,7 +223,7 @@
             background: rgba(255, 255, 255, 0.96);
             box-shadow: 0 18px 40px rgba(0, 80, 0, 0.14);
             display: none;
-            z-index: 10;
+            z-index: 140;
         }
 
         .profile-dropdown.is-open .profile-menu {
@@ -1512,28 +1515,7 @@
             ['donor' => 'Muh Rheivandy', 'date' => '14 Okt 2024', 'item' => 'Buku Pelajaran', 'amount' => 'Tiga', 'image' => $cardImages[1]],
             ['donor' => 'Aulia Rahman', 'date' => '16 Okt 2024', 'item' => 'Pakaian Anak', 'amount' => 'Dua', 'image' => $cardImages[2]],
         ];
-        $locations = [
-            ['name' => 'Dago', 'image' => $cardImages[0]],
-            ['name' => 'Lembang', 'image' => $cardImages[1]],
-            ['name' => 'Braga', 'image' => $cardImages[2]],
-            ['name' => 'Cihampelas', 'image' => $cardImages[3]],
-            ['name' => 'Gedebage', 'image' => $cardImages[0]],
-            ['name' => 'Cibaduyut', 'image' => $cardImages[1]],
-            ['name' => 'Ciwidey', 'image' => $cardImages[2]],
-            ['name' => 'Pangalengan', 'image' => $cardImages[3]],
-            ['name' => 'Bojongsoang', 'image' => $cardImages[0]],
-            ['name' => 'Setiabudi', 'image' => $cardImages[1]],
-            ['name' => 'Pasteur', 'image' => $cardImages[2]],
-            ['name' => 'Antapani', 'image' => $cardImages[3]],
-            ['name' => 'Arcamanik', 'image' => $cardImages[0]],
-            ['name' => 'Ujungberung', 'image' => $cardImages[1]],
-            ['name' => 'Soreang', 'image' => $cardImages[2]],
-            ['name' => 'Padalarang', 'image' => $cardImages[3]],
-            ['name' => 'Cimahi', 'image' => $cardImages[0]],
-            ['name' => 'Jatinangor', 'image' => $cardImages[1]],
-            ['name' => 'Dayeuhkolot', 'image' => $cardImages[2]],
-            ['name' => 'Cileunyi', 'image' => $cardImages[3]],
-        ];
+        $locations = \App\Support\ReboxLocations::all();
     @endphp
 
     <div class="dashboard-inner">
@@ -1559,9 +1541,9 @@
                 </button>
 
                 <div class="profile-menu">
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" data-dashboard-logout-form>
                         @csrf
-                        <button type="submit">Logout</button>
+                        <button type="submit" data-dashboard-logout>Logout</button>
                     </form>
                 </div>
             </div>
@@ -1623,7 +1605,7 @@
 
             <div class="carousel-window" data-carousel>
                 @foreach($locations as $index => $location)
-                    <article class="box-card" data-card-index="{{ $index }}" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-image="{{ $location['image'] }}">
+                    <article class="box-card" data-card-index="{{ $index }}" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
                         <div class="box-image">
                             <img src="{{ $location['image'] }}" alt="Rebox {{ $location['name'] }}">
                         </div>
@@ -1656,7 +1638,7 @@
         <section class="all-locations" data-detail-panel>
             <div class="detail-grid">
                 @foreach($locations as $location)
-                    <article class="box-card" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-image="{{ $location['image'] }}">
+                    <article class="box-card" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
                         <div class="box-image">
                             <img src="{{ $location['image'] }}" alt="Rebox {{ $location['name'] }}">
                         </div>
@@ -1844,10 +1826,18 @@
 
             const profileDropdown = root.querySelector('[data-profile-dropdown]');
             const profileButton = profileDropdown?.querySelector('.profile-pill');
+            const logoutButton = profileDropdown?.querySelector('[data-dashboard-logout]');
 
             profileButton?.addEventListener('click', (event) => {
+                event.preventDefault();
                 event.stopPropagation();
                 profileDropdown.classList.toggle('is-open');
+            });
+
+            logoutButton?.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                logoutButton.closest('form')?.submit();
             });
 
             document.addEventListener('click', (event) => {

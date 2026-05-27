@@ -2486,20 +2486,33 @@
 
         .code-modal-actions {
             display: flex;
-            justify-content: center;
-            gap: 12px;
+            justify-content: flex-end;
+            gap: 14px;
             margin-top: 22px;
             flex-wrap: wrap;
         }
 
         .code-modal-actions .primary-btn,
         .code-modal-actions .secondary-btn {
-            min-height: 44px;
-            border-radius: 14px;
-            padding: 0 26px;
+            min-height: 46px;
+            border-radius: 12px;
+            padding: 0 24px;
             font-size: 14px;
-            font-weight: 650;
+            font-weight: 800;
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .code-modal-actions .secondary-btn {
+            min-width: 96px;
+            background: #f5f6f5;
+            color: #111827;
+            box-shadow: none;
+        }
+
+        .code-modal-actions .primary-btn {
+            min-width: 176px;
+            background: linear-gradient(135deg, #17c43e, #00941e);
+            box-shadow: 0 16px 30px rgba(0, 134, 0, .26);
         }
 
         .code-modal-actions .primary-btn:hover,
@@ -2510,6 +2523,578 @@
         .code-modal-actions .primary-btn:active,
         .code-modal-actions .secondary-btn:active {
             transform: translateY(0) scale(.98);
+        }
+
+        .request-qr-flow {
+            width: min(1180px, calc(100vw - 80px));
+            padding: 0;
+            overflow: hidden;
+            text-align: left;
+            border-radius: 24px;
+            border-color: rgba(15, 23, 42, .05);
+            background: #ffffff;
+            box-shadow: 0 26px 88px rgba(15, 23, 42, .13);
+        }
+
+        .request-qr-shell {
+            display: grid;
+            grid-template-columns: minmax(0, 52.2%) minmax(0, 47.8%);
+            min-height: 690px;
+        }
+
+        .request-qr-visual {
+            padding: 26px 32px;
+            background:
+                radial-gradient(circle at 72% 74%, rgba(22, 163, 74, .18), transparent 30%),
+                radial-gradient(circle at 18% 20%, rgba(34, 197, 94, .18), transparent 31%),
+                linear-gradient(145deg, #06150f 0%, #062116 50%, #07381e 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .request-qr-content {
+            padding: 28px 40px 28px 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 10% 50%, rgba(0, 134, 0, .045), transparent 34%),
+                radial-gradient(circle at 84% 8%, rgba(15, 23, 42, .045), transparent 28%),
+                linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+        }
+
+        .request-qr-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 850;
+        }
+
+        .request-qr-safe {
+            margin-left: auto;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, .075);
+            border: 1px solid rgba(255, 255, 255, .13);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 12px 28px rgba(0, 0, 0, .13);
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .request-qr-safe i {
+            color: #65f083;
+            font-size: 16px;
+        }
+
+        .request-qr-brand-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(145deg, #15c84b, #008c28);
+            color: #ffffff;
+            box-shadow: 0 20px 46px rgba(0, 170, 48, .30);
+            font-size: 22px;
+        }
+
+        .request-qr-content .big-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 0 22px;
+            border-radius: 16px;
+            font-size: 24px;
+            background: linear-gradient(145deg, #f4fbf6, #ffffff);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, .07);
+        }
+
+        .request-qr-content h2 {
+            text-align: left;
+            margin-bottom: 10px;
+            color: #111827;
+            font-size: 30px;
+            font-weight: 850;
+        }
+
+        .request-qr-copy {
+            max-width: 390px;
+            margin: 0 0 20px;
+            color: rgba(102, 112, 133, .82);
+            font-size: 14px;
+            font-weight: 520;
+            line-height: 1.6;
+        }
+
+        .request-location-card {
+            border: 1px solid rgba(15, 23, 42, .10);
+            border-radius: 18px;
+            padding: 18px;
+            background: #ffffff;
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, .07);
+        }
+
+        .request-location-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 50px;
+        }
+
+        .request-location-main > div {
+            position: relative;
+            min-width: 0;
+            min-height: 44px;
+            padding-left: 58px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .request-location-main > div::before {
+            content: "\f3c5";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            color: #111827;
+            background: linear-gradient(145deg, #eaf9ee, #f8fffa);
+            box-shadow: 0 14px 28px rgba(0, 134, 0, .07);
+        }
+
+        .request-location-main strong,
+        .request-manual-title {
+            display: block;
+            color: #111827;
+            font-size: 15px;
+            font-weight: 850;
+        }
+
+        .request-location-main span {
+            display: block;
+            margin-top: 7px;
+            color: #667085;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .request-code-pill {
+            display: none;
+        }
+
+        .request-location-main .request-box-code-pill {
+            min-width: 78px;
+            max-width: 116px;
+            height: 36px;
+            margin-top: 0;
+            padding: 0 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #008600;
+            background: #effaf1;
+            font-size: 13px;
+            font-weight: 850;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 0 0 auto;
+        }
+
+        .request-location-main .request-box-code-pill::before {
+            display: none;
+        }
+
+        .request-scan-hint {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #06701c;
+            background: linear-gradient(135deg, #e3f7e6, #edf8ef);
+            font-size: 13px;
+            font-weight: 750;
+            line-height: 1.35;
+        }
+
+        .request-scan-hint-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .request-qr-box {
+            border-radius: 0;
+            border: 0;
+            overflow: hidden;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: blur(14px);
+        }
+
+        .request-qr-camera {
+            min-height: 420px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+            background:
+                radial-gradient(circle at center, rgba(74, 222, 128, .08), transparent 35%),
+                linear-gradient(145deg, #082719, #06341e);
+        }
+
+        .request-qr-camera::before {
+            content: "Arahkan kamera ke kode QR";
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            top: 26px;
+            transform: translateX(-50%);
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 22px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, .90);
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, .16);
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .request-qr-camera video {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .request-qr-empty {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: #ffffff;
+            text-align: center;
+            background:
+                radial-gradient(circle at center, rgba(0, 0, 0, .18), transparent 28%),
+                linear-gradient(135deg, rgba(0, 38, 23, .78), rgba(0, 69, 38, .52));
+        }
+
+        .request-qr-empty::before {
+            display: none;
+        }
+
+        .request-qr-empty.is-hidden {
+            display: none;
+        }
+
+        .request-qr-empty i {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: 86px;
+            height: 74px;
+            margin: 0 auto 34px;
+            border-radius: 18px;
+            background: transparent;
+            color: #ffffff;
+            font-size: 58px;
+            box-shadow: none;
+        }
+
+        .request-qr-empty strong {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .request-qr-empty p {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 520;
+        }
+
+        .request-qr-glass-code {
+            --qr-glass-size: 156px;
+            --qr-scan-distance: calc(var(--qr-glass-size) - 28px);
+            position: absolute;
+            z-index: 3;
+            left: 50%;
+            top: 50%;
+            width: var(--qr-glass-size);
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 22px;
+            color: rgba(255, 255, 255, .42);
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .22);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .20),
+                0 18px 44px rgba(0, 0, 0, .18);
+            backdrop-filter: blur(8px) saturate(110%);
+            -webkit-backdrop-filter: blur(8px) saturate(110%);
+            contain: layout paint;
+            pointer-events: none;
+        }
+
+        .request-qr-camera:not(.is-scanning) .request-qr-glass-code {
+            display: none;
+        }
+
+        .request-qr-glass-code i {
+            font-size: clamp(90px, 78%, 124px);
+            opacity: .58;
+            filter: drop-shadow(0 2px 8px rgba(255, 255, 255, .14));
+        }
+
+        .request-qr-glass-code::after {
+            content: "";
+            position: absolute;
+            left: -18%;
+            right: -18%;
+            top: 12px;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, transparent, rgba(101, 240, 131, .96), transparent);
+            box-shadow:
+                0 0 12px rgba(101, 240, 131, .78),
+                0 0 28px rgba(101, 240, 131, .32);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
+            animation: requestQrGlassScan 2.2s ease-in-out infinite alternate;
+        }
+
+        .request-qr-glass-code::before {
+            content: "";
+            position: absolute;
+            left: -8%;
+            right: -8%;
+            top: 0;
+            height: 42px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(101, 240, 131, .18), transparent);
+            opacity: .72;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
+            animation: requestQrGlassScanGlow 2.2s ease-in-out infinite alternate;
+        }
+
+        .request-qr-frame {
+            position: absolute;
+            z-index: 4;
+            inset: 54px 28px 22px;
+            border: 0;
+            border-radius: 10px;
+            pointer-events: none;
+            box-shadow: none;
+        }
+
+        .request-qr-frame::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background:
+                linear-gradient(#5cff74, #5cff74) left top / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left top / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right top / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right top / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left bottom / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) left bottom / 6px 38px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right bottom / 38px 6px no-repeat,
+                linear-gradient(#5cff74, #5cff74) right bottom / 6px 38px no-repeat;
+        }
+
+        .request-qr-frame::after {
+            display: none;
+        }
+
+        .request-qr-actions {
+            display: flex;
+            gap: 14px;
+            padding: 0;
+            margin: 16px 0 0;
+            background: transparent;
+        }
+
+        .request-qr-actions .primary-btn,
+        .request-qr-actions .secondary-btn {
+            flex: 1;
+            min-width: 145px;
+            min-height: 50px;
+            border-radius: 13px;
+            font-size: 15px;
+        }
+
+        .request-qr-actions .primary-btn {
+            background: linear-gradient(135deg, #18cf3c, #00a522);
+            box-shadow: 0 18px 38px rgba(0, 134, 0, .32);
+        }
+
+        .request-qr-actions .secondary-btn {
+            color: rgba(255, 255, 255, .84);
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .10);
+        }
+
+        .request-qr-status {
+            margin: 16px 0 0;
+            border-radius: 16px;
+            padding: 16px 18px 16px 54px;
+            position: relative;
+            color: rgba(255, 255, 255, .92);
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .09);
+            font-size: 13px;
+            font-weight: 650;
+            line-height: 1.4;
+        }
+
+        .request-qr-status::before {
+            content: "\f05a";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #72f087;
+            background: transparent;
+            font-size: 18px;
+        }
+
+        .request-qr-status.is-error {
+            color: #dc2626;
+        }
+
+        .request-method-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0 18px;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .request-method-divider::before,
+        .request-method-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(102, 112, 133, .18);
+        }
+
+        .request-manual-card {
+            border-radius: 18px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(20, 32, 43, .08);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, .05);
+        }
+
+        .request-manual-card .input-box {
+            min-height: 56px;
+            border-radius: 13px;
+            background: #ffffff;
+            box-shadow: none;
+            border-color: rgba(15, 23, 42, .11);
+            padding: 0 16px;
+        }
+
+        .request-manual-card .input-box i {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            color: #008600;
+            background: #eef9f0;
+            font-size: 16px;
+        }
+
+        .request-manual-card .input-box input {
+            color: #111827;
+            font-size: 15px;
+            font-weight: 520;
+        }
+
+        .request-manual-card .input-box input::placeholder {
+            color: #7c8596;
+        }
+
+        .request-manual-title {
+            margin-bottom: 12px;
+        }
+
+        .request-manual-note {
+            margin: 2px 0 0;
+            color: #667085;
+            font-size: 13px;
+            font-weight: 520;
+            line-height: 1.45;
+        }
+
+        @keyframes requestQrLine {
+            from { transform: translateY(-44px); }
+            to { transform: translateY(116px); }
+        }
+
+        @keyframes requestQrGlassScan {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, var(--qr-scan-distance), 0); }
+        }
+
+        @keyframes requestQrGlassScanGlow {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, calc(var(--qr-scan-distance) - 20px), 0); }
         }
 
         .big-icon {
@@ -2949,6 +3534,26 @@
             .fulfillment-action {
                 align-items: stretch;
                 flex-direction: column;
+            }
+
+            .request-qr-shell {
+                grid-template-columns: 1fr;
+                max-height: calc(100vh - 48px);
+                overflow-y: auto;
+            }
+
+            .request-qr-visual,
+            .request-qr-content {
+                padding: 20px;
+            }
+
+            .request-qr-camera {
+                min-height: 260px;
+                aspect-ratio: 16 / 10;
+            }
+
+            .request-qr-glass-code {
+                --qr-glass-size: 132px;
             }
         }
 
@@ -3525,27 +4130,81 @@
 
         @if ($show_code_modal)
             <div class="code-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="code-modal-title">
-            <section class="donor-flow-card glass-card">
-                <div class="big-icon"><i class="fas fa-key"></i></div>
-                <h2 id="code-modal-title">Masukkan Kode Box</h2>
-                <p>Masukkan kode box untuk membuka akses pengambilan barang. Pastikan kamu berada dekat dengan lokasi Rebox.</p>
-
-                <div class="code-info">
-                    <div>Lokasi: <strong>{{ $selectedLocation['title'] ?? '-' }}</strong></div>
-                    <div>Area: <strong>{{ $selectedLocation['area'] ?? '-' }}</strong></div>
-                    <div>Format kode: <strong>XX-00</strong></div>
-                </div>
-
+            <section class="donor-flow-card glass-card request-qr-flow">
                 <form wire:submit.prevent="openBox">
-                    <label class="input-box" style="margin-bottom:10px;">
-                        <i class="fas fa-lock-open"></i>
-                        <input type="text" wire:model="kode_box_input" placeholder="CONTOH: {{ $selectedLocation['code'] ?? 'DG-01' }}">
-                    </label>
-                    @error('kode_box_input') <span class="error-text" style="text-align:left;">{{ $message }}</span> @enderror
+                    <div class="request-qr-shell">
+                        <div class="request-qr-visual">
+                            <div class="request-qr-brand">
+                                <span class="request-qr-brand-icon"><i class="fas fa-qrcode"></i></span>
+                                <span>QR Box</span>
+                                <span class="request-qr-safe"><i class="fas fa-shield-heart"></i> Aman</span>
+                            </div>
+                            <div class="request-qr-box" data-request-qr-scanner data-expected-code="{{ $selectedLocation['code'] ?? '' }}">
+                                <div class="request-qr-camera">
+                                    <video playsinline muted data-request-qr-video></video>
+                                    <div class="request-qr-glass-code" aria-hidden="true">
+                                        <i class="fas fa-qrcode"></i>
+                                    </div>
+                                    <div class="request-qr-empty" data-request-qr-empty>
+                                        <div>
+                                            <i class="fas fa-camera"></i>
+                                            <strong>Kamera laptop belum aktif</strong>
+                                            <p>Klik aktifkan kamera, lalu izinkan akses kamera di browser.</p>
+                                        </div>
+                                    </div>
+                                    <div class="request-qr-frame" aria-hidden="true"></div>
+                                </div>
+                                <div class="request-qr-actions">
+                                    <button type="button" class="primary-btn" data-request-qr-start>
+                                        <i class="fas fa-camera"></i> Aktifkan Kamera
+                                    </button>
+                                    <button type="button" class="secondary-btn" data-request-qr-stop>Matikan Kamera</button>
+                                </div>
+                                <div class="request-qr-status" data-request-qr-status>
+                                    Kamera dimatikan.
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="code-modal-actions">
-                        <button type="button" class="secondary-btn" wire:click="closeCodeModal">Batal</button>
-                        <button type="submit" class="primary-btn">Buka Box</button>
+                        <div class="request-qr-content">
+                            <div class="big-icon"><i class="fas fa-qrcode"></i></div>
+                            <h2 id="code-modal-title">Scan QR Box</h2>
+                            <p class="request-qr-copy">Arahkan QR ke kamera untuk membuka akses pengambilan barang. Input manual hanya dipakai kalau QR tidak terbaca.</p>
+
+                            <div class="request-location-card">
+                                <div class="request-location-main">
+                                    <div>
+                                        <strong>{{ $selectedLocation['title'] ?? '-' }}</strong>
+                                        <span>{{ $selectedLocation['area'] ?? '-' }}</span>
+                                    </div>
+                                    <span class="request-box-code-pill">{{ $selectedLocation['code'] ?? '-' }}</span>
+                                </div>
+                                <div class="request-scan-hint">
+                                    <span class="request-scan-hint-text">
+                                        <i class="fas fa-shield-heart"></i>
+                                        QR harus berisi kode lokasi ini agar box bisa dibuka.
+                                    </span>
+                                    <span class="request-code-pill">{{ $selectedLocation['code'] ?? '-' }}</span>
+                                </div>
+                            </div>
+
+                            <div class="request-method-divider">atau</div>
+
+                            <div class="request-manual-card">
+                                <div class="request-manual-title">Masukkan kode manual</div>
+                                <label class="input-box" style="margin-bottom:10px;">
+                                    <i class="fas fa-lock-open"></i>
+                                    <input type="text" wire:model="kode_box_input" data-request-qr-input placeholder="Contoh: {{ $selectedLocation['code'] ?? 'DG-31' }}">
+                                </label>
+                                <p class="request-manual-note">Masukkan kode lokasi secara manual jika diperlukan.</p>
+                                @error('kode_box_input') <span class="error-text" style="text-align:left;">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="code-modal-actions">
+                                <button type="button" class="secondary-btn" wire:click="closeCodeModal">Batal</button>
+                                <button type="submit" class="primary-btn" data-request-open-submit><i class="fas fa-lock-open"></i> Buka Box</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </section>
@@ -3644,7 +4303,252 @@
         </main>
     @endif
 
+    <script src="{{ asset('jsQR.min.js') }}"></script>
     <script>
+        function stopRequestQrScanner() {
+            if (window.reboxRequestQrFrame) {
+                window.cancelAnimationFrame(window.reboxRequestQrFrame);
+                window.reboxRequestQrFrame = null;
+            }
+
+            window.reboxRequestQrScanning = false;
+
+            if (window.reboxRequestQrStream) {
+                window.reboxRequestQrStream.getTracks().forEach((track) => track.stop());
+                window.reboxRequestQrStream = null;
+            }
+
+            document.querySelectorAll('[data-request-qr-video]').forEach((video) => {
+                video.pause();
+                video.srcObject = null;
+            });
+
+            document.querySelectorAll('[data-request-qr-empty]').forEach((empty) => empty.classList.remove('is-hidden'));
+            document.querySelectorAll('.request-qr-camera.is-scanning').forEach((camera) => camera.classList.remove('is-scanning'));
+        }
+
+        function setRequestQrStatus(scanner, message, isError = false) {
+            const status = scanner?.querySelector('[data-request-qr-status]');
+
+            if (!status) return;
+
+            status.textContent = message;
+            status.classList.toggle('is-error', isError);
+        }
+
+        function extractRequestQrCode(value) {
+            const match = String(value || '').toUpperCase().match(/[A-Z]{2}-\d{2}/);
+            return match ? match[0] : String(value || '').trim().toUpperCase();
+        }
+
+        function initRequestQrScanner(root = document) {
+            const scanner = root.querySelector('[data-request-qr-scanner]');
+
+            if (!scanner) {
+                stopRequestQrScanner();
+                return;
+            }
+
+            if (scanner.dataset.ready === 'true') return;
+            scanner.dataset.ready = 'true';
+
+            const expectedCode = scanner.dataset.expectedCode;
+            const video = scanner.querySelector('[data-request-qr-video]');
+            const empty = scanner.querySelector('[data-request-qr-empty]');
+            const startButton = scanner.querySelector('[data-request-qr-start]');
+            const stopButton = scanner.querySelector('[data-request-qr-stop]');
+            const input = document.querySelector('[data-request-qr-input]');
+            const submitButton = document.querySelector('[data-request-open-submit]');
+            let lastScanAt = 0;
+            let scanFrameCount = 0;
+
+            const submitScannedCode = (code) => {
+                const component = window.Livewire?.find(scanner.closest('[wire\\:id]')?.getAttribute('wire:id'));
+
+                stopRequestQrScanner();
+                input && (input.value = code);
+                setRequestQrStatus(scanner, `QR cocok (${code}). Membuka box...`);
+
+                if (component) {
+                    component.set('kode_box_input', code).then(() => submitButton?.click());
+                    return;
+                }
+
+                window.setTimeout(() => submitButton?.click(), 250);
+            };
+
+            const handleScanValue = (value) => {
+                const code = extractRequestQrCode(value);
+
+                if (code === expectedCode) {
+                    submitScannedCode(code);
+                    return;
+                }
+
+                window.reboxRequestQrLastValue = '';
+                setRequestQrStatus(scanner, `QR terbaca (${code || 'tidak valid'}), tapi tidak cocok dengan ${expectedCode}. Arahkan QR yang benar.`, true);
+            };
+
+            const decodeCanvas = (sourceCanvas, crop = null) => {
+                const sourceContext = sourceCanvas.getContext('2d', { willReadFrequently: true });
+
+                if (!sourceContext || typeof window.jsQR !== 'function') {
+                    return null;
+                }
+
+                if (!crop) {
+                    const imageData = sourceContext.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+                    return window.jsQR(imageData.data, sourceCanvas.width, sourceCanvas.height, {
+                        inversionAttempts: 'attemptBoth',
+                    });
+                }
+
+                const cropCanvas = window.reboxRequestQrCropCanvas || document.createElement('canvas');
+                const cropContext = cropCanvas.getContext('2d', { willReadFrequently: true });
+                window.reboxRequestQrCropCanvas = cropCanvas;
+
+                if (!cropContext) return null;
+
+                cropCanvas.width = crop.width;
+                cropCanvas.height = crop.height;
+                cropContext.drawImage(sourceCanvas, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+
+                const imageData = cropContext.getImageData(0, 0, crop.width, crop.height);
+                return window.jsQR(imageData.data, crop.width, crop.height, {
+                    inversionAttempts: 'attemptBoth',
+                });
+            };
+
+            const scanLoop = () => {
+                if (!window.reboxRequestQrScanning || !video) return;
+
+                const now = performance.now();
+
+                if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && now - lastScanAt >= 90) {
+                    try {
+                        const canvas = window.reboxRequestQrCanvas || document.createElement('canvas');
+                        const context = canvas.getContext('2d', { willReadFrequently: true });
+                        const sourceWidth = video.videoWidth;
+                        const sourceHeight = video.videoHeight;
+                        const scale = Math.min(1, 720 / Math.max(sourceWidth || 1, sourceHeight || 1));
+                        const width = Math.max(1, Math.floor(sourceWidth * scale));
+                        const height = Math.max(1, Math.floor(sourceHeight * scale));
+                        window.reboxRequestQrCanvas = canvas;
+
+                        if (sourceWidth && sourceHeight && width && height && context && typeof window.jsQR === 'function') {
+                            lastScanAt = now;
+                            canvas.width = width;
+                            canvas.height = height;
+                            context.drawImage(video, 0, 0, sourceWidth, sourceHeight, 0, 0, width, height);
+
+                            const centerSize = Math.floor(Math.min(width, height) * .86);
+                            const centerCrop = {
+                                x: Math.max(0, Math.floor((width - centerSize) / 2)),
+                                y: Math.max(0, Math.floor((height - centerSize) / 2)),
+                                width: centerSize,
+                                height: centerSize,
+                            };
+                            const wideHeight = Math.floor(height * .82);
+                            const wideCrop = {
+                                x: 0,
+                                y: Math.max(0, Math.floor((height - wideHeight) / 2)),
+                                width,
+                                height: wideHeight,
+                            };
+
+                            const qr = decodeCanvas(canvas, centerCrop)
+                                || (scanFrameCount % 2 === 0 ? decodeCanvas(canvas) : null)
+                                || (scanFrameCount % 3 === 0 ? decodeCanvas(canvas, wideCrop) : null);
+
+                            if (qr?.data) {
+                                const scannedValue = String(qr.data);
+
+                                if (scannedValue === window.reboxRequestQrLastValue && performance.now() - (window.reboxRequestQrLastSeenAt || 0) < 450) {
+                                    scanFrameCount += 1;
+                                    window.reboxRequestQrFrame = window.requestAnimationFrame(scanLoop);
+                                    return;
+                                }
+
+                                window.reboxRequestQrLastValue = scannedValue;
+                                window.reboxRequestQrLastSeenAt = performance.now();
+                                handleScanValue(scannedValue);
+                            }
+                        } else if (typeof window.jsQR !== 'function') {
+                            setRequestQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
+                        }
+                    } catch (error) {
+                        if (scanFrameCount % 45 === 0) {
+                            setRequestQrStatus(scanner, 'Kamera aktif. Dekatkan QR dan pastikan gambar tidak blur.');
+                        }
+                    }
+                }
+
+                scanFrameCount += 1;
+
+                if (window.reboxRequestQrScanning) {
+                    window.reboxRequestQrFrame = window.requestAnimationFrame(scanLoop);
+                }
+            };
+
+            startButton?.addEventListener('click', async () => {
+                if (!navigator.mediaDevices?.getUserMedia) {
+                    setRequestQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
+                    return;
+                }
+
+                if (typeof window.jsQR !== 'function') {
+                    setRequestQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
+                    return;
+                }
+
+                try {
+                    stopRequestQrScanner();
+
+                    try {
+                        window.reboxRequestQrStream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 960 },
+                                height: { ideal: 540 },
+                                facingMode: 'environment',
+                            },
+                            audio: false,
+                        });
+                    } catch (cameraError) {
+                        window.reboxRequestQrStream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 960 },
+                                height: { ideal: 540 },
+                            },
+                            audio: false,
+                        });
+                    }
+
+                    video.srcObject = window.reboxRequestQrStream;
+                    empty?.classList.add('is-hidden');
+                    video.closest('.request-qr-camera')?.classList.add('is-scanning');
+                    window.reboxRequestQrScanning = true;
+                    scanFrameCount = 0;
+                    setRequestQrStatus(scanner, 'Kamera laptop aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.');
+                    await video.play();
+                    scanLoop();
+                } catch (error) {
+                    setRequestQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                }
+            });
+
+            stopButton?.addEventListener('click', () => {
+                stopRequestQrScanner();
+                setRequestQrStatus(scanner, 'Kamera dimatikan.');
+            });
+        }
+
+        function queueRequestInit() {
+            window.requestAnimationFrame(() => window.setTimeout(() => {
+                initRequestProfileMenu();
+                initRequestQrScanner();
+            }, 0));
+        }
+
         function initRequestProfileMenu() {
             document.querySelectorAll('[data-profile-dropdown]').forEach((dropdown) => {
                 if (dropdown.dataset.ready === 'true') return;
@@ -3661,8 +4565,36 @@
         document.addEventListener('click', () => {
             document.querySelectorAll('[data-profile-dropdown].is-open').forEach((dropdown) => dropdown.classList.remove('is-open'));
         });
-        document.addEventListener('DOMContentLoaded', initRequestProfileMenu);
-        document.addEventListener('livewire:navigated', initRequestProfileMenu);
-        document.addEventListener('livewire:updated', initRequestProfileMenu);
+        window.addEventListener('beforeunload', stopRequestQrScanner);
+        document.addEventListener('DOMContentLoaded', queueRequestInit);
+        document.addEventListener('livewire:navigated', queueRequestInit);
+        document.addEventListener('livewire:initialized', queueRequestInit);
+        document.addEventListener('livewire:update', queueRequestInit);
+        document.addEventListener('livewire:updated', queueRequestInit);
+
+        document.addEventListener('livewire:init', () => {
+            if (window.Livewire) {
+                try {
+                    window.Livewire.hook('morph.updated', queueRequestInit);
+                    window.Livewire.hook('commit', (payload = {}) => {
+                        if (typeof payload.succeed === 'function') {
+                            payload.succeed(queueRequestInit);
+                        } else {
+                            queueRequestInit();
+                        }
+                    });
+                } catch (error) {
+                    queueRequestInit();
+                }
+            }
+        });
+
+        if (!window.reboxRequestObserver) {
+            window.reboxRequestObserver = new MutationObserver(queueRequestInit);
+            window.reboxRequestObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+        }
     </script>
 </div>

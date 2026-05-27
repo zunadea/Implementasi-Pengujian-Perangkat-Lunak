@@ -21,6 +21,9 @@ class Riwayat extends Component
     public ?int $selectedRecipientRequestId = null;
     public array $selectedRecipientRequest = [];
     public bool $showRecipientDetail = false;
+    public ?int $selectedDonorRequestId = null;
+    public array $selectedDonorRequest = [];
+    public bool $showDonorDetail = false;
     public bool $showFeedbackForm = false;
     public $feedback_photo;
     public string $feedback_nama_barang = '';
@@ -31,6 +34,7 @@ class Riwayat extends Component
     {
         $this->tab = in_array($tab, ['salurkan', 'rebox'], true) ? $tab : 'salurkan';
         $this->donorHistoryPage = 1;
+        $this->closeDonorDetail();
     }
 
     public function setDonorHistoryPage(int $page): void
@@ -87,6 +91,28 @@ class Riwayat extends Component
         $this->resetFeedbackForm();
     }
 
+    public function openDonorSalurkanDetail(int $id): void
+    {
+        $request = PermintaanModel::with(['fulfilledBy', 'user'])
+            ->where('fulfilled_by_user_id', Auth::id())
+            ->find($id);
+
+        if (! $request) {
+            return;
+        }
+
+        $this->selectedDonorRequestId = $id;
+        $this->selectedDonorRequest = $this->formatDonorSalurkanRequest($request);
+        $this->showDonorDetail = true;
+    }
+
+    public function closeDonorDetail(): void
+    {
+        $this->showDonorDetail = false;
+        $this->selectedDonorRequestId = null;
+        $this->selectedDonorRequest = [];
+    }
+
     public function openFeedbackForm(): void
     {
         if (! $this->selectedRecipientRequestId) {
@@ -134,7 +160,7 @@ class Riwayat extends Component
         $path = $this->feedback_photo->store('feedback-permintaan', 'public');
 
         $request->update([
-            'status' => 'Disetujui',
+            'status' => 'Selesai',
             'feedback_photo' => $path,
             'feedback_nama_barang' => $this->feedback_nama_barang,
             'feedback_jumlah' => (int) $this->feedback_jumlah,
@@ -165,6 +191,13 @@ class Riwayat extends Component
             'rejected', 'tolak', 'ditolak' => 'Ditolak',
             default => ucfirst($status ?: 'Menunggu'),
         };
+    }
+
+    private function hasRecipientFeedback(PermintaanModel $request): bool
+    {
+        return filled($request->feedback_at)
+            && filled($request->feedback_photo)
+            && Storage::disk('public')->exists($request->feedback_photo);
     }
 
     private function recipientCategoryIcon(string $category): array
@@ -247,10 +280,12 @@ class Riwayat extends Component
             ->latest('fulfilled_at')
             ->get()
             ->map(function ($request) {
-                $status = $this->recipientStatus($request->status ?? 'Diproses') === 'Disetujui' ? 'Selesai' : 'Proses';
+                $isComplete = $this->hasRecipientFeedback($request);
+                $status = $isComplete ? 'Selesai' : 'Proses';
                 $dateTime = $this->formatIndonesiaDateTime($request->fulfilled_at ?? $request->updated_at ?? $request->created_at);
 
                 return [
+                    'id' => $request->id,
                     'donatur' => Auth::user()?->name ?? 'Donatur Rebox',
                     'role' => 'Donatur',
                     'date' => $dateTime['date'],
@@ -262,11 +297,44 @@ class Riwayat extends Component
                     'jumlah' => $request->jumlah . ' Pcs',
                     'kategori' => $request->kategori,
                     'status' => $status,
+                    'feedback_at' => $request->feedback_at ? \Carbon\Carbon::parse($request->feedback_at)->translatedFormat('d M Y, H:i') : null,
+                    'feedback_photo_url' => $isComplete ? asset('storage/' . $request->feedback_photo) : null,
+                    'feedback_note' => $request->feedback_note,
                     'image' => asset('images/GambarcardRebox2.png'),
                 ];
             })
             ->values()
             ->all();
+    }
+
+    private function formatDonorSalurkanRequest(PermintaanModel $request): array
+    {
+        $isComplete = $this->hasRecipientFeedback($request);
+        $fulfilledAt = $this->formatIndonesiaDateTime($request->fulfilled_at ?? $request->updated_at ?? $request->created_at);
+        $mapsUrl = $request->google_maps_link ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($request->lokasi_hub ?: ($request->user?->name ?? 'Penerima Rebox') . ' Bandung');
+
+        return [
+            'id' => $request->id,
+            'code' => '#REQ-' . now()->format('Y') . '-' . str_pad((string) $request->id, 5, '0', STR_PAD_LEFT),
+            'nama_barang' => $request->nama_barang,
+            'kategori' => $request->kategori,
+            'jumlah' => $request->jumlah . ' Pcs',
+            'deskripsi' => $request->deskripsi ?: 'Tidak ada deskripsi tambahan.',
+            'penerima' => $request->user?->name ?? 'Penerima Rebox',
+            'penerima_email' => $request->user?->email ?? '-',
+            'lokasi_hub' => $request->lokasi_hub ?: 'Lokasi penerima belum diisi.',
+            'maps_url' => $mapsUrl,
+            'status' => $isComplete ? 'Selesai' : 'Proses',
+            'status_note' => $isComplete
+                ? 'Penerima sudah mengisi feedback dan mengunggah bukti barang diterima.'
+                : 'Menunggu penerima mengisi feedback dan bukti barang diterima.',
+            'fulfilled_at' => $fulfilledAt['date'] . ', ' . $fulfilledAt['time'],
+            'feedback_at' => $request->feedback_at ? \Carbon\Carbon::parse($request->feedback_at)->translatedFormat('d M Y, H:i') : null,
+            'feedback_photo_url' => $isComplete ? asset('storage/' . $request->feedback_photo) : null,
+            'feedback_nama_barang' => $request->feedback_nama_barang,
+            'feedback_jumlah' => $request->feedback_jumlah ? $request->feedback_jumlah . ' Pcs' : null,
+            'feedback_note' => $request->feedback_note,
+        ];
     }
 
     private function indonesiaTimezone(): string

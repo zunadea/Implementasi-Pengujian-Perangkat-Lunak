@@ -335,6 +335,23 @@
             box-shadow: 0 12px 24px rgba(0, 134, 0, 0.10);
         }
 
+        .profile-file-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .photo-upload-state {
+            margin-top: -12px;
+            margin-bottom: 18px;
+            color: var(--rebox-green);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         .profile-name { margin: 0; color: #111111; font-size: 24px; font-weight: 700; }
         .profile-email { margin: 8px 0 16px; color: #737373; font-size: 14px; font-weight: 600; }
         .status-badge {
@@ -805,9 +822,10 @@
                                 </div>
                                 <div class="action-row">
                                     <button type="button" class="ghost-button" wire:click="showPanel('info')">Batal</button>
-                                    <button type="submit" class="save-button" wire:loading.attr="disabled">
-                                        <span wire:loading.remove>Simpan</span>
-                                        <span wire:loading>Menyimpan...</span>
+                                    <button type="submit" class="save-button" wire:loading.attr="disabled" wire:target="updateProfile,photo">
+                                        <span wire:loading.remove wire:target="updateProfile,photo">Simpan</span>
+                                        <span wire:loading wire:target="photo">Mengunggah...</span>
+                                        <span wire:loading wire:target="updateProfile">Menyimpan...</span>
                                     </button>
                                 </div>
                             </div>
@@ -828,7 +846,10 @@
                                     <i class="fas fa-camera"></i>
                                     Ganti Foto
                                 </label>
-                                <input type="file" wire:model="photo" id="photo-upload" class="d-none" accept="image/*">
+                                <input type="file" wire:model="photo" id="photo-upload" class="profile-file-input" accept="image/png,image/jpeg,image/webp">
+                            </div>
+                            <div class="photo-upload-state" wire:loading wire:target="photo">
+                                Mengunggah foto, tunggu sebentar sebelum menyimpan.
                             </div>
                             @error('photo') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
 

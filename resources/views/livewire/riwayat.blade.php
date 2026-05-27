@@ -875,6 +875,56 @@
             font-size: 17px;
         }
 
+        .donor-status-box.has-proof {
+            min-height: 92px;
+            padding: 10px 12px;
+            align-items: stretch;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .donor-status-box.has-proof > span:first-of-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .donor-proof-link {
+            border-radius: 14px;
+            padding: 7px 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #169b36;
+            background: rgba(255, 255, 255, .70);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 750;
+            line-height: 1.25;
+        }
+
+        .donor-proof-link img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex: 0 0 auto;
+            box-shadow: 0 8px 18px rgba(0, 134, 0, .14);
+        }
+
+        .donor-proof-link span {
+            display: grid;
+            gap: 2px;
+        }
+
+        .donor-proof-link small {
+            color: #667085;
+            font-size: 11px;
+            font-weight: 650;
+        }
+
         .donor-history-arrow {
             width: 38px;
             height: 38px;
@@ -1384,8 +1434,12 @@
             border-radius: 12px;
             border: 0;
             padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-size: 14px;
             font-weight: 650;
+            text-decoration: none;
             cursor: pointer;
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
         }
@@ -2136,15 +2190,24 @@
                             </div>
 
                             @if ($tab === 'salurkan')
-                                <div class="donor-status-box {{ $isDone ? 'is-done' : 'is-process' }}">
-                                    <i class="{{ $isDone ? 'far fa-circle-check' : 'far fa-clock' }}"></i>
+                                <div class="donor-status-box {{ $isDone ? 'is-done' : 'is-process' }} {{ $isDone && !empty($history['feedback_photo_url']) ? 'has-proof' : '' }}">
                                     <span>
+                                        <i class="{{ $isDone ? 'far fa-circle-check' : 'far fa-clock' }}"></i>
                                         @if($isDone)
                                             Selesai<br>Disalurkan
                                         @else
                                             Proses<br>Penyaluran
                                         @endif
                                     </span>
+                                    @if($isDone && !empty($history['feedback_photo_url']))
+                                        <a class="donor-proof-link" href="{{ $history['feedback_photo_url'] }}" target="_blank" rel="noopener noreferrer">
+                                            <img src="{{ $history['feedback_photo_url'] }}" alt="Bukti barang diterima">
+                                            <span>
+                                                Bukti
+                                                <small>{{ $history['feedback_at'] ?? 'Diterima' }}</small>
+                                            </span>
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="donor-data-block">
@@ -2153,7 +2216,14 @@
                                 </div>
                             @endif
 
-                            <button type="button" class="donor-history-arrow" aria-label="Lihat detail {{ $history['nama_barang'] }}">
+                            <button
+                                type="button"
+                                class="donor-history-arrow"
+                                aria-label="Lihat detail {{ $history['nama_barang'] }}"
+                                @if($tab === 'salurkan')
+                                    wire:click="openDonorSalurkanDetail({{ $history['id'] }})"
+                                @endif
+                            >
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </article>
@@ -2188,6 +2258,95 @@
                 </div>
             @endif
         </section>
+            @if($showDonorDetail && !empty($selectedDonorRequest))
+                <div class="recipient-modal-overlay" wire:key="donor-salurkan-detail-modal">
+                    <section class="recipient-modal-card">
+                        <div class="recipient-modal-head">
+                            <div>
+                                <span class="recipient-request-code">{{ $selectedDonorRequest['code'] }}</span>
+                                <h2>Detail Penyaluran {{ $selectedDonorRequest['nama_barang'] }}</h2>
+                                <p>{{ $selectedDonorRequest['status_note'] }}</p>
+                            </div>
+                            <button type="button" class="recipient-modal-close" wire:click="closeDonorDetail" aria-label="Tutup detail penyaluran">
+                                <i class="fas fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <div class="recipient-detail-grid">
+                            <div class="recipient-detail-item">
+                                <span>Status Penyaluran</span>
+                                <strong>{{ $selectedDonorRequest['status'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Penerima</span>
+                                <strong>{{ $selectedDonorRequest['penerima'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Email Penerima</span>
+                                <strong>{{ $selectedDonorRequest['penerima_email'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Barang</span>
+                                <strong>{{ $selectedDonorRequest['nama_barang'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Kategori</span>
+                                <strong>{{ $selectedDonorRequest['kategori'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Jumlah</span>
+                                <strong>{{ $selectedDonorRequest['jumlah'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Dicatat Disalurkan</span>
+                                <strong>{{ $selectedDonorRequest['fulfilled_at'] }}</strong>
+                            </div>
+                            <div class="recipient-detail-item">
+                                <span>Feedback Diterima</span>
+                                <strong>{{ $selectedDonorRequest['feedback_at'] ?? 'Belum ada feedback' }}</strong>
+                            </div>
+                            <div class="recipient-detail-item is-wide">
+                                <span>Lokasi / Tujuan</span>
+                                <p>{{ $selectedDonorRequest['lokasi_hub'] }}</p>
+                            </div>
+                            <div class="recipient-detail-item is-wide">
+                                <span>Deskripsi Permintaan</span>
+                                <p>{{ $selectedDonorRequest['deskripsi'] }}</p>
+                            </div>
+                        </div>
+
+                        @if($selectedDonorRequest['feedback_photo_url'])
+                            <div class="feedback-complete-box">
+                                <strong>Bukti barang diterima oleh penerima.</strong>
+                                @if($selectedDonorRequest['feedback_nama_barang'])
+                                    Barang diterima: {{ $selectedDonorRequest['feedback_nama_barang'] }}
+                                    @if($selectedDonorRequest['feedback_jumlah'])
+                                        ({{ $selectedDonorRequest['feedback_jumlah'] }})
+                                    @endif
+                                @endif
+                                @if($selectedDonorRequest['feedback_note'])
+                                    <p style="margin:8px 0 0;">{{ $selectedDonorRequest['feedback_note'] }}</p>
+                                @endif
+                                <a href="{{ $selectedDonorRequest['feedback_photo_url'] }}" target="_blank" rel="noopener noreferrer">
+                                    <img src="{{ $selectedDonorRequest['feedback_photo_url'] }}" class="feedback-preview" alt="Foto bukti barang diterima">
+                                </a>
+                            </div>
+                        @else
+                            <div class="feedback-complete-box">
+                                <strong>Menunggu feedback penerima.</strong>
+                                Riwayat ini akan berubah menjadi selesai setelah penerima mengunggah bukti barang diterima.
+                            </div>
+                        @endif
+
+                        <div class="recipient-modal-actions">
+                            <a class="recipient-action-secondary" href="{{ $selectedDonorRequest['maps_url'] }}" target="_blank" rel="noopener noreferrer">
+                                Buka Maps
+                            </a>
+                            <button type="button" class="recipient-action-primary" wire:click="closeDonorDetail">Tutup</button>
+                        </div>
+                    </section>
+                </div>
+            @endif
         @endif
     </div>
 

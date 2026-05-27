@@ -75,6 +75,16 @@ class Profile extends Component
         ]);
     }
 
+    public function updatedPhoto()
+    {
+        $this->validateOnly('photo', [
+            'photo' => 'nullable|image|max:5120',
+        ], [
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.max' => 'Ukuran foto terlalu besar (Maksimal 5MB).',
+        ]);
+    }
+
     /**
      * Logic Simpan Perubahan
      */

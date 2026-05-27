@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Throwable;
@@ -21,14 +22,23 @@ class GoogleAuthController extends Controller
                 ->with('error', 'Login Google belum aktif. Isi GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET terlebih dahulu.');
         }
 
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->stateless()
+            ->redirect();
     }
 
     public function callback(Request $request): RedirectResponse
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')
+                ->stateless()
+                ->user();
         } catch (Throwable $exception) {
+            Log::warning('Google login callback failed.', [
+                'exception' => $exception::class,
+                'message' => $exception->getMessage(),
+            ]);
+
             return redirect()
                 ->route('login')
                 ->with('error', 'Login Google gagal. Silakan coba lagi.');
@@ -37,10 +47,16 @@ class GoogleAuthController extends Controller
         $email = strtolower((string) $googleUser->getEmail());
         $isVerified = (bool) data_get($googleUser->user, 'email_verified', true);
 
-        if (! $isVerified || ! Str::endsWith($email, '@gmail.com')) {
+        if (! $email) {
             return redirect()
                 ->route('login')
-                ->with('error', 'Gunakan akun Gmail yang sudah terverifikasi Google.');
+                ->with('error', 'Email Google tidak ditemukan.');
+        }
+
+        if (! $isVerified) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Gunakan akun Google yang sudah terverifikasi.');
         }
 
         $user = User::where('email', $email)->first();
@@ -55,7 +71,9 @@ class GoogleAuthController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect()->route('dashboard')->with('message', 'Selamat datang kembali!');
+            return redirect()
+                ->route('dashboard')
+                ->with('message', 'Selamat datang kembali!');
         }
 
         $request->session()->put('google_auth_user', [
@@ -105,9 +123,12 @@ class GoogleAuthController extends Controller
         ]);
 
         $request->session()->forget('google_auth_user');
+
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard')->with('message', 'Akun Google berhasil dibuat.');
+        return redirect()
+            ->route('dashboard')
+            ->with('message', 'Akun Google berhasil dibuat.');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Donation;
 use App\Models\PermintaanModel;
+use App\Support\ReboxLocations;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -149,11 +150,14 @@ class Permintaan extends Component
             'kode_box_input.required' => 'Kode box wajib diisi.',
         ]);
 
-        if (strtoupper(trim($this->kode_box_input)) !== $this->selectedLocation['code']) {
+        $scannedCode = ReboxLocations::extractCode($this->kode_box_input);
+
+        if ($scannedCode !== $this->selectedLocation['code']) {
             $this->addError('kode_box_input', 'Kode box tidak sesuai dengan lokasi Rebox yang dipilih.');
             return;
         }
 
+        $this->kode_box_input = $scannedCode;
         $this->salurkan_nama_barang = $this->selectedRequest['nama_barang'] ?? '';
         $this->salurkan_kategori = $this->selectedRequest['kategori_barang'] ?? '';
         $this->salurkan_jumlah = $this->selectedRequest['jumlah'] ?? '';
@@ -444,36 +448,7 @@ class Permintaan extends Component
 
     public function locations(): array
     {
-        $images = [
-            'images/GambarcardRebox1.png',
-            'images/GambarcardRebox2.png',
-            'images/GambarcardRebox3.png',
-            'images/GambarcardRebox4.png',
-        ];
-
-        $names = [
-            'Dago', 'Lembang', 'Braga', 'Cihampelas', 'Gedebage',
-            'Cibaduyut', 'Ciwidey', 'Pangalengan', 'Bojongsoang', 'Setiabudi',
-            'Pasteur', 'Antapani', 'Arcamanik', 'Ujungberung', 'Soreang',
-            'Padalarang', 'Cimahi', 'Jatinangor', 'Dayeuhkolot', 'Cileunyi',
-        ];
-
-        $codes = [
-            'DG-01', 'LB-02', 'BR-03', 'CH-04', 'GD-05',
-            'CB-06', 'CW-07', 'PG-08', 'BS-09', 'SB-10',
-            'PS-11', 'AP-12', 'AM-13', 'UB-14', 'SR-15',
-            'PD-16', 'CM-17', 'JT-18', 'DK-19', 'CL-20',
-        ];
-
-        return collect($names)->map(fn ($name, $index) => [
-            'id' => $index + 1,
-            'name' => $name,
-            'title' => 'Rebox ' . $name,
-            'area' => $name . ', Kota Bandung',
-            'distance' => ($index % 5) + 1 . '.' . ($index % 8) . ' km',
-            'code' => $codes[$index],
-            'image' => asset($images[$index % count($images)]),
-        ])->all();
+        return ReboxLocations::all();
     }
 
     public function render()
