@@ -775,16 +775,17 @@
         }
 
         .donation-flow-card {
-            width: min(100%, 520px);
+            width: min(100%, 480px);
             max-height: calc(100vh - 48px);
             overflow-y: auto;
-            border-radius: 24px;
+            border-radius: 22px;
             border: 1px solid rgba(0, 134, 0, 0.16);
             background: rgba(255, 255, 255, 0.96);
             box-shadow: 0 32px 90px rgba(15, 23, 42, 0.16), 0 18px 48px rgba(0, 134, 0, 0.10);
-            padding: 28px;
+            padding: 24px;
             color: #14202b;
             font-family: var(--sf-pro);
+            font-weight: 450;
             animation: modalFlipIn .58s cubic-bezier(.18,.88,.22,1.08) both;
             transform-origin: center;
             transform-style: preserve-3d;
@@ -792,32 +793,32 @@
         }
 
         .donation-flow-card.is-open {
-            width: min(100%, 590px);
+            width: min(100%, 520px);
         }
 
         .donation-flow-card.is-code {
-            width: min(1180px, calc(100vw - 80px));
+            width: min(980px, calc(100vw - 80px));
             padding: 0;
             overflow: hidden;
-            border-radius: 24px;
+            border-radius: 22px;
             border-color: rgba(15, 23, 42, .05);
             background: #ffffff;
             box-shadow: 0 26px 88px rgba(15, 23, 42, .13);
         }
 
         .donation-flow-card.is-success {
-            width: min(100%, 560px);
+            width: min(100%, 500px);
             text-align: center;
         }
 
         .scan-shell {
             display: grid;
             grid-template-columns: minmax(0, 52.2%) minmax(0, 47.8%);
-            min-height: 690px;
+            min-height: 560px;
         }
 
         .scan-visual {
-            padding: 26px 32px;
+            padding: 22px 26px;
             background:
                 radial-gradient(circle at 72% 74%, rgba(22, 163, 74, .18), transparent 30%),
                 radial-gradient(circle at 18% 20%, rgba(34, 197, 94, .18), transparent 31%),
@@ -829,7 +830,7 @@
         }
 
         .scan-content {
-            padding: 28px 40px 28px 38px;
+            padding: 24px 32px 24px 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -844,8 +845,8 @@
             align-items: center;
             gap: 14px;
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 850;
+            font-size: 15px;
+            font-weight: 650;
         }
 
         .scan-safe {
@@ -860,8 +861,8 @@
             background: rgba(255, 255, 255, .075);
             border: 1px solid rgba(255, 255, 255, .13);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 12px 28px rgba(0, 0, 0, .13);
-            font-size: 13px;
-            font-weight: 850;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .scan-safe i {
@@ -870,15 +871,15 @@
         }
 
         .scan-brand-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 13px;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
             display: grid;
             place-items: center;
             background: linear-gradient(145deg, #15c84b, #008c28);
             color: #ffffff;
             box-shadow: 0 20px 46px rgba(0, 170, 48, 0.30);
-            font-size: 22px;
+            font-size: 19px;
         }
 
         .flow-head {
@@ -897,25 +898,25 @@
         }
 
         .modal-icon {
-            width: 66px;
-            height: 66px;
-            margin: 0 auto 16px;
-            border-radius: 19px;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 14px;
+            border-radius: 17px;
             display: grid;
             place-items: center;
             background: var(--rebox-green-soft);
             color: var(--rebox-green);
-            font-size: 27px;
+            font-size: 23px;
             box-shadow: 0 14px 28px rgba(0, 134, 0, 0.08);
             animation: floatBox 3.6s ease-in-out infinite;
         }
 
         .scan-content .modal-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 0 22px;
-            border-radius: 16px;
-            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            margin: 0 0 18px;
+            border-radius: 15px;
+            font-size: 20px;
             background: linear-gradient(145deg, #f4fbf6, #ffffff);
             box-shadow: 0 18px 40px rgba(15, 23, 42, .07);
             animation: none;
@@ -923,9 +924,9 @@
 
         .donation-flow-card h2 {
             margin: 0 0 10px;
-            font-size: 30px;
+            font-size: 24px;
             line-height: 1.15;
-            font-weight: 850;
+            font-weight: 650;
             letter-spacing: 0;
             color: #14202b;
         }
@@ -933,8 +934,8 @@
         .donation-flow-card p {
             margin: 0;
             color: rgba(102, 112, 133, 0.86);
-            font-size: 14px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
             line-height: 1.6;
         }
 
@@ -952,12 +953,12 @@
 
         .scan-location-card {
             border: 1px solid rgba(15, 23, 42, 0.10);
-            border-radius: 18px;
-            padding: 18px;
+            border-radius: 16px;
+            padding: 14px;
             background: #ffffff;
             display: grid;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 18px;
             box-shadow: 0 20px 50px rgba(15, 23, 42, .07);
         }
 
@@ -987,9 +988,9 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: grid;
             place-items: center;
             color: #111827;
@@ -1000,17 +1001,17 @@
         .scan-location-main strong {
             display: block;
             color: #111827;
-            font-size: 15px;
-            font-weight: 850;
+            font-size: 14px;
+            font-weight: 650;
             line-height: 1.2;
         }
 
         .scan-location-main span {
             display: block;
             color: #667085;
-            font-size: 13px;
-            font-weight: 700;
-            margin-top: 7px;
+            font-size: 12px;
+            font-weight: 450;
+            margin-top: 5px;
         }
 
         .scan-code-pill {
@@ -1020,7 +1021,7 @@
         .scan-location-main .scan-box-code-pill {
             min-width: 78px;
             max-width: 116px;
-            height: 36px;
+            height: 32px;
             margin-top: 0;
             padding: 0 14px;
             border-radius: 999px;
@@ -1029,8 +1030,8 @@
             justify-content: center;
             color: #008600;
             background: #effaf1;
-            font-size: 13px;
-            font-weight: 850;
+            font-size: 12px;
+            font-weight: 650;
             line-height: 1;
             white-space: nowrap;
             overflow: hidden;
@@ -1043,17 +1044,17 @@
         }
 
         .scan-hint {
-            min-height: 50px;
+            min-height: 42px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             gap: 10px;
             border-radius: 10px;
-            padding: 12px 16px;
+            padding: 10px 13px;
             color: #06701c;
             background: linear-gradient(135deg, #e3f7e6, #edf8ef);
-            font-size: 13px;
-            font-weight: 750;
+            font-size: 12px;
+            font-weight: 600;
             line-height: 1.35;
         }
 
@@ -1070,14 +1071,14 @@
         }
 
         .modal-input {
-            min-height: 54px;
-            border-radius: 16px;
+            min-height: 48px;
+            border-radius: 14px;
             border: 1px solid rgba(0, 134, 0, 0.14);
             background: rgba(255, 255, 255, 0.96);
             display: flex;
             align-items: center;
-            gap: 13px;
-            padding: 0 16px;
+            gap: 11px;
+            padding: 0 14px;
             box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
             transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
         }
@@ -1089,14 +1090,14 @@
         }
 
         .modal-input i {
-            width: 34px;
-            height: 34px;
-            border-radius: 11px;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
             display: grid;
             place-items: center;
             color: #008600;
             background: #eef9f0;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .modal-input input {
@@ -1106,13 +1107,13 @@
             min-width: 0;
             background: transparent;
             color: #14202b;
-            font-size: 15px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
         }
 
         .modal-input input::placeholder {
             color: rgba(102, 112, 133, 0.62);
-            font-weight: 520;
+            font-weight: 450;
         }
 
         .qr-scanner-box {
@@ -1126,7 +1127,7 @@
         }
 
         .qr-camera-wrap {
-            min-height: 420px;
+            min-height: 330px;
             position: relative;
             overflow: hidden;
             border-radius: 18px;
@@ -1144,18 +1145,18 @@
             left: 50%;
             top: 26px;
             transform: translateX(-50%);
-            min-height: 44px;
+            min-height: 36px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0 22px;
+            padding: 0 18px;
             border-radius: 999px;
             color: rgba(255, 255, 255, 0.90);
             background: rgba(255, 255, 255, .10);
             border: 1px solid rgba(255, 255, 255, .16);
             box-shadow: 0 16px 42px rgba(0, 0, 0, .16);
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 600;
             white-space: nowrap;
             pointer-events: none;
         }
@@ -1196,26 +1197,27 @@
             position: relative;
             display: grid;
             place-items: center;
-            width: 86px;
-            height: 74px;
-            margin: 0 auto 34px;
+            width: 70px;
+            height: 62px;
+            margin: 0 auto 24px;
             border-radius: 18px;
             background: transparent;
             color: #ffffff;
-            font-size: 58px;
+            font-size: 46px;
             box-shadow: none;
         }
 
         .qr-camera-empty strong {
             display: block;
-            font-size: 20px;
-            margin-bottom: 14px;
+            font-size: 17px;
+            font-weight: 650;
+            margin-bottom: 10px;
         }
 
         .qr-camera-empty p {
             margin: 0;
-            font-size: 15px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
         }
 
         .qr-glass-code {
@@ -1330,9 +1332,10 @@
         .qr-scanner-actions .btn-soft {
             flex: 1;
             min-width: 145px;
-            height: 50px;
+            height: 44px;
             border-radius: 13px;
-            font-size: 15px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .qr-scanner-actions .btn-main {
@@ -1347,15 +1350,15 @@
         }
 
         .qr-scan-status {
-            margin: 16px 0 0;
-            border-radius: 16px;
-            padding: 16px 18px 16px 54px;
+            margin: 14px 0 0;
+            border-radius: 14px;
+            padding: 13px 16px 13px 48px;
             position: relative;
             color: rgba(255, 255, 255, .92);
             background: rgba(255, 255, 255, .10);
             border: 1px solid rgba(255, 255, 255, .09);
-            font-size: 13px;
-            font-weight: 650;
+            font-size: 12px;
+            font-weight: 500;
             line-height: 1.4;
         }
 
@@ -1385,10 +1388,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 16px 0;
+            margin: 14px 0;
             color: #667085;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 650;
             text-transform: uppercase;
         }
 
@@ -1401,22 +1404,22 @@
         }
 
         .manual-code-title {
-            margin: 0 0 12px;
+            margin: 0 0 10px;
             color: #111827;
-            font-size: 15px;
-            font-weight: 850;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .manual-code-card {
-            border-radius: 18px;
-            padding: 18px;
+            border-radius: 16px;
+            padding: 14px;
             background: #ffffff;
             border: 1px solid rgba(20, 32, 43, 0.08);
             box-shadow: 0 18px 48px rgba(15, 23, 42, 0.05);
         }
 
         .manual-code-card .modal-input {
-            min-height: 56px;
+            min-height: 48px;
             border-radius: 13px;
             background: #ffffff;
         }
@@ -1445,12 +1448,12 @@
 
         .modal-actions .btn-main,
         .modal-actions .btn-soft {
-            min-width: 124px;
-            height: 46px;
+            min-width: 112px;
+            height: 42px;
             border-radius: 14px;
-            font-size: 14px;
-            font-weight: 620;
-            padding: 0 22px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 18px;
         }
 
         .scan-content .modal-actions {
@@ -1463,8 +1466,8 @@
         .scan-content .modal-actions .btn-soft {
             min-width: 96px;
             border-radius: 12px;
-            font-weight: 800;
-            padding: 0 24px;
+            font-weight: 600;
+            padding: 0 20px;
         }
 
         .scan-content .modal-actions .btn-soft {
@@ -1474,7 +1477,7 @@
         }
 
         .scan-content .modal-actions .btn-main {
-            min-width: 176px;
+            min-width: 150px;
             background: linear-gradient(135deg, #17c43e, #00941e);
             box-shadow: 0 16px 30px rgba(0, 134, 0, .26);
         }
@@ -1483,32 +1486,32 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            height: 34px;
-            padding: 0 16px;
+            height: 32px;
+            padding: 0 14px;
             border-radius: 999px;
             background: var(--rebox-green);
             color: #ffffff;
             font-size: 12px;
-            font-weight: 650;
-            margin-bottom: 16px;
+            font-weight: 600;
+            margin-bottom: 14px;
         }
 
         .open-timer-display {
             color: var(--rebox-green);
-            font-size: 52px;
+            font-size: 44px;
             line-height: 1;
-            font-weight: 700;
+            font-weight: 650;
             letter-spacing: 0;
             text-align: center;
-            margin: 18px 0;
+            margin: 14px 0;
             text-shadow: 0 16px 34px rgba(0, 134, 0, 0.10);
         }
 
         .donation-flow-card .upload-proof {
-            min-height: 134px;
-            border-radius: 18px;
-            font-size: 15px;
-            font-weight: 620;
+            min-height: 112px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .donation-flow-card .proof-note {
@@ -1525,16 +1528,16 @@
 
         .success-flow-actions .btn-main,
         .success-flow-actions .btn-soft {
-            min-width: 138px;
-            height: 46px;
+            min-width: 124px;
+            height: 42px;
             border-radius: 14px;
-            font-size: 14px;
-            font-weight: 620;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .success-card { text-align: center; }
         .success-card .center-icon { margin: 0 auto 24px; }
-        .success-card h2 { font-size: 34px; }
+        .success-card h2 { font-size: 26px; font-weight: 650; }
 
         .success-actions {
             display: flex;

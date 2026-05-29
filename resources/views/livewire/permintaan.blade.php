@@ -2526,11 +2526,11 @@
         }
 
         .request-qr-flow {
-            width: min(1180px, calc(100vw - 80px));
+            width: min(980px, calc(100vw - 80px));
             padding: 0;
             overflow: hidden;
             text-align: left;
-            border-radius: 24px;
+            border-radius: 22px;
             border-color: rgba(15, 23, 42, .05);
             background: #ffffff;
             box-shadow: 0 26px 88px rgba(15, 23, 42, .13);
@@ -2539,11 +2539,11 @@
         .request-qr-shell {
             display: grid;
             grid-template-columns: minmax(0, 52.2%) minmax(0, 47.8%);
-            min-height: 690px;
+            min-height: 560px;
         }
 
         .request-qr-visual {
-            padding: 26px 32px;
+            padding: 22px 26px;
             background:
                 radial-gradient(circle at 72% 74%, rgba(22, 163, 74, .18), transparent 30%),
                 radial-gradient(circle at 18% 20%, rgba(34, 197, 94, .18), transparent 31%),
@@ -2551,11 +2551,11 @@
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 15px;
         }
 
         .request-qr-content {
-            padding: 28px 40px 28px 38px;
+            padding: 24px 32px 24px 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -2568,80 +2568,80 @@
         .request-qr-brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 850;
+            font-size: 15px;
+            font-weight: 650;
         }
 
         .request-qr-safe {
             margin-left: auto;
-            height: 40px;
+            height: 34px;
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            padding: 0 16px;
+            gap: 8px;
+            padding: 0 13px;
             border-radius: 999px;
             color: #ffffff;
             background: rgba(255, 255, 255, .075);
             border: 1px solid rgba(255, 255, 255, .13);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 12px 28px rgba(0, 0, 0, .13);
-            font-size: 13px;
-            font-weight: 850;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .request-qr-safe i {
             color: #65f083;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .request-qr-brand-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 13px;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
             display: grid;
             place-items: center;
             background: linear-gradient(145deg, #15c84b, #008c28);
             color: #ffffff;
             box-shadow: 0 20px 46px rgba(0, 170, 48, .30);
-            font-size: 22px;
+            font-size: 19px;
         }
 
         .request-qr-content .big-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 0 22px;
-            border-radius: 16px;
-            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            margin: 0 0 16px;
+            border-radius: 15px;
+            font-size: 20px;
             background: linear-gradient(145deg, #f4fbf6, #ffffff);
             box-shadow: 0 18px 40px rgba(15, 23, 42, .07);
         }
 
         .request-qr-content h2 {
             text-align: left;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #111827;
-            font-size: 30px;
-            font-weight: 850;
+            font-size: 24px;
+            font-weight: 650;
         }
 
         .request-qr-copy {
             max-width: 390px;
-            margin: 0 0 20px;
+            margin: 0 0 16px;
             color: rgba(102, 112, 133, .82);
-            font-size: 14px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
             line-height: 1.6;
         }
 
         .request-location-card {
             border: 1px solid rgba(15, 23, 42, .10);
-            border-radius: 18px;
-            padding: 18px;
+            border-radius: 16px;
+            padding: 14px;
             background: #ffffff;
             display: grid;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 18px;
             box-shadow: 0 20px 50px rgba(15, 23, 42, .07);
         }
 
@@ -2649,15 +2649,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            min-height: 50px;
+            gap: 10px;
+            min-height: 44px;
         }
 
         .request-location-main > div {
             position: relative;
             min-width: 0;
-            min-height: 44px;
-            padding-left: 58px;
+            min-height: 40px;
+            padding-left: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -2671,9 +2671,9 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: grid;
             place-items: center;
             color: #111827;
@@ -2685,16 +2685,16 @@
         .request-manual-title {
             display: block;
             color: #111827;
-            font-size: 15px;
-            font-weight: 850;
+            font-size: 14px;
+            font-weight: 650;
         }
 
         .request-location-main span {
             display: block;
-            margin-top: 7px;
+            margin-top: 5px;
             color: #667085;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 450;
         }
 
         .request-code-pill {
@@ -2702,19 +2702,19 @@
         }
 
         .request-location-main .request-box-code-pill {
-            min-width: 78px;
-            max-width: 116px;
-            height: 36px;
+            min-width: 70px;
+            max-width: 105px;
+            height: 32px;
             margin-top: 0;
-            padding: 0 14px;
+            padding: 0 12px;
             border-radius: 999px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             color: #008600;
             background: #effaf1;
-            font-size: 13px;
-            font-weight: 850;
+            font-size: 12px;
+            font-weight: 650;
             line-height: 1;
             white-space: nowrap;
             overflow: hidden;
@@ -2727,17 +2727,17 @@
         }
 
         .request-scan-hint {
-            min-height: 50px;
+            min-height: 42px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 10px;
+            gap: 8px;
             border-radius: 10px;
-            padding: 12px 16px;
+            padding: 10px 13px;
             color: #06701c;
             background: linear-gradient(135deg, #e3f7e6, #edf8ef);
-            font-size: 13px;
-            font-weight: 750;
+            font-size: 12px;
+            font-weight: 600;
             line-height: 1.35;
         }
 
@@ -2758,7 +2758,7 @@
         }
 
         .request-qr-camera {
-            min-height: 420px;
+            min-height: 330px;
             position: relative;
             overflow: hidden;
             border-radius: 18px;
@@ -2774,20 +2774,20 @@
             position: absolute;
             z-index: 5;
             left: 50%;
-            top: 26px;
+            top: 22px;
             transform: translateX(-50%);
-            min-height: 42px;
+            min-height: 36px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0 22px;
+            padding: 0 18px;
             border-radius: 999px;
             color: rgba(255, 255, 255, .90);
             background: rgba(255, 255, 255, .10);
             border: 1px solid rgba(255, 255, 255, .16);
             box-shadow: 0 16px 42px rgba(0, 0, 0, .16);
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 600;
             white-space: nowrap;
             pointer-events: none;
         }
@@ -2808,7 +2808,7 @@
             z-index: 2;
             display: grid;
             place-items: center;
-            padding: 24px;
+            padding: 20px;
             color: #ffffff;
             text-align: center;
             background:
@@ -2828,26 +2828,27 @@
             position: relative;
             display: grid;
             place-items: center;
-            width: 86px;
-            height: 74px;
-            margin: 0 auto 34px;
-            border-radius: 18px;
+            width: 70px;
+            height: 62px;
+            margin: 0 auto 24px;
+            border-radius: 16px;
             background: transparent;
             color: #ffffff;
-            font-size: 58px;
+            font-size: 46px;
             box-shadow: none;
         }
 
         .request-qr-empty strong {
             display: block;
-            font-size: 20px;
-            margin-bottom: 14px;
+            font-size: 17px;
+            margin-bottom: 10px;
+            font-weight: 650;
         }
 
         .request-qr-empty p {
             margin: 0;
-            font-size: 15px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
         }
 
         .request-qr-glass-code {
@@ -2952,7 +2953,7 @@
 
         .request-qr-actions {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             padding: 0;
             margin: 16px 0 0;
             background: transparent;
@@ -2961,10 +2962,11 @@
         .request-qr-actions .primary-btn,
         .request-qr-actions .secondary-btn {
             flex: 1;
-            min-width: 145px;
-            min-height: 50px;
+            min-width: 128px;
+            min-height: 44px;
             border-radius: 13px;
-            font-size: 15px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .request-qr-actions .primary-btn {
@@ -2979,15 +2981,15 @@
         }
 
         .request-qr-status {
-            margin: 16px 0 0;
-            border-radius: 16px;
-            padding: 16px 18px 16px 54px;
+            margin: 14px 0 0;
+            border-radius: 14px;
+            padding: 13px 15px 13px 46px;
             position: relative;
             color: rgba(255, 255, 255, .92);
             background: rgba(255, 255, 255, .10);
             border: 1px solid rgba(255, 255, 255, .09);
-            font-size: 13px;
-            font-weight: 650;
+            font-size: 12px;
+            font-weight: 550;
             line-height: 1.4;
         }
 
@@ -2996,7 +2998,7 @@
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
-            left: 18px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             width: 18px;
@@ -3017,10 +3019,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 16px 0 18px;
+            margin: 14px 0 16px;
             color: #667085;
-            font-size: 12px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 650;
             text-transform: uppercase;
         }
 
@@ -3033,37 +3035,37 @@
         }
 
         .request-manual-card {
-            border-radius: 18px;
-            padding: 18px;
+            border-radius: 16px;
+            padding: 14px;
             background: #ffffff;
             border: 1px solid rgba(20, 32, 43, .08);
             box-shadow: 0 18px 48px rgba(15, 23, 42, .05);
         }
 
         .request-manual-card .input-box {
-            min-height: 56px;
-            border-radius: 13px;
+            min-height: 48px;
+            border-radius: 12px;
             background: #ffffff;
             box-shadow: none;
             border-color: rgba(15, 23, 42, .11);
-            padding: 0 16px;
+            padding: 0 13px;
         }
 
         .request-manual-card .input-box i {
-            width: 34px;
-            height: 34px;
+            width: 30px;
+            height: 30px;
             border-radius: 11px;
             display: grid;
             place-items: center;
             color: #008600;
             background: #eef9f0;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .request-manual-card .input-box input {
             color: #111827;
-            font-size: 15px;
-            font-weight: 520;
+            font-size: 13px;
+            font-weight: 450;
         }
 
         .request-manual-card .input-box input::placeholder {
@@ -3071,14 +3073,14 @@
         }
 
         .request-manual-title {
-            margin-bottom: 12px;
+            margin-bottom: 9px;
         }
 
         .request-manual-note {
             margin: 2px 0 0;
             color: #667085;
-            font-size: 13px;
-            font-weight: 520;
+            font-size: 12px;
+            font-weight: 450;
             line-height: 1.45;
         }
 
