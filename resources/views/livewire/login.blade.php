@@ -10,8 +10,9 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             background:
-                radial-gradient(circle at center, rgba(124, 255, 124, 0.16), transparent 35%),
-                linear-gradient(to right, #f2f2f2 0%, #eaf5e9 50%, #f2f2f2 100%);
+                linear-gradient(135deg, rgba(0, 148, 0, 0.045) 0 1px, transparent 1px 52px),
+                linear-gradient(45deg, rgba(0, 148, 0, 0.035) 0 1px, transparent 1px 58px),
+                linear-gradient(115deg, #f8fbf8 0%, #eef7ef 48%, #ffffff 100%);
         }
 
         .rebox-auth-page {
@@ -26,8 +27,9 @@
             position: relative;
             overflow: hidden;
             background:
-                radial-gradient(circle at center, rgba(124, 255, 124, 0.16), transparent 35%),
-                linear-gradient(to right, #f2f2f2 0%, #eaf5e9 50%, #f2f2f2 100%);
+                linear-gradient(135deg, rgba(0, 148, 0, 0.050) 0 1px, transparent 1px 54px),
+                linear-gradient(45deg, rgba(0, 148, 0, 0.035) 0 1px, transparent 1px 62px),
+                linear-gradient(115deg, #f8fbf8 0%, #eef7ef 48%, #ffffff 100%);
             perspective: 1200px;
         }
 
@@ -35,40 +37,46 @@
         .rebox-auth-page::after {
             content: "";
             position: absolute;
-            border-radius: 50%;
             pointer-events: none;
-            filter: blur(24px);
             z-index: 0;
         }
 
         .rebox-auth-page::before {
-            width: 230px;
-            height: 230px;
-            left: 12%;
-            top: 18%;
-            background: rgba(0, 148, 0, 0.12);
+            width: 58%;
+            height: 150%;
+            left: -28%;
+            top: -24%;
+            border-radius: 0 120px 120px 0;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0)),
+                repeating-linear-gradient(0deg, rgba(0, 148, 0, 0.055) 0 1px, transparent 1px 28px);
+            transform: rotate(-9deg);
+            opacity: .8;
         }
 
         .rebox-auth-page::after {
-            width: 320px;
-            height: 320px;
-            right: 11%;
-            bottom: 11%;
-            background: rgba(61, 159, 61, 0.14);
+            width: 42%;
+            height: 100%;
+            right: -20%;
+            bottom: -18%;
+            border-radius: 120px 0 0 120px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0)),
+                repeating-linear-gradient(90deg, rgba(0, 148, 0, 0.05) 0 1px, transparent 1px 30px);
+            transform: rotate(11deg);
+            opacity: .62;
         }
 
         .bg-accent {
             position: absolute;
-            width: 170px;
-            height: 170px;
-            left: 48%;
-            bottom: 18%;
-            border-radius: 50%;
-            background: rgba(0, 148, 0, 0.09);
-            filter: blur(22px);
+            inset: auto 0 0;
+            height: 150px;
+            background:
+                linear-gradient(180deg, transparent, rgba(0, 148, 0, 0.035)),
+                repeating-linear-gradient(135deg, rgba(0, 148, 0, 0.045) 0 1px, transparent 1px 26px);
             pointer-events: none;
             z-index: 0;
-            animation: authAccentFloat 7s ease-in-out infinite;
+            animation: authAccentFloat 9s ease-in-out infinite;
         }
 
         .left-content {
@@ -473,10 +481,13 @@
             background: #ffffff;
             display: grid;
             place-items: center;
-            color: #4285f4;
-            font-size: 16px;
-            font-weight: 900;
             box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.08);
+        }
+
+        .google-mark svg {
+            width: 16px;
+            height: 16px;
+            display: block;
         }
 
         .auth-link {
@@ -703,7 +714,14 @@
         </form>
 
         <a href="{{ route('login.google') }}" class="google-login-btn">
-            <span class="google-mark">G</span>
+            <span class="google-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img" focusable="false">
+                    <path fill="#4285F4" d="M23.49 12.27c0-.83-.07-1.44-.22-2.08H12v3.78h6.62c-.13.94-.85 2.36-2.45 3.31l-.02.13 3.56 2.33.25.02c2.28-1.79 3.53-4.43 3.53-7.49z"/>
+                    <path fill="#34A853" d="M12 23c3.26 0 5.99-.91 7.99-2.48l-3.81-3.24c-1.02.6-2.39 1.02-4.18 1.02-3.2 0-5.92-1.79-6.89-4.27l-.13.01-3.7 2.42-.05.11C3.21 20.41 7.29 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.11 14.03A5.87 5.87 0 0 1 4.79 12c0-.71.12-1.39.31-2.03l-.01-.13-3.75-2.47-.12.05A10.3 10.3 0 0 0 0 12c0 1.65.43 3.2 1.22 4.58l3.89-2.55z"/>
+                    <path fill="#EA4335" d="M12 5.7c2.27 0 3.8.83 4.67 1.53l3.41-2.83C17.98 2.75 15.26 1.8 12 1.8c-4.71 0-8.79 2.59-10.78 6.38l3.88 2.55C6.08 7.49 8.8 5.7 12 5.7z"/>
+                </svg>
+            </span>
             <span>Login dengan Google</span>
         </a>
 

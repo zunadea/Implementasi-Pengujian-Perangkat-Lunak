@@ -10,8 +10,9 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             background:
-                radial-gradient(circle at center, rgba(124, 255, 124, 0.16), transparent 35%),
-                linear-gradient(to right, #f2f2f2 0%, #eaf5e9 50%, #f2f2f2 100%);
+                linear-gradient(135deg, rgba(0, 148, 0, 0.045) 0 1px, transparent 1px 52px),
+                linear-gradient(45deg, rgba(0, 148, 0, 0.035) 0 1px, transparent 1px 58px),
+                linear-gradient(115deg, #f8fbf8 0%, #eef7ef 48%, #ffffff 100%);
         }
 
         .rebox-auth-page {
@@ -26,8 +27,9 @@
             position: relative;
             overflow: hidden;
             background:
-                radial-gradient(circle at center, rgba(124, 255, 124, 0.16), transparent 35%),
-                linear-gradient(to right, #f2f2f2 0%, #eaf5e9 50%, #f2f2f2 100%);
+                linear-gradient(135deg, rgba(0, 148, 0, 0.050) 0 1px, transparent 1px 54px),
+                linear-gradient(45deg, rgba(0, 148, 0, 0.035) 0 1px, transparent 1px 62px),
+                linear-gradient(115deg, #f8fbf8 0%, #eef7ef 48%, #ffffff 100%);
             perspective: 1200px;
         }
 
@@ -35,40 +37,46 @@
         .rebox-auth-page::after {
             content: "";
             position: absolute;
-            border-radius: 50%;
             pointer-events: none;
-            filter: blur(24px);
             z-index: 0;
         }
 
         .rebox-auth-page::before {
-            width: 230px;
-            height: 230px;
-            left: 12%;
-            top: 18%;
-            background: rgba(0, 148, 0, 0.12);
+            width: 58%;
+            height: 150%;
+            left: -28%;
+            top: -24%;
+            border-radius: 0 120px 120px 0;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0)),
+                repeating-linear-gradient(0deg, rgba(0, 148, 0, 0.055) 0 1px, transparent 1px 28px);
+            transform: rotate(-9deg);
+            opacity: .8;
         }
 
         .rebox-auth-page::after {
-            width: 320px;
-            height: 320px;
-            right: 11%;
-            bottom: 11%;
-            background: rgba(61, 159, 61, 0.14);
+            width: 42%;
+            height: 100%;
+            right: -20%;
+            bottom: -18%;
+            border-radius: 120px 0 0 120px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0)),
+                repeating-linear-gradient(90deg, rgba(0, 148, 0, 0.05) 0 1px, transparent 1px 30px);
+            transform: rotate(11deg);
+            opacity: .62;
         }
 
         .bg-accent {
             position: absolute;
-            width: 170px;
-            height: 170px;
-            left: 48%;
-            bottom: 18%;
-            border-radius: 50%;
-            background: rgba(0, 148, 0, 0.09);
-            filter: blur(22px);
+            inset: auto 0 0;
+            height: 150px;
+            background:
+                linear-gradient(180deg, transparent, rgba(0, 148, 0, 0.035)),
+                repeating-linear-gradient(135deg, rgba(0, 148, 0, 0.045) 0 1px, transparent 1px 26px);
             pointer-events: none;
             z-index: 0;
-            animation: authAccentFloat 7s ease-in-out infinite;
+            animation: authAccentFloat 9s ease-in-out infinite;
         }
 
         .left-content {
