@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Livewire\Register;
 use App\Livewire\Login;
 use App\Livewire\Dashboard;
+use App\Livewire\Landing;
 use App\Livewire\Permintaan;
 use App\Livewire\Riwayat;
 use App\Livewire\FormDonasi;
@@ -21,9 +22,7 @@ use App\Http\Controllers\GoogleAuthController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return redirect()->to('/login');
-});
+Route::get('/', Landing::class)->name('landing');
 
 // Akses untuk Guest (Belum Login)
 Route::group(['middleware' => 'guest'], function () {
