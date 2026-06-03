@@ -40,6 +40,10 @@
             scroll-behavior: smooth;
         }
 
+        .rebox-dashboard-page.rebox-landing-page {
+            background: #ffffff;
+        }
+
         #beranda,
         #tentang,
         #dampak,
@@ -101,19 +105,24 @@
             isolation: isolate;
         }
 
+        .rebox-landing-page .dashboard-inner::before {
+            display: none;
+        }
+
         .rebox-landing-page .dashboard-inner::after {
             content: "";
             position: absolute;
             left: 50%;
             top: 0;
             width: 100vw;
-            height: 920px;
+            height: 1060px;
             transform: translateX(-50%);
             background:
                 linear-gradient(180deg,
-                    rgba(255, 255, 255, 0.04) 0%,
-                    rgba(255, 255, 255, 0.02) 52%,
-                    rgba(255, 255, 255, 0.72) 82%,
+                    rgba(255, 255, 255, 0.02) 0%,
+                    rgba(255, 255, 255, 0.05) 58%,
+                    rgba(255, 255, 255, 0.82) 84%,
+                    #ffffff 96%,
                     #ffffff 100%),
                 var(--landing-hero-bg);
             background-size: cover;
@@ -285,10 +294,6 @@
         .rebox-landing-page .hero-section {
             padding: 126px 0 118px;
             min-height: 610px;
-        }
-
-        .rebox-landing-page .hero-hand {
-            display: none;
         }
 
         .hero-hand {
@@ -807,23 +812,61 @@
             content: "";
             position: absolute;
             inset: 0;
-            z-index: -3;
-            background-image: var(--about-bg-1);
-            background-size: cover;
-            background-position: center;
-            animation: aboutReboxBg 18s steps(1, end) infinite;
-            filter: saturate(1.05) contrast(1.04);
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
         }
 
         .about-rebox-section::after {
             content: "";
             position: absolute;
             inset: 0;
-            z-index: -2;
+            z-index: 2;
+            pointer-events: none;
             background:
                 linear-gradient(90deg, rgba(8, 24, 15, 0.84) 0%, rgba(9, 63, 26, 0.70) 48%, rgba(255, 255, 255, 0.10) 100%),
                 radial-gradient(circle at 80% 20%, rgba(190, 241, 196, 0.36), transparent 38%),
                 radial-gradient(circle at 12% 86%, rgba(0, 134, 0, 0.28), transparent 42%);
+        }
+
+        .about-bg-stack {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .about-bg-frame {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.035);
+            filter: saturate(1.05) contrast(1.04);
+            animation: aboutReboxCrossfade 24s ease-in-out infinite;
+            will-change: opacity, transform;
+        }
+
+        .about-bg-frame-1 {
+            background-image: var(--about-bg-1);
+            animation-delay: 0s;
+        }
+
+        .about-bg-frame-2 {
+            background-image: var(--about-bg-2);
+            animation-delay: 6s;
+        }
+
+        .about-bg-frame-3 {
+            background-image: var(--about-bg-3);
+            animation-delay: 12s;
+        }
+
+        .about-bg-frame-4 {
+            background-image: var(--about-bg-4);
+            animation-delay: 18s;
         }
 
         .about-rebox-content {
@@ -837,6 +880,8 @@
             padding: 92px 68px;
             margin: 0 auto;
             color: #ffffff;
+            position: relative;
+            z-index: 3;
         }
 
         .about-rebox-copy {
@@ -963,11 +1008,21 @@
             line-height: 1.45;
         }
 
-        @keyframes aboutReboxBg {
-            0%, 24% { background-image: var(--about-bg-1); }
-            25%, 49% { background-image: var(--about-bg-2); }
-            50%, 74% { background-image: var(--about-bg-3); }
-            75%, 100% { background-image: var(--about-bg-4); }
+        @keyframes aboutReboxCrossfade {
+            0%, 18% {
+                opacity: 1;
+                transform: scale(1.035);
+            }
+
+            28%, 90% {
+                opacity: 0;
+                transform: scale(1.085);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.035);
+            }
         }
 
         .quote-box {
@@ -1462,7 +1517,7 @@
             background:
                 radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.15), transparent 28%),
                 radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.10), transparent 30%),
-                linear-gradient(135deg, #63ae5e, #5fac5a);
+                rgba(0, 134, 0, 0.70);
             box-shadow: 0 -18px 58px rgba(0, 76, 0, 0.13);
             position: relative;
             overflow: hidden;
