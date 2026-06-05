@@ -806,6 +806,10 @@
             border: 0;
             box-shadow: none;
             isolation: isolate;
+            background-image: var(--about-bg-main);
+            background-size: cover;
+            background-position: center 48%;
+            background-repeat: no-repeat;
         }
 
         .about-rebox-section::before {
@@ -814,7 +818,9 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.12) 100%),
+                radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.24), transparent 30%);
         }
 
         .about-rebox-section::after {
@@ -824,9 +830,8 @@
             z-index: 2;
             pointer-events: none;
             background:
-                linear-gradient(90deg, rgba(8, 24, 15, 0.84) 0%, rgba(9, 63, 26, 0.70) 48%, rgba(255, 255, 255, 0.10) 100%),
-                radial-gradient(circle at 80% 20%, rgba(190, 241, 196, 0.36), transparent 38%),
-                radial-gradient(circle at 12% 86%, rgba(0, 134, 0, 0.28), transparent 42%);
+                linear-gradient(90deg, rgba(7, 24, 14, 0.90) 0%, rgba(8, 54, 24, 0.74) 43%, rgba(8, 54, 24, 0.34) 68%, rgba(255, 255, 255, 0.04) 100%),
+                radial-gradient(circle at 16% 82%, rgba(0, 134, 0, 0.22), transparent 36%);
         }
 
         .about-bg-stack {
@@ -841,7 +846,7 @@
             position: absolute;
             inset: 0;
             background-size: cover;
-            background-position: center;
+            background-position: center 48%;
             opacity: 0;
             transform: scale(1.035);
             filter: saturate(1.05) contrast(1.04);
@@ -887,6 +892,7 @@
         .about-rebox-copy {
             grid-column: 1;
             align-self: center;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
         }
 
         .about-rebox-eyebrow {
@@ -942,17 +948,18 @@
             align-items: center;
             padding: 14px 24px;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(12, 48, 25, 0.42);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
             transition: transform 0.28s ease, background 0.28s ease, border-color 0.28s ease;
         }
 
         .about-feature:hover {
             transform: translateX(8px);
             border-color: rgba(212, 246, 210, 0.36);
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(18, 78, 35, 0.48);
         }
 
         .about-feature-icon {
@@ -1794,8 +1801,8 @@
 
             .about-rebox-section::after {
                 background:
-                    linear-gradient(180deg, rgba(8, 24, 15, 0.88) 0%, rgba(9, 63, 26, 0.72) 100%),
-                    radial-gradient(circle at 86% 16%, rgba(190, 241, 196, 0.26), transparent 38%);
+                    linear-gradient(180deg, rgba(7, 24, 14, 0.90) 0%, rgba(8, 54, 24, 0.76) 56%, rgba(8, 54, 24, 0.48) 100%),
+                    radial-gradient(circle at 84% 18%, rgba(190, 241, 196, 0.20), transparent 34%);
             }
 
             .about-rebox-content {
@@ -1806,6 +1813,14 @@
                 justify-content: center;
                 padding: 42px 24px;
                 margin: 0 auto;
+            }
+
+            .about-rebox-section {
+                background-position: center top;
+            }
+
+            .about-bg-frame {
+                background-position: center top;
             }
 
             .about-rebox-content h2 {
@@ -2098,12 +2113,20 @@
             class="about-rebox-section reveal"
             aria-label="Apa itu Rebox"
             style="
+                --about-bg-main: url('{{ asset('images/GambarcardRebox1.png') }}');
                 --about-bg-1: url('{{ asset('images/GambarcardRebox1.png') }}');
                 --about-bg-2: url('{{ asset('images/GambarcardRebox2.png') }}');
                 --about-bg-3: url('{{ asset('images/GambarcardRebox3.png') }}');
                 --about-bg-4: url('{{ asset('images/GambarcardRebox4.png') }}');
             "
         >
+            <div class="about-bg-stack" aria-hidden="true">
+                <div class="about-bg-frame about-bg-frame-1"></div>
+                <div class="about-bg-frame about-bg-frame-2"></div>
+                <div class="about-bg-frame about-bg-frame-3"></div>
+                <div class="about-bg-frame about-bg-frame-4"></div>
+            </div>
+
             <div class="about-rebox-content">
                 <div class="about-rebox-copy">
                     <h2>Apa itu Rebox?</h2>

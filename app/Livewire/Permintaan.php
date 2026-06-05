@@ -343,12 +343,7 @@ class Permintaan extends Component
             return $donations;
         }
 
-        return [
-            ['nama_barang' => 'Pakaian Muslim', 'kategori' => 'Pakaian', 'jumlah' => 5],
-            ['nama_barang' => 'Buku Pelajaran', 'kategori' => 'Buku', 'jumlah' => 12],
-            ['nama_barang' => 'Jaket Anak', 'kategori' => 'Pakaian', 'jumlah' => 4],
-            ['nama_barang' => 'Rice Cooker', 'kategori' => 'Elektronik', 'jumlah' => 1],
-        ];
+        return [];
     }
 
     public function mapsUrl(): string
@@ -364,7 +359,7 @@ class Permintaan extends Component
 
     private function requests(): array
     {
-        $databaseRequests = PermintaanModel::with('user')
+        return PermintaanModel::with('user')
             ->whereIn('status', ['Pending', 'pending'])
             ->latest()
             ->take(8)
@@ -384,66 +379,6 @@ class Permintaan extends Component
                 'date_label' => $item->created_at?->diffForHumans() ?? 'Baru saja',
             ])
             ->all();
-
-        return array_merge($databaseRequests, $this->sampleRequests());
-    }
-
-    private function sampleRequests(): array
-    {
-        return [
-            [
-                'id' => 900001,
-                'nama_barang' => 'Pakaian Muslim',
-                'kategori_barang' => 'Pakaian',
-                'jumlah' => 5,
-                'deskripsi' => 'Untuk kebutuhan orang tua mengikuti kegiatan shalat Idul Adha dan kegiatan keagamaan rutin.',
-                'penerima' => 'Panti Asuhan Hijrah',
-                'penerima_photo' => null,
-                'jenis_penerima' => 'Panti Asuhan',
-                'lokasi' => 'Jl. Pandjaitan, Bandung',
-                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Pandjaitan, Bandung'),
-                'status' => 'Prioritas',
-            ],
-            [
-                'id' => 900002,
-                'nama_barang' => 'Pakaian Anak',
-                'kategori_barang' => 'Pakaian',
-                'jumlah' => 8,
-                'deskripsi' => 'Dibutuhkan pakaian anak layak pakai untuk anak-anak asuh usia sekolah dasar.',
-                'penerima' => 'Panti Jompo Samiyah',
-                'penerima_photo' => null,
-                'jenis_penerima' => 'Panti Jompo',
-                'lokasi' => 'Jl. Sukajadi, Bandung',
-                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Sukajadi, Bandung'),
-                'status' => 'Butuh bantuan',
-            ],
-            [
-                'id' => 900003,
-                'nama_barang' => 'Buku Pelajaran',
-                'kategori_barang' => 'Buku',
-                'jumlah' => 12,
-                'deskripsi' => 'Buku pelajaran dan buku bacaan anak untuk mendukung kegiatan belajar komunitas.',
-                'penerima' => 'Komunitas Cahaya Ilmu',
-                'penerima_photo' => null,
-                'jenis_penerima' => 'Komunitas',
-                'lokasi' => 'Jl. Braga, Bandung',
-                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Braga, Bandung'),
-                'status' => 'Butuh bantuan',
-            ],
-            [
-                'id' => 900004,
-                'nama_barang' => 'Selimut Layak Pakai',
-                'kategori_barang' => 'Pakaian',
-                'jumlah' => 6,
-                'deskripsi' => 'Selimut bersih dan layak pakai untuk penerima disabilitas yang tinggal di asrama.',
-                'penerima' => 'Panti Disabilitas Mandiri',
-                'penerima_photo' => null,
-                'jenis_penerima' => 'Panti Disabilitas',
-                'lokasi' => 'Jl. Cihampelas, Bandung',
-                'maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Jl. Cihampelas, Bandung'),
-                'status' => 'Prioritas',
-            ],
-        ];
     }
 
     public function locations(): array

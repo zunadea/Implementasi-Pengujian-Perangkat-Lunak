@@ -4016,7 +4016,7 @@
 
                     <aside class="fulfillment-inventory">
                         <div class="inventory-list">
-                            @foreach ($inventoryItems as $inventory)
+                            @forelse ($inventoryItems as $inventory)
                                 @php
                                     $inventoryIcon = match ($inventory['kategori'] ?? '') {
                                         'Buku' => 'fas fa-book-open',
@@ -4033,7 +4033,15 @@
                                     </div>
                                     <div class="qty-badge">{{ $inventory['jumlah'] }}</div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="inventory-item">
+                                    <div class="inventory-icon"><i class="fas fa-box-open"></i></div>
+                                    <div>
+                                        <strong>Belum ada barang</strong>
+                                        <span>Stok asli belum tersedia di box ini.</span>
+                                    </div>
+                                </div>
+                            @endforelse
                         </div>
 
                         <div class="fulfillment-location-info">
@@ -4105,7 +4113,7 @@
                         </div>
 
                         <div class="inventory-list">
-                            @foreach ($inventoryItems as $inventory)
+                            @forelse ($inventoryItems as $inventory)
                                 <div class="inventory-item" wire:key="inventory-{{ $loop->index }}">
                                     <div>
                                         <strong>{{ $inventory['nama_barang'] }}</strong>
@@ -4113,7 +4121,14 @@
                                     </div>
                                     <div class="qty-badge">{{ $inventory['jumlah'] }}</div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="inventory-item">
+                                    <div>
+                                        <strong>Belum ada barang</strong>
+                                        <span>Stok asli belum tersedia di box ini.</span>
+                                    </div>
+                                </div>
+                            @endforelse
                         </div>
 
                         <div class="code-info" style="margin-bottom:22px;">
