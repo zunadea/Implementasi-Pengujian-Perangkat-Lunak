@@ -5,6 +5,11 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
+=======
+use App\Models\Donation;
+use App\Models\PermintaanModel;
+>>>>>>> zunadeafiturv1
 
 #[Title('Dashboard')] 
 class Dashboard extends Component
@@ -37,6 +42,23 @@ class Dashboard extends Component
 
     public function render()
     {
+<<<<<<< HEAD
         return view('livewire.dashboard');
     }
 }
+=======
+        $user = Auth::user();
+        $isRecipient = $user?->role === 'penerima';
+
+        $dashboardTotal = $isRecipient
+            ? PermintaanModel::where('user_id', $user?->id)
+                ->whereIn('status', ['Selesai', 'selesai', 'Disetujui', 'disetujui', 'completed'])
+                ->sum('jumlah')
+            : Donation::where('user_id', $user?->id)->count();
+
+        return view('livewire.dashboard', [
+            'dashboardTotal' => (int) $dashboardTotal,
+        ]);
+    }
+}
+>>>>>>> zunadeafiturv1

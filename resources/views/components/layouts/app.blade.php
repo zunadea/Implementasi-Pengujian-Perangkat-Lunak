@@ -14,6 +14,10 @@
             --rebox-primary: #024d36;
             --rebox-secondary: #036b4b;
             --rebox-accent: #2ecc71;
+<<<<<<< HEAD
+=======
+            --rebox-soft: rgba(255, 255, 255, 0.10);
+>>>>>>> zunadeafiturv1
             --rebox-soft-hover: rgba(255, 255, 255, 0.16);
             --bg-body: #f4f7f6;
         }
@@ -28,14 +32,25 @@
 
         .dropdown-toggle::after { display: none !important; }
 
+<<<<<<< HEAD
+=======
+        /* NAVBAR AREA */
+>>>>>>> zunadeafiturv1
         .rebox-navbar-area {
             background: var(--bg-body);
             padding: 14px 18px 0;
             position: sticky;
             top: 0;
+<<<<<<< HEAD
             z-index: 9999;
         }
 
+=======
+            z-index: 999;
+        }
+
+        /* NAVBAR */
+>>>>>>> zunadeafiturv1
         .rebox-navbar {
             min-height: 74px;
             background: linear-gradient(135deg, #024d36 0%, #035d41 100%);
@@ -45,10 +60,16 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 12px 28px rgba(2, 77, 54, 0.22);
+<<<<<<< HEAD
             position: relative;
             z-index: 10000;
         }
 
+=======
+        }
+
+        /* BRAND */
+>>>>>>> zunadeafiturv1
         .brand-rebox {
             color: #ffffff;
             font-size: 26px;
@@ -62,6 +83,10 @@
         .brand-rebox span { color: var(--rebox-accent); }
         .brand-rebox:hover { color: #ffffff; text-decoration: none; }
 
+<<<<<<< HEAD
+=======
+        /* LEFT MENU */
+>>>>>>> zunadeafiturv1
         .navbar-left {
             display: flex;
             align-items: center;
@@ -90,10 +115,14 @@
             text-decoration: none;
         }
 
+<<<<<<< HEAD
         .rebox-menu .nav-link i {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.70);
         }
+=======
+        .rebox-menu .nav-link i { font-size: 16px; color: rgba(255, 255, 255, 0.70); }
+>>>>>>> zunadeafiturv1
 
         .rebox-menu .nav-link:hover,
         .rebox-menu .nav-link.active {
@@ -102,6 +131,7 @@
         }
 
         .rebox-menu .nav-link:hover i,
+<<<<<<< HEAD
         .rebox-menu .nav-link.active i {
             color: #ffffff;
         }
@@ -340,6 +370,87 @@
                 width: 100%;
                 min-width: 100%;
             }
+=======
+        .rebox-menu .nav-link.active i { color: #ffffff; }
+
+        /* RIGHT USER */
+        .navbar-right { display: flex; align-items: center; gap: 16px; }
+
+        .user-dropdown-wrap { position: relative; }
+
+        .user-dropdown-btn {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 7px 13px 7px 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 230px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .user-dropdown-btn:hover { background: rgba(255, 255, 255, 0.13); }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(46, 204, 113, 0.65);
+            background: #ffffff;
+        }
+
+        .user-info { text-align: left; line-height: 1.15; flex: 1; }
+
+        .user-name {
+            display: block; font-size: 14px; font-weight: 800; color: #ffffff;
+            white-space: nowrap; max-width: 135px; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .user-role {
+            display: block; font-size: 10px; font-weight: 900; letter-spacing: 1.2px;
+            color: var(--rebox-accent); text-transform: uppercase; margin-top: 3px;
+        }
+
+        .dropdown-arrow { font-size: 13px; color: rgba(255, 255, 255, 0.85); transition: 0.25s ease; }
+        .show .dropdown-arrow { transform: rotate(180deg); }
+
+        /* DROPDOWN */
+        .rebox-dropdown-menu {
+            border: none; border-radius: 18px; padding: 10px; margin-top: 12px;
+            min-width: 230px; box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18); overflow: hidden;
+        }
+
+        .rebox-dropdown-menu .dropdown-header-box {
+            padding: 12px 12px 10px; border-bottom: 1px solid #eef2f1; margin-bottom: 8px;
+        }
+
+        .dropdown-header-box .dropdown-name { font-size: 14px; font-weight: 800; color: #1f2937; margin-bottom: 3px; }
+        .dropdown-header-box .dropdown-role { font-size: 11px; font-weight: 800; color: #00a85a; text-transform: uppercase; letter-spacing: 0.8px; }
+
+        .rebox-dropdown-menu .dropdown-item {
+            border-radius: 12px; padding: 11px 12px; font-size: 14px; font-weight: 700;
+            color: #374151; display: flex; align-items: center; gap: 10px; transition: 0.2s ease; text-decoration: none;
+        }
+
+        .rebox-dropdown-menu .dropdown-item:hover { background: #e9f8ef; color: var(--rebox-primary); }
+
+        .logout-item { color: #dc2626 !important; }
+        .logout-item:hover { background: #fee2e2 !important; color: #b91c1c !important; }
+
+        .content-wrapper { background: transparent !important; min-height: 100vh; }
+
+        @media (max-width: 992px) {
+            .rebox-navbar { padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; border-radius: 0 0 22px 22px; }
+            .navbar-left { flex-direction: column; align-items: flex-start; gap: 14px; }
+            .rebox-menu { flex-wrap: wrap; gap: 8px; }
+            .rebox-menu .nav-link { padding: 11px 15px; font-size: 13px; }
+            .navbar-right { justify-content: flex-start; }
+            .user-dropdown-btn { width: 100%; min-width: 0; }
+>>>>>>> zunadeafiturv1
         }
     </style>
 
@@ -360,6 +471,10 @@
                 </a>
 
                 <ul class="rebox-menu">
+<<<<<<< HEAD
+=======
+                    {{-- Menu Utama: Dashboard Donasi --}}
+>>>>>>> zunadeafiturv1
                     <li>
                         <a href="/dashboard" wire:navigate
                            class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
@@ -368,6 +483,10 @@
                         </a>
                     </li>
 
+<<<<<<< HEAD
+=======
+                    {{-- MENU KHUSUS PENERIMA --}}
+>>>>>>> zunadeafiturv1
                     @if(auth()->user()->role === 'penerima')
                     <li>
                         <a href="/permintaan" wire:navigate
@@ -376,7 +495,10 @@
                             Minta Barang
                         </a>
                     </li>
+<<<<<<< HEAD
 
+=======
+>>>>>>> zunadeafiturv1
                     <li>
                         <a href="/riwayat" wire:navigate
                            class="nav-link {{ request()->is('riwayat') ? 'active' : '' }}">
@@ -386,6 +508,10 @@
                     </li>
                     @endif
 
+<<<<<<< HEAD
+=======
+                    {{-- MENU KHUSUS DONATUR --}}
+>>>>>>> zunadeafiturv1
                     @if(auth()->user()->role === 'donatur')
                     <li>
                         <a href="/riwayat-permintaan" wire:navigate
@@ -407,12 +533,19 @@
             </div>
 
             <div class="navbar-right">
+<<<<<<< HEAD
                 <div class="dropdown user-dropdown-wrap" id="reboxUserDropdown">
                     <button class="user-dropdown-btn"
                             type="button"
                             id="userDropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
+=======
+                <div class="dropdown user-dropdown-wrap">
+                    <button class="user-dropdown-btn dropdown-toggle"
+                            type="button" id="userDropdown" data-toggle="dropdown" 
+                            aria-haspopup="true" aria-expanded="false">
+>>>>>>> zunadeafiturv1
 
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="user-avatar" alt="User">
@@ -436,6 +569,7 @@
                         </div>
 
                         <a href="/profile" wire:navigate class="dropdown-item">
+<<<<<<< HEAD
                             <i class="fas fa-user"></i>
                             <span>Lihat Profile</span>
                         </a>
@@ -456,6 +590,27 @@
                             <i class="fas fa-right-from-bracket"></i>
                             <span>Logout</span>
                         </a>
+=======
+                            <i class="fas fa-user"></i> Lihat Profile
+                        </a>
+
+                        @if(auth()->user()->role === 'penerima')
+                        <a href="/riwayat" wire:navigate class="dropdown-item">
+                            <i class="fas fa-clock-rotate-left"></i> Riwayat Permintaan
+                        </a>
+                        @else
+                        <a href="/riwayat-permintaan" wire:navigate class="dropdown-item">
+                            <i class="fas fa-heart"></i> Kontribusi Donasi
+                        </a>
+                        @endif
+
+                        <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                            @csrf
+                            <button type="submit" class="dropdown-item logout-item" style="width: 100%; border: 0; text-align: left;">
+                                <i class="fas fa-right-from-bracket"></i> Logout
+                            </button>
+                        </form>
+>>>>>>> zunadeafiturv1
                     </div>
                 </div>
             </div>
@@ -464,9 +619,27 @@
     </div>
     @endauth
 
+<<<<<<< HEAD
     <div class="content-wrapper">
         <div class="content pt-4">
             <div class="container-fluid">
+=======
+    {{-- CONTENT --}}
+    <div class="content-wrapper">
+        <div class="content pt-4">
+            <div class="container-fluid">
+                @auth
+                @if (session()->has('message'))
+                    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert" style="border-radius: 14px; background-color: #eefbf2; border-color: #d7f2df; color: #14532d;">
+                        <i class="fas fa-check-circle mr-2"></i> {{ session('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @endauth
+
+>>>>>>> zunadeafiturv1
                 {{ $slot }}
             </div>
         </div>
@@ -480,6 +653,7 @@
 
 @livewireScripts
 
+<<<<<<< HEAD
 <script>
     function initReboxDropdown() {
         const wrapper = document.getElementById('reboxUserDropdown');
@@ -528,3 +702,7 @@
 
 </body>
 </html>
+=======
+</body>
+</html>
+>>>>>>> zunadeafiturv1

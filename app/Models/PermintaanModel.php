@@ -28,7 +28,19 @@ class PermintaanModel extends Model
         'deskripsi', 
         'urgensi', 
         'lokasi_hub',
+<<<<<<< HEAD
         'status'        // Status 'Pending' atau 'Disetujui'
+=======
+        'google_maps_link',
+        'status',
+        'fulfilled_by_user_id',
+        'fulfilled_at',
+        'feedback_photo',
+        'feedback_nama_barang',
+        'feedback_jumlah',
+        'feedback_note',
+        'feedback_at',
+>>>>>>> zunadeafiturv1
     ];
 
     /**
@@ -42,4 +54,13 @@ class PermintaanModel extends Model
          */
         return $this->belongsTo(User::class, 'user_id');
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function fulfilledBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'fulfilled_by_user_id');
+    }
+}
+>>>>>>> zunadeafiturv1

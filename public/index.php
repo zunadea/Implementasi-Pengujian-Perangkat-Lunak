@@ -5,6 +5,11 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+<<<<<<< HEAD
+=======
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
+>>>>>>> zunadeafiturv1
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
@@ -46,6 +51,11 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
+<<<<<<< HEAD
+=======
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
+>>>>>>> zunadeafiturv1
 $kernel = $app->make(Kernel::class);
 
 $response = $kernel->handle(
