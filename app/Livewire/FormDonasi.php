@@ -14,7 +14,7 @@ class FormDonasi extends Component
 {
     use WithFileUploads;
 
-    public $rebox_id = 1;
+    public $rebox_id;
     public $nama_barang;
     public $jumlah;
     public $kategori;
@@ -28,13 +28,18 @@ class FormDonasi extends Component
 
     public array $selectedLocation = [];
 
-    public function mount($name)
+    public function mount(?string $name = null): void
     {
-        $requestedName = str_replace('Rebox ', '', $name);
-        $location = collect($this->locations())->firstWhere('name', $requestedName)
-            ?? $this->locations()[0];
+        if (! $name) {
+            return;
+        }
 
-        $this->selectLocation($location['name']);
+        $requestedName = str_replace('Rebox ', '', $name);
+        $location = collect($this->locations())->firstWhere('name', $requestedName);
+
+        if ($location) {
+            $this->selectLocation($location['name']);
+        }
     }
 
     public function locations(): array
@@ -64,12 +69,26 @@ class FormDonasi extends Component
 
     public function selectLocation($name)
     {
-        $location = collect($this->locations())->firstWhere('name', $name) ?? $this->locations()[0];
+        $location = collect($this->locations())->firstWhere('name', $name);
+
+        if (! $location) {
+            return;
+        }
+
+        if (($this->selectedLocation['id'] ?? null) === $location['id']) {
+            $this->selectedLocation = [];
+            $this->nama_lokasi = null;
+            $this->rebox_id = null;
+            $this->kode_box_input = '';
+            $this->resetErrorBag('selectedLocation');
+            return;
+        }
 
         $this->selectedLocation = $location;
         $this->nama_lokasi = $location['title'];
         $this->rebox_id = $location['id'];
         $this->kode_box_input = '';
+        $this->resetErrorBag('selectedLocation');
     }
 
     public function updated($property)
@@ -166,6 +185,7 @@ class FormDonasi extends Component
             'jumlah' => ['required', 'integer', 'min:1', 'max:1000'],
             'kategori' => ['required', 'string'],
             'kondisi' => ['required', 'string'],
+            'selectedLocation' => ['required', 'array', 'min:1'],
             'deskripsi' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (str_word_count(strip_tags($value)) > 100) {
                     $fail('Deskripsi maksimal 100 kata.');
@@ -178,6 +198,8 @@ class FormDonasi extends Component
             'jumlah.max' => 'Jumlah barang maksimal 1000.',
             'kategori.required' => 'Kategori barang wajib dipilih.',
             'kondisi.required' => 'Kondisi barang wajib dipilih.',
+            'selectedLocation.required' => 'Pilih lokasi Rebox terlebih dahulu.',
+            'selectedLocation.min' => 'Pilih lokasi Rebox terlebih dahulu.',
             'deskripsi.required' => 'Deskripsi barang wajib diisi.',
         ]);
     }

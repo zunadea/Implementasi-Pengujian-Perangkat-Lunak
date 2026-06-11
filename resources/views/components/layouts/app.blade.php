@@ -174,6 +174,88 @@
 
         .content-wrapper { background: transparent !important; min-height: 100vh; }
 
+        .profile-pill.rebox-profile-identity-pill {
+            width: 250px !important;
+            max-width: none !important;
+            min-height: 64px !important;
+            height: auto !important;
+            justify-content: flex-start !important;
+            gap: 12px !important;
+            padding: 7px 16px 7px 8px !important;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .24) !important;
+            border-radius: 999px !important;
+            background: #46ad49 !important;
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, .28),
+                0 14px 30px rgba(0, 80, 20, .16) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .profile-pill.rebox-profile-identity-pill:hover,
+        .profile-dropdown.is-open .profile-pill.rebox-profile-identity-pill {
+            background: #3d9f41 !important;
+        }
+
+        .profile-pill.rebox-profile-identity-pill::after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: 2px;
+            right: 14%;
+            left: 14%;
+            height: 36%;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .28), transparent);
+            opacity: .58;
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        .rebox-profile-identity-pill .profile-identity {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3px;
+            line-height: 1.05;
+            text-align: left;
+        }
+
+        .rebox-profile-identity-pill .profile-name {
+            width: 100%;
+            overflow: hidden;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 750;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rebox-profile-identity-pill .profile-role {
+            color: rgba(255, 255, 255, .78);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: capitalize;
+        }
+
+        .rebox-profile-identity-pill .profile-caret {
+            width: 18px !important;
+            height: 18px !important;
+            flex: 0 0 18px;
+        }
+
+        .rebox-profile-identity-pill .profile-caret::before {
+            width: 16px !important;
+            height: 13px !important;
+            background: #ffffff !important;
+        }
+
         @media (max-width: 992px) {
             .rebox-navbar { padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; border-radius: 0 0 22px 22px; }
             .navbar-left { flex-direction: column; align-items: flex-start; gap: 14px; }
@@ -182,6 +264,231 @@
             .navbar-right { justify-content: flex-start; }
             .user-dropdown-btn { width: 100%; min-width: 0; }
         }
+
+        .rebox-mobile-menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            html,
+            body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            body.rebox-mobile-menu-active {
+                overflow: hidden;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown {
+                width: min(230px, calc(100vw - 88px)) !important;
+            }
+
+            .profile-pill.rebox-profile-identity-pill {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .rebox-profile-identity-pill img,
+            .rebox-profile-identity-pill .profile-avatar-fallback {
+                width: 42px !important;
+                height: 42px !important;
+                flex: 0 0 42px;
+            }
+
+            .rebox-profile-identity-pill .profile-name {
+                font-size: 12px;
+            }
+
+            .top-shell.rebox-menu-ready {
+                position: relative;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) auto !important;
+                align-items: center !important;
+                gap: 12px !important;
+                transform: none !important;
+                filter: none !important;
+            }
+
+            .top-shell.rebox-menu-ready.is-mobile-menu-open {
+                z-index: 1200 !important;
+            }
+
+            .top-shell.rebox-menu-ready > .rebox-mobile-menu-toggle {
+                grid-column: 1;
+                grid-row: 1;
+                position: relative;
+                z-index: 1102;
+                width: 48px;
+                height: 48px;
+                display: inline-grid;
+                place-items: center;
+                justify-self: start;
+                padding: 0;
+                border: 1px solid rgba(255, 255, 255, .24);
+                border-radius: 14px;
+                color: #ffffff;
+                background: rgba(0, 134, 0, .78);
+                box-shadow: 0 12px 26px rgba(0, 80, 0, .16);
+                cursor: pointer;
+                transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+            }
+
+            .top-shell.rebox-menu-ready > .rebox-mobile-menu-toggle:hover {
+                background: #008600;
+                transform: translateY(-1px);
+                box-shadow: 0 16px 30px rgba(0, 80, 0, .20);
+            }
+
+            .top-shell.rebox-menu-ready > .rebox-mobile-menu-toggle:focus-visible {
+                outline: 3px solid rgba(139, 209, 125, .52);
+                outline-offset: 3px;
+            }
+
+            .top-shell.rebox-menu-ready > .rebox-mobile-menu-toggle i {
+                font-size: 20px;
+            }
+
+            .top-shell.rebox-menu-ready.is-mobile-menu-open > .rebox-mobile-menu-toggle {
+                position: fixed;
+                top: 14px;
+                left: 14px;
+            }
+
+            .top-shell.rebox-menu-ready > .top-nav {
+                position: fixed !important;
+                top: 0 !important;
+                right: auto !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                z-index: 1100;
+                width: min(82vw, 340px) !important;
+                height: 100dvh !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                justify-content: flex-start !important;
+                gap: 8px !important;
+                margin: 0 !important;
+                padding: 86px 18px 24px !important;
+                border: 0 !important;
+                border-radius: 0 !important;
+                background: #46ad49 !important;
+                background-image: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateX(-105%);
+                box-shadow: none !important;
+                transition: transform .28s ease, opacity .22s ease, visibility .28s ease;
+            }
+
+            .top-shell.rebox-menu-ready.is-mobile-menu-open > .top-nav {
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateX(0);
+            }
+
+            .top-shell.rebox-menu-ready > .top-nav a {
+                width: 100% !important;
+                min-width: 0 !important;
+                min-height: 46px;
+                height: auto !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                padding: 12px 16px !important;
+                text-align: left !important;
+                white-space: normal;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown,
+            .top-shell.rebox-menu-ready > .auth-actions {
+                grid-column: 2;
+                grid-row: 1;
+                min-width: 0;
+                max-width: 100%;
+                justify-self: end !important;
+                margin: 0 !important;
+            }
+
+            img,
+            video,
+            canvas {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .top-shell.rebox-menu-ready {
+                grid-template-columns: 48px minmax(0, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .top-shell.rebox-menu-ready > .auth-actions {
+                width: auto !important;
+                min-width: 0;
+            }
+
+            .top-shell.rebox-menu-ready > .auth-actions a,
+            .top-shell.rebox-menu-ready > .auth-actions button {
+                min-width: 0 !important;
+                padding-inline: 14px !important;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown {
+                width: min(220px, 100%) !important;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-pill.rebox-profile-identity-pill {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-height: 54px !important;
+                gap: 8px !important;
+                padding: 6px 10px 6px 7px !important;
+            }
+
+            .rebox-profile-identity-pill img,
+            .rebox-profile-identity-pill .profile-avatar-fallback {
+                width: 38px !important;
+                height: 38px !important;
+                flex-basis: 38px;
+            }
+
+            .rebox-profile-identity-pill .profile-name {
+                font-size: 11px;
+            }
+
+            .rebox-profile-identity-pill .profile-role {
+                font-size: 9px;
+            }
+
+            .rebox-profile-identity-pill .profile-caret {
+                width: 14px !important;
+                height: 14px !important;
+                flex-basis: 14px;
+            }
+
+            .rebox-profile-identity-pill .profile-caret::before {
+                width: 13px !important;
+                height: 10px !important;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-menu {
+                right: 0 !important;
+                left: auto !important;
+                max-width: calc(100vw - 28px);
+            }
+        }
+
     </style>
 
     @livewireStyles
@@ -331,6 +638,92 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 @livewireScripts
+
+<script>
+    (() => {
+        const closeMobileMenu = (shell) => {
+            if (!shell) return;
+
+            shell.classList.remove('is-mobile-menu-open');
+            if (!document.querySelector('.top-shell.rebox-menu-ready.is-mobile-menu-open')) {
+                document.body.classList.remove('rebox-mobile-menu-active');
+            }
+            const button = shell.querySelector(':scope > .rebox-mobile-menu-toggle');
+            const icon = button?.querySelector('i');
+            button?.setAttribute('aria-expanded', 'false');
+            icon?.classList.remove('fa-xmark');
+            icon?.classList.add('fa-bars');
+        };
+
+        const initResponsiveNavigation = () => {
+            document.querySelectorAll('.top-shell').forEach((shell, index) => {
+                const nav = shell.querySelector(':scope > .top-nav');
+                if (!nav) return;
+
+                shell.classList.add('rebox-menu-ready');
+
+                let button = shell.querySelector(':scope > .rebox-mobile-menu-toggle');
+                if (!button) {
+                    const navId = nav.id || `rebox-responsive-nav-${index}`;
+                    nav.id = navId;
+                    button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'rebox-mobile-menu-toggle';
+                    button.setAttribute('aria-label', 'Buka menu navigasi');
+                    button.setAttribute('aria-controls', navId);
+                    button.setAttribute('aria-expanded', 'false');
+                    button.title = 'Menu navigasi';
+                    button.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                    shell.insertBefore(button, nav);
+                }
+
+                if (button.dataset.bound !== 'true') {
+                    button.dataset.bound = 'true';
+                    button.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        const isOpen = shell.classList.toggle('is-mobile-menu-open');
+                        document.body.classList.toggle('rebox-mobile-menu-active', isOpen);
+                        const icon = button.querySelector('i');
+                        button.setAttribute('aria-expanded', String(isOpen));
+                        button.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+                        icon?.classList.toggle('fa-bars', !isOpen);
+                        icon?.classList.toggle('fa-xmark', isOpen);
+                    });
+
+                    nav.addEventListener('click', (event) => {
+                        if (event.target.closest('a')) closeMobileMenu(shell);
+                    });
+                }
+            });
+        };
+
+        document.addEventListener('click', (event) => {
+            document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach((shell) => {
+                if (event.target === shell || !shell.contains(event.target)) closeMobileMenu(shell);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach(closeMobileMenu);
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                document.querySelectorAll('.top-shell.rebox-menu-ready').forEach(closeMobileMenu);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', initResponsiveNavigation);
+        document.addEventListener('livewire:navigated', initResponsiveNavigation);
+        document.addEventListener('livewire:initialized', initResponsiveNavigation);
+
+        new MutationObserver(() => window.requestAnimationFrame(initResponsiveNavigation)).observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
+    })();
+</script>
 
 </body>
 </html>

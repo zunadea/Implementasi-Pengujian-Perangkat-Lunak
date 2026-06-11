@@ -30,7 +30,6 @@
                 linear-gradient(135deg, rgba(0, 148, 0, 0.050) 0 1px, transparent 1px 54px),
                 linear-gradient(45deg, rgba(0, 148, 0, 0.035) 0 1px, transparent 1px 62px),
                 linear-gradient(115deg, #f8fbf8 0%, #eef7ef 48%, #ffffff 100%);
-            perspective: 1200px;
         }
 
         .rebox-auth-page::before,
@@ -195,24 +194,16 @@
                 0 0 50px rgba(0, 255, 0, 0.08);
             position: relative;
             z-index: 1;
-            transform-origin: center right;
-            transform-style: preserve-3d;
-            animation: authCardFlipIn 0.72s cubic-bezier(0.19, 1, 0.22, 1) both;
             transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, background 0.28s ease;
-            will-change: transform;
         }
 
         .login-card:hover {
-            transform: translateY(-8px) rotateX(1.2deg) rotateY(-1.8deg);
+            transform: translateY(-8px);
             border-color: rgba(0, 148, 0, 0.70);
             background: rgba(217, 240, 213, 0.94);
             box-shadow:
                 0 28px 56px rgba(0, 0, 0, 0.11),
                 0 0 62px rgba(0, 148, 0, 0.16);
-        }
-
-        .rebox-auth-page.is-flipping .login-card {
-            animation: authCardFlipOut 0.34s ease-in both;
         }
 
         .title-role {
@@ -556,32 +547,6 @@
             }
         }
 
-        @keyframes authCardFlipIn {
-            0% {
-                opacity: 0;
-                transform: translateX(34px) rotateY(-18deg) scale(0.96);
-            }
-            62% {
-                opacity: 1;
-                transform: translateX(0) rotateY(2.5deg) scale(1.01);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) rotateY(0) scale(1);
-            }
-        }
-
-        @keyframes authCardFlipOut {
-            from {
-                opacity: 1;
-                transform: translateX(0) rotateY(0) scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-28px) rotateY(18deg) scale(0.96);
-            }
-        }
-
         @keyframes authAccentFloat {
             0%, 100% {
                 transform: translate3d(0, 0, 0) scale(1);
@@ -643,12 +608,12 @@
     </style>
 
     <div class="left-content">
-        <h1>Rebox Application</h1>
+        <h1>ReBox Aplikasi</h1>
         <p>Berikan kehidupan kedua untuk barang Anda</p>
 
         <div class="button-group">
-            <a href="/login" wire:navigate class="auth-tab auth-tab-login auth-switch-link">Login</a>
-            <a href="/register" wire:navigate class="auth-tab auth-tab-register auth-switch-link">Register</a>
+            <a href="/login" wire:navigate class="auth-tab auth-tab-login auth-switch-link">Masuk</a>
+            <a href="/register" wire:navigate class="auth-tab auth-tab-register auth-switch-link">Daftar</a>
         </div>
     </div>
 
@@ -680,7 +645,7 @@
         @error('role') <div class="field-error" style="margin-top: -14px; margin-bottom: 14px;">{{ $message }}</div> @enderror
 
         <div class="divider">
-            <span>Login</span>
+            <span>Masuk</span>
         </div>
 
         <form id="loginForm" method="POST" action="{{ route('login.store') }}" wire:submit.prevent="login">
@@ -710,7 +675,7 @@
                 <div class="login-error">{{ session('error') }}</div>
             @endif
 
-            <button type="submit" class="signin-btn">Sign In</button>
+            <button type="submit" class="signin-btn">Masuk</button>
         </form>
 
         <a href="{{ route('login.google') }}" class="google-login-btn">
@@ -722,10 +687,10 @@
                     <path fill="#EA4335" d="M12 5.7c2.27 0 3.8.83 4.67 1.53l3.41-2.83C17.98 2.75 15.26 1.8 12 1.8c-4.71 0-8.79 2.59-10.78 6.38l3.88 2.55C6.08 7.49 8.8 5.7 12 5.7z"/>
                 </svg>
             </span>
-            <span>Login dengan Google</span>
+            <span>Masuk dengan Google</span>
         </a>
 
-        <a href="/register" wire:navigate class="auth-link auth-switch-link">Belum punya akun? Register</a>
+        <a href="/register" wire:navigate class="auth-link auth-switch-link">Belum punya akun? Daftar</a>
     </div>
 
     <span class="bg-accent"></span>
@@ -758,30 +723,4 @@
     document.addEventListener('DOMContentLoaded', bindReboxPasswordToggle);
     document.addEventListener('livewire:navigated', bindReboxPasswordToggle);
 
-    function bindReboxAuthSwitch() {
-        document.querySelectorAll('.auth-switch-link').forEach((link) => {
-            if (link.dataset.switchBound === 'true') {
-                return;
-            }
-
-            link.dataset.switchBound = 'true';
-            link.addEventListener('click', (event) => {
-                const href = link.getAttribute('href');
-
-                if (!href || href === window.location.pathname) {
-                    return;
-                }
-
-                event.preventDefault();
-                document.querySelector('.rebox-auth-page')?.classList.add('is-flipping');
-
-                window.setTimeout(() => {
-                    window.location.href = href;
-                }, 260);
-            });
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', bindReboxAuthSwitch);
-    document.addEventListener('livewire:navigated', bindReboxAuthSwitch);
 </script>

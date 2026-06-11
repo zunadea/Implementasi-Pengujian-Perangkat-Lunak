@@ -18,7 +18,7 @@ class Login extends Component
     #[Validate('required')]
     public $password;
 
-    #[Validate('required|in:donatur,penerima')]
+    #[Validate('nullable|in:donatur,penerima')]
     public $role = '';
 
     public function messages()
@@ -34,15 +34,27 @@ class Login extends Component
 
     public function login()
     {
-        $this->validate();
+        $this->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        $user = User::where('email', $this->email)
-            ->where('role', $this->role)
-            ->first();
+        $user = User::where('email', $this->email)->first();
 
         if (! $user) {
-            session()->flash('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+            session()->flash('error', 'Akun tidak ditemukan.');
             return;
+        }
+
+        if ($user->role !== 'admin') {
+            $this->validate([
+                'role' => ['required', 'in:donatur,penerima'],
+            ]);
+
+            if ($user->role !== $this->role) {
+                session()->flash('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+                return;
+            }
         }
 
         if (! Hash::check($this->password, $user->password)) {
@@ -58,7 +70,7 @@ class Login extends Component
 
         session()->flash('message', 'Selamat datang kembali!');
 
-        return redirect()->route('dashboard');
+        return redirect()->route($user->role === 'admin' ? 'admin.verification' : 'dashboard');
     }
 
     public function render()

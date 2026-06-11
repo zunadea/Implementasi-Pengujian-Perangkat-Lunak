@@ -34,7 +34,10 @@ class Register extends Component
         return [
             'email.unique' => 'Email ini sudah terdaftar. Silakan gunakan email lain atau login.',
             'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
             'name.required' => 'Nama lengkap wajib diisi.',
+            'name.min' => 'Nama lengkap minimal 3 karakter.',
+            'name.max' => 'Nama lengkap maksimal 250 karakter.',
             'role.required' => 'Pilih peran Anda (Donatur/Penerima).',
             'role.in' => 'Peran yang dipilih tidak valid.',
             'password.required' => 'Password wajib diisi.',
@@ -56,7 +59,7 @@ class Register extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        session()->flash('message', 'Akun berhasil didaftarkan. Silakan login untuk masuk ke aplikasi Rebox.');
+        session()->flash('message', 'Akun berhasil didaftarkan. Silakan masuk ke aplikasi Rebox.');
  
         return redirect()->route('login');
     }

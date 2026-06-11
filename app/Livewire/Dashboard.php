@@ -7,6 +7,7 @@ use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Donation;
 use App\Models\PermintaanModel;
+use Illuminate\Support\Facades\Storage;
 
 #[Title('Dashboard')] 
 class Dashboard extends Component
@@ -48,8 +49,25 @@ class Dashboard extends Component
                 ->sum('jumlah')
             : Donation::where('user_id', $user?->id)->count();
 
+        $inventoryByLocation = Donation::with('user')
+            ->latest()
+            ->get()
+            ->groupBy('rebox_id')
+            ->map(fn ($donations) => $donations->map(fn ($donation) => [
+                'donor' => $donation->user?->name ?? 'Donatur Rebox',
+                'donor_avatar' => $donation->user?->profile_photo
+                    ? Storage::url($donation->user->profile_photo)
+                    : ($donation->user?->google_avatar ?: null),
+                'date' => $donation->created_at?->translatedFormat('d M Y') ?? '-',
+                'item' => $donation->nama_barang,
+                'amount' => (string) $donation->jumlah,
+                'image' => $donation->foto ? Storage::url($donation->foto) : null,
+            ])->values()->all())
+            ->all();
+
         return view('livewire.dashboard', [
             'dashboardTotal' => (int) $dashboardTotal,
+            'inventoryByLocation' => $inventoryByLocation,
         ]);
     }
 }

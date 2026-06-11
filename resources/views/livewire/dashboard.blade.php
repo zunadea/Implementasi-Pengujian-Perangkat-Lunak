@@ -157,24 +157,36 @@
         }
 
         .profile-pill {
-            height: 59px;
-            width: 142px;
-            border: 0;
-            border-radius: 25px;
-            background: rgba(0, 134, 0, 0.70);
+            min-height: 64px;
+            width: 250px;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            border-radius: 999px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015) 46%, rgba(0, 70, 25, 0.035));
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 24px;
-            padding: 7px 22px 7px 10px;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 7px 16px 7px 8px;
             cursor: pointer;
-            box-shadow: 0 16px 30px rgba(0, 134, 0, 0.12);
-            transition: transform 0.24s ease, box-shadow 0.24s ease;
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.68),
+                inset 0 -1px 1px rgba(0, 75, 25, 0.16),
+                inset 8px 8px 18px rgba(255, 255, 255, 0.035),
+                0 14px 30px rgba(0, 80, 20, 0.10);
+            backdrop-filter: blur(20px) saturate(165%) contrast(108%);
+            -webkit-backdrop-filter: blur(20px) saturate(165%) contrast(108%);
+            transition: transform 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
         }
 
         .profile-pill:hover,
         .profile-dropdown.is-open .profile-pill {
             transform: translateY(-2px);
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.025) 46%, rgba(0, 70, 25, 0.05));
             box-shadow:
                 inset 0 1px 1px rgba(255, 255, 255, 0.24),
                 0 16px 30px rgba(0, 134, 0, 0.16);
@@ -196,18 +208,48 @@
             font-weight: 800;
         }
 
+        .profile-identity {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3px;
+            text-align: left;
+            line-height: 1.05;
+        }
+
+        .profile-name {
+            width: 100%;
+            overflow: hidden;
+            color: #075f24;
+            font-size: 14px;
+            font-weight: 750;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-role {
+            color: rgba(7, 95, 36, 0.72);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: capitalize;
+        }
+
         .profile-caret {
-            width: 24px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
+            flex: 0 0 18px;
             display: grid;
             place-items: center;
         }
 
         .profile-caret::before {
             content: "";
-            width: 20px;
-            height: 17px;
-            background: #ffffff;
+            width: 16px;
+            height: 13px;
+            background: #087327;
             clip-path: polygon(8% 0, 92% 0, 60% 72%, 53% 88%, 47% 88%, 40% 72%);
             border-radius: 6px;
         }
@@ -819,6 +861,13 @@
             font-weight: 900;
             box-shadow: inset 0 0 0 2px rgba(0, 134, 0, 0.08);
             flex: 0 0 auto;
+            overflow: hidden;
+        }
+
+        .inventory-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .inventory-donor-name {
@@ -851,6 +900,38 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        .inventory-photo-empty {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            color: var(--rebox-green);
+            font-size: 26px;
+        }
+
+        .inventory-empty {
+            min-height: 220px;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            gap: 8px;
+            border: 1px dashed rgba(255, 255, 255, .62);
+            border-radius: 18px;
+            color: #31553a;
+            background: rgba(255, 255, 255, .42);
+            text-align: center;
+            padding: 28px;
+        }
+
+        .inventory-empty i {
+            font-size: 34px;
+            color: var(--rebox-green);
+        }
+
+        .inventory-empty span {
+            font-size: 12px;
         }
 
         .inventory-item-info {
@@ -1380,14 +1461,6 @@
             line-height: 1.25;
         }
 
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 34px;
-            color: #111111;
-            font-size: 18px;
-        }
-
         @media (max-width: 1180px) {
             .dashboard-inner {
                 padding: 24px 28px 70px;
@@ -1400,6 +1473,10 @@
             .profile-dropdown {
                 justify-self: end;
                 margin-top: -18px;
+            }
+
+            .profile-pill {
+                width: min(250px, 48vw);
             }
 
             .carousel-stage {
@@ -1417,6 +1494,22 @@
         }
 
         @media (max-width: 940px) {
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-pill {
+                width: min(230px, 62vw);
+                max-width: none;
+            }
+
+            .profile-pill img,
+            .profile-avatar-fallback {
+                width: 42px;
+                height: 42px;
+                flex: 0 0 42px;
+            }
+
+            .profile-name {
+                font-size: 12px;
+            }
+
             .top-nav {
                 height: auto;
                 grid-template-columns: repeat(2, 1fr);
@@ -1475,6 +1568,13 @@
                 text-align: center;
             }
 
+            .step-one-number { order: 1; }
+            .step-one-copy { order: 2; }
+            .step-two-number { order: 3; }
+            .step-two-copy { order: 4; }
+            .step-three-number { order: 5; }
+            .step-three-copy { order: 6; }
+
             .modern-card {
                 padding: 60px 30px;
                 grid-template-columns: 1fr;
@@ -1497,6 +1597,40 @@
                 gap: 18px 28px;
             }
         }
+
+        @media (max-width: 640px) {
+            .carousel-stage {
+                grid-template-columns: repeat(2, 48px);
+                grid-template-rows: auto 48px;
+                justify-content: center;
+                column-gap: 18px;
+                row-gap: 14px;
+            }
+
+            .carousel-window {
+                grid-column: 1 / -1;
+                grid-row: 1;
+                width: 100%;
+                min-height: 370px;
+            }
+
+            .carousel-arrow {
+                width: 46px;
+                height: 46px;
+                align-self: center;
+                font-size: 22px;
+            }
+
+            [data-carousel-prev] {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            [data-carousel-next] {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
     </style>
 
     @php
@@ -1504,26 +1638,15 @@
         $avatarUrl = auth()->user()?->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : null;
         $handGive = asset('images/TanganAtasMemberi.png');
         $handReceive = asset('images/TanganBawahMenerima.png');
-        $cardImages = [
-            asset('images/GambarcardRebox1.png'),
-            asset('images/GambarcardRebox2.png'),
-            asset('images/GambarcardRebox3.png'),
-            asset('images/GambarcardRebox4.png'),
-        ];
-        $inventoryDonations = [
-            ['donor' => 'Zunadea Kusmiandita', 'date' => '12 Okt 2024', 'item' => 'Tas Sekolah', 'amount' => 'Satu', 'image' => $cardImages[0]],
-            ['donor' => 'Muh Rheivandy', 'date' => '14 Okt 2024', 'item' => 'Buku Pelajaran', 'amount' => 'Tiga', 'image' => $cardImages[1]],
-            ['donor' => 'Aulia Rahman', 'date' => '16 Okt 2024', 'item' => 'Pakaian Anak', 'amount' => 'Dua', 'image' => $cardImages[2]],
-        ];
         $locations = \App\Support\ReboxLocations::all();
     @endphp
 
     <div class="dashboard-inner">
-        <header class="top-shell reveal">
+        <header class="top-shell reveal" wire:ignore>
             <nav class="top-nav {{ auth()->user()?->role === 'penerima' ? 'is-recipient' : '' }}" aria-label="Dashboard navigation">
                 <a href="/dashboard" class="{{ request()->is('dashboard') ? 'is-active' : '' }}" wire:navigate>Dashboard</a>
                 @if(auth()->user()?->role !== 'penerima')
-                    <a href="{{ route('form-donasi', ['name' => 'Rebox Dago']) }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
+                    <a href="{{ route('form-donasi') }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
                 @endif
                 <a href="/permintaan" class="{{ request()->is('permintaan*') ? 'is-active' : '' }}" wire:navigate>Permintaan</a>
                 <a href="/riwayat" class="{{ request()->is('riwayat*') ? 'is-active' : '' }}" wire:navigate>Riwayat</a>
@@ -1531,12 +1654,16 @@
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
+                <button class="profile-pill rebox-profile-identity-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ auth()->user()->name }}">
                     @else
                         <span class="profile-avatar-fallback">{{ strtoupper(substr(auth()->user()->name ?? 'R', 0, 1)) }}</span>
                     @endif
+                    <span class="profile-identity">
+                        <span class="profile-name">{{ auth()->user()->name }}</span>
+                        <span class="profile-role">{{ auth()->user()->role }}</span>
+                    </span>
                     <span class="profile-caret" aria-hidden="true"></span>
                 </button>
 
@@ -1552,7 +1679,7 @@
         <section class="hero-section reveal">
             <img src="{{ $handGive }}" alt="" class="hero-hand hero-hand-give" aria-hidden="true">
             <img src="{{ $handReceive }}" alt="" class="hero-hand hero-hand-receive" aria-hidden="true">
-            <p class="welcome-text">Welcome to Rebox</p>
+            <p class="welcome-text">Selamat Datang Di Rebox</p>
             <h1 class="hero-title">
                 Hallo {{ $firstName }}<br>
                 @if(auth()->user()?->role === 'penerima')
@@ -1570,7 +1697,7 @@
                     bagi mereka yang membutuhkan
                 @endif
             </p>
-            <a href="{{ auth()->user()?->role === 'penerima' ? route('permintaan') : route('form-donasi', ['name' => 'Rebox Dago']) }}" class="donate-cta" wire:navigate>
+            <a href="{{ auth()->user()?->role === 'penerima' ? route('permintaan') : route('form-donasi') }}" class="donate-cta" wire:navigate>
                 {{ auth()->user()?->role === 'penerima' ? 'Kelola Permintaan' : 'Donasi Sekarang' }}
             </a>
         </section>
@@ -1605,7 +1732,7 @@
 
             <div class="carousel-window" data-carousel>
                 @foreach($locations as $index => $location)
-                    <article class="box-card" data-card-index="{{ $index }}" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
+                    <article class="box-card" data-card-index="{{ $index }}" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-id="{{ $location['id'] }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
                         <div class="box-image">
                             <img src="{{ $location['image'] }}" alt="Rebox {{ $location['name'] }}">
                         </div>
@@ -1638,7 +1765,7 @@
         <section class="all-locations" data-detail-panel>
             <div class="detail-grid">
                 @foreach($locations as $location)
-                    <article class="box-card" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
+                    <article class="box-card" data-card-link="{{ auth()->user()?->role === 'penerima' ? '' : route('form-donasi', ['name' => 'Rebox ' . $location['name']]) }}" data-rebox-id="{{ $location['id'] }}" data-rebox-name="{{ $location['name'] }}" data-rebox-code="{{ $location['code'] }}" data-rebox-image="{{ $location['image'] }}">
                         <div class="box-image">
                             <img src="{{ $location['image'] }}" alt="Rebox {{ $location['name'] }}">
                         </div>
@@ -1687,42 +1814,7 @@
                             </div>
                         </article>
 
-                        <div class="inventory-list">
-                            @foreach($inventoryDonations as $donation)
-                                <article class="inventory-donation-card">
-                                    <div>
-                                        <div class="inventory-donor">
-                                            <div class="inventory-donor-profile">
-                                                <span class="inventory-avatar">{{ strtoupper(substr($donation['donor'], 0, 1)) }}</span>
-                                                <div>
-                                                    <div class="inventory-donor-name">{{ $donation['donor'] }}</div>
-                                                    <div class="inventory-donor-role">Donatur</div>
-                                                </div>
-                                            </div>
-                                            <span class="inventory-date">{{ $donation['date'] }}</span>
-                                        </div>
-                                        <div class="inventory-item-photo">
-                                            <img src="{{ $donation['image'] }}" alt="{{ $donation['item'] }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="inventory-item-info">
-                                        <div>
-                                            <strong>Nama Barang</strong>
-                                            <span>{{ $donation['item'] }}</span>
-                                        </div>
-                                        <div>
-                                            <strong>Lokasi Box</strong>
-                                            <span data-inventory-card-location>Rebox {{ $locations[0]['name'] }}</span>
-                                        </div>
-                                        <div>
-                                            <strong>Jumlah</strong>
-                                            <span>{{ $donation['amount'] }}</span>
-                                        </div>
-                                    </div>
-                                </article>
-                            @endforeach
-                        </div>
+                        <div class="inventory-list" data-inventory-list></div>
                     </div>
                 </div>
             </div>
@@ -1749,8 +1841,8 @@
 
             <div class="steps-grid">
                 <div></div>
-                <div class="step-number">01</div>
-                <div class="step-copy">
+                <div class="step-number step-one-number">01</div>
+                <div class="step-copy step-one-copy">
                     <strong>Daftar & Login</strong>
                     Buat akunmu dan masuk ke Rebox dengan mudah
                 </div>
@@ -1759,11 +1851,11 @@
                 <div class="step-line"></div>
                 <div></div>
 
-                <div class="step-copy left">
+                <div class="step-copy left step-two-copy">
                     <strong>Temukan Box Rebox</strong>
                     Cari dan temukan Rebox terdekat dan lakukan donasi
                 </div>
-                <div class="step-number">02</div>
+                <div class="step-number step-two-number">02</div>
                 <div></div>
 
                 <div></div>
@@ -1771,8 +1863,8 @@
                 <div></div>
 
                 <div></div>
-                <div class="step-number">03</div>
-                <div class="step-copy">
+                <div class="step-number step-three-number">03</div>
+                <div class="step-copy step-three-copy">
                     <strong>Kirim dan Salurkan</strong>
                     Lakukan kebaikan dengan menyalurkan donasi ke penerima
                 </div>
@@ -1798,20 +1890,15 @@
 
         <footer class="footer-dashboard reveal">
             <div class="footer-links">
-                <span>Generality</span>
-                <span>Sustainability</span>
-                <span>Impact</span>
-                <span>Transparency</span>
-                <span>Community</span>
+                <span>Kepedulian</span>
+                <span>Keberlanjutan</span>
+                <span>Dampak</span>
+                <span>Transparansi</span>
+                <span>Komunitas</span>
             </div>
             <p class="footer-copy">
-                Give more, waste less, and connect through kindness. Because the greatest value of a pre-loved item is not in its storage, but in the new story it creates for someone in need
+                Berbagi lebih banyak, mengurangi limbah, dan terhubung melalui kebaikan. Nilai terbesar barang layak pakai bukan saat disimpan, tetapi saat menciptakan cerita baru bagi mereka yang membutuhkan.
             </p>
-            <div class="socials">
-                <i class="fab fa-facebook-f"></i>
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-instagram"></i>
-            </div>
         </footer>
     </div>
 
@@ -1937,7 +2024,113 @@
             const inventoryImage = root.querySelector('[data-inventory-image]');
             const inventoryTitle = root.querySelector('[data-inventory-title]');
             const inventoryArea = root.querySelector('[data-inventory-area]');
-            const inventoryCardLocations = Array.from(root.querySelectorAll('[data-inventory-card-location]'));
+            const inventoryList = root.querySelector('[data-inventory-list]');
+            const inventoryByLocation = @json($inventoryByLocation);
+
+            function renderInventory(reboxId, reboxName) {
+                if (!inventoryList) return;
+
+                inventoryList.replaceChildren();
+                const donations = inventoryByLocation[String(reboxId)] || [];
+
+                if (!donations.length) {
+                    const empty = document.createElement('div');
+                    empty.className = 'inventory-empty';
+                    const emptyIcon = document.createElement('i');
+                    emptyIcon.className = 'fas fa-box-open';
+                    emptyIcon.setAttribute('aria-hidden', 'true');
+
+                    const emptyTitle = document.createElement('strong');
+                    emptyTitle.textContent = 'Belum ada barang';
+
+                    const emptyDescription = document.createElement('span');
+                    emptyDescription.textContent = 'Belum ada donasi yang tercatat di lokasi ini.';
+
+                    empty.append(emptyIcon, emptyTitle, emptyDescription);
+                    inventoryList.appendChild(empty);
+                    return;
+                }
+
+                donations.forEach((donation) => {
+                    const card = document.createElement('article');
+                    card.className = 'inventory-donation-card';
+
+                    const mediaColumn = document.createElement('div');
+                    const donorHeader = document.createElement('div');
+                    donorHeader.className = 'inventory-donor';
+
+                    const donorProfile = document.createElement('div');
+                    donorProfile.className = 'inventory-donor-profile';
+
+                    const avatar = document.createElement('span');
+                    avatar.className = 'inventory-avatar';
+
+                    const donorIdentity = document.createElement('div');
+                    const donorName = document.createElement('div');
+                    donorName.className = 'inventory-donor-name';
+                    donorName.textContent = donation.donor;
+
+                    const donorRole = document.createElement('div');
+                    donorRole.className = 'inventory-donor-role';
+                    donorRole.textContent = 'Donatur';
+
+                    const donationDate = document.createElement('span');
+                    donationDate.className = 'inventory-date';
+                    donationDate.textContent = donation.date;
+
+                    const itemPhoto = document.createElement('div');
+                    itemPhoto.className = 'inventory-item-photo';
+
+                    if (donation.donor_avatar) {
+                        const avatarImage = document.createElement('img');
+                        avatarImage.src = donation.donor_avatar;
+                        avatarImage.alt = `Foto profil ${donation.donor}`;
+                        avatar.appendChild(avatarImage);
+                    } else {
+                        avatar.textContent = String(donation.donor || 'D').trim().charAt(0).toUpperCase();
+                    }
+
+                    if (donation.image) {
+                        const image = document.createElement('img');
+                        image.src = donation.image;
+                        image.alt = donation.item;
+                        itemPhoto.appendChild(image);
+                    } else {
+                        const emptyPhoto = document.createElement('span');
+                        emptyPhoto.className = 'inventory-photo-empty';
+                        const emptyPhotoIcon = document.createElement('i');
+                        emptyPhotoIcon.className = 'fas fa-box';
+                        emptyPhotoIcon.setAttribute('aria-hidden', 'true');
+                        emptyPhoto.appendChild(emptyPhotoIcon);
+                        itemPhoto.appendChild(emptyPhoto);
+                    }
+
+                    donorIdentity.append(donorName, donorRole);
+                    donorProfile.append(avatar, donorIdentity);
+                    donorHeader.append(donorProfile, donationDate);
+                    mediaColumn.append(donorHeader, itemPhoto);
+
+                    const itemInfo = document.createElement('div');
+                    itemInfo.className = 'inventory-item-info';
+
+                    [
+                        ['Nama Barang', donation.item],
+                        ['Lokasi Box', `Rebox ${reboxName}`],
+                        ['Jumlah', `${donation.amount} Pcs`],
+                    ].forEach(([label, value]) => {
+                        const field = document.createElement('div');
+                        const fieldLabel = document.createElement('strong');
+                        const fieldValue = document.createElement('span');
+                        fieldLabel.textContent = label;
+                        fieldValue.textContent = value;
+                        field.append(fieldLabel, fieldValue);
+                        itemInfo.appendChild(field);
+                    });
+
+                    card.append(mediaColumn, itemInfo);
+                    inventoryList.appendChild(card);
+                });
+            }
 
             function openInventoryModal(card) {
                 if (!inventoryModal || !card) {
@@ -1945,6 +2138,7 @@
                 }
 
                 const reboxName = card.dataset.reboxName || 'Dago';
+                const reboxId = card.dataset.reboxId || '';
                 const reboxImage = card.dataset.reboxImage || '';
 
                 if (inventoryImage && reboxImage) {
@@ -1960,9 +2154,7 @@
                     inventoryArea.textContent = reboxName;
                 }
 
-                inventoryCardLocations.forEach((item) => {
-                    item.textContent = `Rebox ${reboxName}`;
-                });
+                renderInventory(reboxId, reboxName);
 
                 inventoryModal.classList.add('is-open');
                 inventoryModal.setAttribute('aria-hidden', 'false');

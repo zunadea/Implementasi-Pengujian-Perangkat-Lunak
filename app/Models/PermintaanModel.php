@@ -24,6 +24,7 @@ class PermintaanModel extends Model
         'user_id',      // ID penerima barang
         'nama_barang', 
         'kategori', 
+        'jenis_penerima',
         'jumlah', 
         'deskripsi', 
         'urgensi', 
