@@ -1558,7 +1558,7 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: 1.25fr repeat(3, 0.75fr);
+            grid-template-columns: minmax(0, 1.4fr) minmax(180px, 0.6fr);
             gap: 54px;
             align-items: start;
         }
@@ -1627,35 +1627,6 @@
         .footer-column a:focus-visible {
             color: #ffffff;
             transform: translateX(4px);
-            outline: none;
-        }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .socials a {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            color: #35513a;
-            background: rgba(255, 255, 255, 0.42);
-            border: 1px solid rgba(0, 134, 0, 0.10);
-            text-decoration: none;
-            font-size: 14px;
-            transition: transform .22s ease, color .22s ease, background .22s ease, box-shadow .22s ease;
-        }
-
-        .socials a:hover,
-        .socials a:focus-visible {
-            color: #ffffff;
-            background: var(--rebox-green);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 22px rgba(0, 134, 0, 0.18);
             outline: none;
         }
 
@@ -1854,6 +1825,13 @@
             .step-copy,
             .step-copy.left { text-align: center; }
 
+            .step-one-number { order: 1; }
+            .step-one-copy { order: 2; }
+            .step-two-number { order: 3; }
+            .step-two-copy { order: 4; }
+            .step-three-number { order: 5; }
+            .step-three-copy { order: 6; }
+
             .modern-card {
                 padding: 60px 30px;
                 grid-template-columns: 1fr;
@@ -1952,6 +1930,40 @@
                 text-align: left;
             }
         }
+
+        @media (max-width: 940px) {
+            .carousel-stage {
+                grid-template-columns: repeat(2, 48px);
+                grid-template-rows: auto 48px;
+                justify-content: center;
+                column-gap: 18px;
+                row-gap: 14px;
+            }
+
+            .carousel-window {
+                grid-column: 1 / -1;
+                grid-row: 1;
+                width: 100%;
+                min-height: 370px;
+            }
+
+            .carousel-arrow {
+                width: 46px;
+                height: 46px;
+                font-size: 22px;
+                align-self: center;
+            }
+
+            [data-carousel-prev] {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            [data-carousel-next] {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
     </style>
 
     @php
@@ -1960,7 +1972,7 @@
     @endphp
 
     <div class="dashboard-inner" style="--landing-hero-bg: url('{{ asset('images/BACKGROUND%20LANDING%20PAGE.png') }}');">
-        <header class="top-shell reveal">
+        <header class="top-shell reveal" wire:ignore>
             <nav class="top-nav" aria-label="Landing navigation">
                 <a href="#beranda" class="is-active">Beranda</a>
                 <a href="#tentang">Tentang</a>
@@ -1970,15 +1982,15 @@
             </nav>
 
             <div class="auth-actions" aria-label="Aksi akun">
-                <a href="{{ route('login') }}" class="auth-link auth-login">Login</a>
-                <a href="{{ url('/register') }}" class="auth-link auth-register">Register</a>
+                <a href="{{ route('login') }}" class="auth-link auth-login">Masuk</a>
+                <a href="{{ url('/register') }}" class="auth-link auth-register">Daftar</a>
             </div>
         </header>
 
         <section id="beranda" class="hero-section reveal">
             <img src="{{ $handGive }}" alt="" class="hero-hand hero-hand-give" aria-hidden="true">
             <img src="{{ $handReceive }}" alt="" class="hero-hand hero-hand-receive" aria-hidden="true">
-            <p class="welcome-text">Welcome to Rebox</p>
+            <p class="welcome-text">Selamat Datang Di Rebox</p>
             <h1 class="hero-title">
                 Berbagi Barang Jadi<br>
                 Lebih Mudah Hari Ini
@@ -2175,8 +2187,8 @@
 
             <div class="steps-grid">
                 <div></div>
-                <div class="step-number">01</div>
-                <div class="step-copy">
+                <div class="step-number step-one-number">01</div>
+                <div class="step-copy step-one-copy">
                     <strong>Daftar & Login</strong>
                     Buat akunmu dan masuk ke Rebox dengan mudah
                 </div>
@@ -2185,11 +2197,11 @@
                 <div class="step-line"></div>
                 <div></div>
 
-                <div class="step-copy left">
+                <div class="step-copy left step-two-copy">
                     <strong>Temukan Box Rebox</strong>
                     Cari dan temukan Rebox terdekat untuk berdonasi
                 </div>
-                <div class="step-number">02</div>
+                <div class="step-number step-two-number">02</div>
                 <div></div>
 
                 <div></div>
@@ -2197,8 +2209,8 @@
                 <div></div>
 
                 <div></div>
-                <div class="step-number">03</div>
-                <div class="step-copy">
+                <div class="step-number step-three-number">03</div>
+                <div class="step-copy step-three-copy">
                     <strong>Kirim dan Salurkan</strong>
                     Barang tercatat lalu disalurkan kepada penerima
                 </div>
@@ -2325,26 +2337,15 @@
 
         <section class="footer-legacy reveal" aria-label="Nilai Rebox">
             <div class="footer-links">
-                <span>Generality</span>
-                <span>Sustainability</span>
-                <span>Impact</span>
-                <span>Transparency</span>
-                <span>Community</span>
+                <span>Kepedulian</span>
+                <span>Keberlanjutan</span>
+                <span>Dampak</span>
+                <span>Transparansi</span>
+                <span>Komunitas</span>
             </div>
             <p class="footer-legacy-copy">
-                Give more, waste less, and connect through kindness. Because the greatest value of a pre-loved item is not in its storage, but in the new story it creates for someone in need
+                Berbagi lebih banyak, mengurangi limbah, dan terhubung melalui kebaikan. Nilai terbesar barang layak pakai bukan saat disimpan, tetapi saat menciptakan cerita baru bagi mereka yang membutuhkan.
             </p>
-            <div class="socials" aria-label="Media sosial Rebox">
-                <a href="{{ route('landing') }}" aria-label="Facebook Rebox">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="{{ route('landing') }}" aria-label="Twitter Rebox">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="{{ route('landing') }}" aria-label="Instagram Rebox">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
         </section>
 
         <footer class="footer-dashboard reveal">
@@ -2354,22 +2355,6 @@
                     <p class="footer-copy">
                         Menghubungkan kebaikan untuk lingkungan melalui teknologi cerdas dan komunitas yang solid.
                     </p>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Tautan Langsung</h4>
-                    <a href="{{ route('landing') }}">Tentang Rebox</a>
-                    <a href="{{ route('landing') }}">Cara Kerja</a>
-                    <a href="{{ route('landing') }}">Lokasi Box</a>
-                    <a href="{{ route('landing') }}">Karir</a>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Bantuan &amp; Syarat</h4>
-                    <a href="{{ route('landing') }}">Pusat Bantuan</a>
-                    <a href="{{ route('landing') }}">Syarat &amp; Ketentuan</a>
-                    <a href="{{ route('landing') }}">Kebijakan Privasi</a>
-                    <a href="{{ route('landing') }}">Kontak Kami</a>
                 </div>
 
                 <div class="footer-column">

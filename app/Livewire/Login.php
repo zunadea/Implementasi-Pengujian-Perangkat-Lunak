@@ -2,22 +2,14 @@
 
 namespace App\Livewire;
 
-<<<<<<< HEAD
-=======
 use App\Models\User;
->>>>>>> zunadeafiturv1
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-
-#[Title('Login')]
-=======
 use Illuminate\Support\Facades\Hash;
 
 #[Title('Login')] 
->>>>>>> zunadeafiturv1
 class Login extends Component
 {
     #[Validate('required|email')]
@@ -26,12 +18,7 @@ class Login extends Component
     #[Validate('required')]
     public $password;
 
-<<<<<<< HEAD
-    #[Validate('required', message: 'Silakan pilih peran terlebih dahulu.')]
-    public $role = '';
-
-=======
-    #[Validate('required|in:donatur,penerima')]
+    #[Validate('nullable|in:donatur,penerima')]
     public $role = '';
 
     public function messages()
@@ -45,44 +32,29 @@ class Login extends Component
         ];
     }
 
->>>>>>> zunadeafiturv1
     public function login()
     {
-        $this->validate();
+        $this->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-<<<<<<< HEAD
-        $credentials = [
-            'email' => $this->email,
-            'password' => $this->password,
-            'role' => $this->role,
-        ];
-
-        if (Auth::attempt($credentials)) {
-            session()->regenerate();
-
-            session()->flash(
-                'message',
-                'Login berhasil! Selamat datang kembali di Rebox.'
-            );
-
-            return $this->redirectRoute('dashboard', navigate: true);
-        }
-
-        $this->addError('email', ' ');
-        $this->addError('password', ' ');
-
-        session()->flash(
-            'error',
-            'Login gagal. Akun tidak ditemukan atau peran tidak sesuai.'
-        );
-=======
-        $user = User::where('email', $this->email)
-            ->where('role', $this->role)
-            ->first();
+        $user = User::where('email', $this->email)->first();
 
         if (! $user) {
-            session()->flash('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+            session()->flash('error', 'Akun tidak ditemukan.');
             return;
+        }
+
+        if ($user->role !== 'admin') {
+            $this->validate([
+                'role' => ['required', 'in:donatur,penerima'],
+            ]);
+
+            if ($user->role !== $this->role) {
+                session()->flash('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+                return;
+            }
         }
 
         if (! Hash::check($this->password, $user->password)) {
@@ -98,16 +70,11 @@ class Login extends Component
 
         session()->flash('message', 'Selamat datang kembali!');
 
-        return redirect()->route('dashboard');
->>>>>>> zunadeafiturv1
+        return redirect()->route($user->role === 'admin' ? 'admin.verification' : 'dashboard');
     }
 
     public function render()
     {
         return view('livewire.login');
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> zunadeafiturv1

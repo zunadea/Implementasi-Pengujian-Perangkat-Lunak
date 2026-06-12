@@ -391,7 +391,7 @@
     @endphp
 
     <div class="admin-inner">
-        <header class="top-shell">
+        <header class="top-shell" wire:ignore>
             <nav class="top-nav" aria-label="Admin navigation">
                 <a href="#verifikasi" class="is-active">Verifikasi NIK</a>
                 <a href="#menunggu">Menunggu ACC</a>

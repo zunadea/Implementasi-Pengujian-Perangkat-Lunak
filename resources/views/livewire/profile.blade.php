@@ -593,6 +593,16 @@
             backdrop-filter: blur(10px);
         }
 
+        .profile-action-icon,
+        .profile-action-arrow,
+        .profile-action-copy small {
+            display: none;
+        }
+
+        .profile-action-copy strong {
+            font: inherit;
+        }
+
         .profile-card {
             padding: 34px 28px;
             text-align: center;
@@ -1065,10 +1075,202 @@
             .profile-dropdown { justify-self: end; margin-top: -18px; }
             .password-panel { grid-template-columns: 1fr; }
             .panel-actions { grid-template-columns: 1fr; }
+
+            .profile-hero {
+                margin-bottom: 24px;
+            }
+
+            .profile-hero p {
+                margin-bottom: 6px;
+                font-size: 12px;
+            }
+
+            .profile-hero h1 {
+                color: #08782b;
+                font-size: 30px;
+            }
+
+            .profile-hero span {
+                max-width: 430px;
+                margin: 12px auto 0;
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .profile-layout {
+                width: min(100%, 620px);
+                gap: 18px;
+            }
+
+            .profile-card {
+                height: auto;
+                padding: 0;
+                border: 0;
+                background: transparent;
+                box-shadow: none;
+                backdrop-filter: none;
+            }
+
+            .profile-identity-card {
+                padding: 24px 22px;
+                border: 1px solid rgba(0, 134, 0, .12);
+                border-radius: 22px;
+                background: rgba(255, 255, 255, .9);
+                box-shadow: 0 16px 38px rgba(26, 73, 38, .09);
+            }
+
+            .avatar-wrap {
+                width: 118px;
+                height: 118px;
+                margin-bottom: 14px;
+            }
+
+            .avatar-wrap img,
+            .avatar-empty {
+                width: 104px;
+                height: 104px;
+            }
+
+            .profile-card .profile-name {
+                font-size: 20px;
+            }
+
+            .profile-card .profile-email {
+                margin: 6px 0 12px;
+                font-size: 12px;
+            }
+
+            .profile-card .status-badge {
+                padding: 7px 13px;
+                font-size: 10px;
+            }
+
+            .profile-stats {
+                margin-top: 18px;
+                padding-top: 0;
+                border-top: 0;
+                gap: 12px;
+            }
+
+            .stat-row {
+                min-height: 76px;
+                position: relative;
+                padding: 14px 48px 14px 14px;
+                border: 1px solid rgba(0, 134, 0, .12);
+                border-radius: 18px;
+                background: rgba(255, 255, 255, .88);
+                box-shadow: 0 12px 28px rgba(26, 73, 38, .07);
+            }
+
+            .stat-row::after {
+                content: "\f054";
+                position: absolute;
+                right: 18px;
+                top: 50%;
+                color: var(--rebox-green);
+                font-family: "Font Awesome 6 Free";
+                font-size: 13px;
+                font-weight: 900;
+                transform: translateY(-50%);
+            }
+
+            .stat-row strong {
+                color: #07952b;
+                font-size: 17px;
+            }
+
+            .stat-row span {
+                font-size: 11px;
+            }
+
+            .info-card {
+                border-radius: 20px;
+                box-shadow: 0 14px 34px rgba(26, 73, 38, .08);
+            }
+
+            .info-card.is-overview .panel-content {
+                padding: 0;
+            }
+
+            .info-card.is-overview .info-head,
+            .info-card.is-overview .form-grid {
+                display: none;
+            }
+
+            .info-card.is-overview .panel-actions {
+                display: grid;
+                gap: 0;
+                padding: 6px 16px;
+            }
+
+            .info-card.is-overview .panel-button {
+                width: 100%;
+                min-height: 70px;
+                display: grid;
+                grid-template-columns: 42px minmax(0, 1fr) 18px;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 0;
+                border: 0;
+                border-bottom: 1px solid rgba(17, 17, 17, .08);
+                border-radius: 0;
+                color: #1f2937;
+                background: transparent;
+                box-shadow: none;
+                text-align: left;
+            }
+
+            .info-card.is-overview .panel-button:last-child {
+                border-bottom: 0;
+            }
+
+            .profile-action-icon {
+                width: 38px;
+                height: 38px;
+                display: grid;
+                place-items: center;
+                border: 1px solid rgba(0, 134, 0, .12);
+                border-radius: 12px;
+                color: var(--rebox-green);
+                background: #f8fcf9;
+                font-size: 16px;
+            }
+
+            .profile-action-copy strong {
+                display: block;
+                margin-bottom: 4px;
+                font-size: 14px;
+                font-weight: 750;
+            }
+
+            .profile-action-copy small {
+                display: block;
+                color: #737373;
+                font-size: 10px;
+                font-weight: 550;
+            }
+
+            .profile-action-arrow {
+                display: block;
+                color: var(--rebox-green);
+                font-size: 12px;
+                justify-self: end;
+            }
+
+            .info-card.is-overview .form-footer {
+                margin: 0 16px;
+                padding: 12px 0 14px;
+                border-top: 1px solid rgba(17, 17, 17, .08);
+            }
+
+            .info-card.is-overview .form-footer p {
+                font-size: 10px;
+            }
         }
         @media (max-width: 720px) {
+            .profile-inner { padding: 18px 16px 54px; }
             .top-nav { height: auto; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 18px 22px; }
-            .profile-hero h1 { font-size: 28px; }
+            .profile-hero h1 { font-size: 24px; }
             .form-grid { grid-template-columns: 1fr; }
             .info-head, .form-footer { align-items: stretch; flex-direction: column; }
             .edit-photo-card { align-items: flex-start; flex-direction: column; }
@@ -1087,11 +1289,11 @@
     @endphp
 
     <div class="profile-inner">
-        <header class="top-shell">
+        <header class="top-shell" wire:ignore>
             <nav class="top-nav {{ auth()->user()?->role === 'penerima' ? 'is-recipient' : '' }}" aria-label="Profile navigation">
                 <a href="/dashboard" class="{{ request()->is('dashboard') ? 'is-active' : '' }}" wire:navigate>Dashboard</a>
                 @if(auth()->user()?->role !== 'penerima')
-                    <a href="{{ route('form-donasi', ['name' => 'Rebox Dago']) }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
+                    <a href="{{ route('form-donasi') }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
                 @endif
                 <a href="/permintaan" class="{{ request()->is('permintaan*') ? 'is-active' : '' }}" wire:navigate>Permintaan</a>
                 <a href="/riwayat" class="{{ request()->is('riwayat*') ? 'is-active' : '' }}" wire:navigate>Riwayat</a>
@@ -1099,12 +1301,16 @@
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
+                <button class="profile-pill rebox-profile-identity-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ $username }}">
                     @else
                         <span class="profile-avatar-fallback">{{ $initial }}</span>
                     @endif
+                    <span class="profile-identity">
+                        <span class="profile-name">{{ $username }}</span>
+                        <span class="profile-role">{{ auth()->user()?->role }}</span>
+                    </span>
                     <span class="profile-caret" aria-hidden="true"></span>
                 </button>
                 <div class="profile-menu">
@@ -1124,24 +1330,26 @@
 
         <section class="profile-layout">
             <aside class="profile-card">
-                <div class="avatar-wrap">
-                    @if($avatarUrl)
-                        <img src="{{ $avatarUrl }}" alt="{{ $username }}">
+                <div class="profile-identity-card">
+                    <div class="avatar-wrap">
+                        @if($avatarUrl)
+                            <img src="{{ $avatarUrl }}" alt="{{ $username }}">
+                        @else
+                            <div class="avatar-empty">{{ $initial }}</div>
+                        @endif
+                    </div>
+
+                    <h2 class="profile-name">{{ $username }}</h2>
+                    <p class="profile-email">{{ $email }}</p>
+
+                    @if($verificationStatus === 'verified')
+                        <span class="status-badge verified"><i class="fas fa-check-circle"></i> Akun Terverifikasi</span>
+                    @elseif($verificationStatus === 'pending')
+                        <span class="status-badge pending"><i class="fas fa-clock"></i> Menunggu Verifikasi</span>
                     @else
-                        <div class="avatar-empty">{{ $initial }}</div>
+                        <span class="status-badge unverified"><i class="fas fa-circle-info"></i> Belum Terverifikasi</span>
                     @endif
                 </div>
-
-                <h2 class="profile-name">{{ $username }}</h2>
-                <p class="profile-email">{{ $email }}</p>
-
-                @if($verificationStatus === 'verified')
-                    <span class="status-badge verified"><i class="fas fa-check-circle"></i> Akun Terverifikasi</span>
-                @elseif($verificationStatus === 'pending')
-                    <span class="status-badge pending"><i class="fas fa-clock"></i> Menunggu Verifikasi</span>
-                @else
-                    <span class="status-badge unverified"><i class="fas fa-circle-info"></i> Belum Terverifikasi</span>
-                @endif
 
                 @if(auth()->user()?->role === 'penerima')
                     <div class="recipient-profile-visual">
@@ -1175,7 +1383,7 @@
                 @endif
             </aside>
 
-            <section class="info-card">
+            <section class="info-card {{ $profilePanel === 'info' ? 'is-overview' : '' }}">
                 <div class="panel-content" wire:key="profile-panel-{{ $profilePanel }}">
                     @if($profilePanel === 'edit')
                         <form wire:submit.prevent="updateProfile">
@@ -1394,9 +1602,21 @@
                         </div>
 
                         <div class="panel-actions">
-                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('edit')">Edit Profil</button>
-                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('password')">Ubah Password</button>
-                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('verification')">Verifikasi Akun</button>
+                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('edit')">
+                                <span class="profile-action-icon"><i class="fas fa-user-edit"></i></span>
+                                <span class="profile-action-copy"><strong>Edit Profil</strong><small>Perbarui informasi pribadi kamu</small></span>
+                                <i class="fas fa-chevron-right profile-action-arrow"></i>
+                            </button>
+                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('password')">
+                                <span class="profile-action-icon"><i class="fas fa-lock"></i></span>
+                                <span class="profile-action-copy"><strong>Ubah Password</strong><small>Atur ulang kata sandi akunmu</small></span>
+                                <i class="fas fa-chevron-right profile-action-arrow"></i>
+                            </button>
+                            <button type="button" class="ghost-button panel-button" wire:click="showPanel('verification')">
+                                <span class="profile-action-icon"><i class="fas fa-shield-alt"></i></span>
+                                <span class="profile-action-copy"><strong>Verifikasi Akun</strong><small>Tingkatkan keamanan akunmu</small></span>
+                                <i class="fas fa-chevron-right profile-action-arrow"></i>
+                            </button>
                         </div>
 
                         <div class="form-footer">

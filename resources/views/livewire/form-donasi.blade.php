@@ -1380,6 +1380,23 @@
             font-size: 13px;
         }
 
+        .selected-preview-empty {
+            min-height: 86px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px dashed rgba(0, 134, 0, 0.34);
+            border-radius: 15px;
+            padding: 18px;
+            color: #667085;
+            background: rgba(247, 252, 248, 0.72);
+        }
+
+        .selected-preview-empty i {
+            color: var(--rebox-green);
+            font-size: 20px;
+        }
+
         .selected-preview-check {
             width: 38px;
             height: 38px;
@@ -1995,6 +2012,55 @@
             display: block;
         }
 
+        .qr-camera-switch {
+            position: absolute;
+            z-index: 6;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            display: inline-grid;
+            place-items: center;
+            padding: 0;
+            border: 0;
+            color: rgba(255, 255, 255, .78);
+            background: transparent;
+            box-shadow: none;
+            cursor: pointer;
+            transition: color .2s ease, transform .2s ease, opacity .2s ease;
+        }
+
+        .qr-camera-switch i {
+            font-size: 16px;
+            -webkit-text-stroke: .35px rgba(255, 255, 255, .32);
+            filter:
+                drop-shadow(0 1px 0 rgba(255, 255, 255, .32))
+                drop-shadow(0 5px 10px rgba(0, 0, 0, .28));
+        }
+
+        .qr-camera-switch:hover:not(:disabled) {
+            color: #ffffff;
+            transform: rotate(12deg);
+        }
+
+        .qr-camera-switch:focus-visible {
+            outline: 2px solid rgba(92, 255, 116, .55);
+            outline-offset: 2px;
+        }
+
+        .qr-camera-switch:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .qr-camera-switch.is-switching i {
+            animation: qrCameraSwitch .7s linear infinite;
+        }
+
+        @keyframes qrCameraSwitch {
+            to { transform: rotate(360deg); }
+        }
+
         .qr-camera-empty {
             position: absolute;
             inset: 0;
@@ -2425,24 +2491,171 @@
             .donation-inner { padding: 24px 28px 70px; }
             .top-shell, .form-layout { grid-template-columns: 1fr; }
             .profile-dropdown { justify-self: end; margin-top: -18px; }
-            .location-panel { height: auto; }
-            .location-list { max-height: 620px; }
+            .location-panel {
+                height: auto;
+                min-width: 0;
+                overflow: hidden;
+            }
+            .location-list,
+            .location-list.is-single {
+                display: flex;
+                grid-template-columns: none;
+                align-items: flex-start;
+                gap: 14px;
+                width: 100%;
+                max-height: none;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 2px 4px 12px;
+                scroll-snap-type: x mandatory;
+                scroll-padding-inline: 4px;
+                overscroll-behavior-inline: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(0, 134, 0, .34) rgba(0, 134, 0, .06);
+            }
+            .location-list::-webkit-scrollbar {
+                height: 6px;
+            }
+            .location-list::-webkit-scrollbar-track {
+                border-radius: 999px;
+                background: rgba(0, 134, 0, .06);
+            }
+            .location-list::-webkit-scrollbar-thumb {
+                border-radius: 999px;
+                background: rgba(0, 134, 0, .34);
+            }
+            .location-list .location-card {
+                flex: 0 0 clamp(230px, 42vw, 290px);
+                width: clamp(230px, 42vw, 290px);
+                scroll-snap-align: start;
+            }
+
+            .donation-modal-overlay {
+                place-items: start center;
+                padding: 16px;
+                overflow-y: auto;
+            }
+            .donation-modal-overlay.is-open-overlay,
+            .donation-modal-overlay.is-success-overlay {
+                place-items: center;
+            }
+            .is-open-overlay .donation-flow-card.is-open,
+            .is-success-overlay .donation-flow-card.is-success {
+                margin: auto;
+            }
+
+            .donation-flow-card.is-code {
+                width: min(100%, 680px);
+                max-height: calc(100dvh - 32px);
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .scan-shell {
+                grid-template-columns: 1fr;
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .scan-visual,
+            .scan-content,
+            .qr-scanner-box,
+            .scan-location-card,
+            .manual-code-card {
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            .scan-location-main,
+            .scan-hint {
+                flex-wrap: wrap;
+            }
+
+            .scan-content .flow-head p,
+            .scan-location-card,
+            .manual-code-card,
+            .qr-scan-status {
+                overflow-wrap: anywhere;
+            }
         }
         @media (max-width: 720px) {
             .top-nav { height: auto; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 18px 22px; }
             .donation-panel, .center-card { padding: 22px; }
-            .location-list { grid-template-columns: 1fr; }
+            .location-list,
+            .location-list.is-single {
+                gap: 12px;
+                padding-inline: 0;
+            }
+            .location-list .location-card {
+                flex-basis: min(82%, 270px);
+                width: min(82%, 270px);
+            }
             .field-grid, .condition-row { grid-template-columns: 1fr; }
             .submit-band, .success-actions { flex-direction: column; align-items: stretch; }
             .btn-main, .btn-soft { width: 100%; }
             .modal-actions { flex-direction: column; }
             .donation-flow-card { padding: 24px; }
-            .donation-flow-card.is-code { padding: 0; }
-            .scan-shell { grid-template-columns: 1fr; max-height: calc(100vh - 48px); overflow-y: auto; }
-            .scan-visual, .scan-content { padding: 20px; }
-            .qr-camera-wrap { min-height: 260px; aspect-ratio: 16 / 10; }
+            .donation-modal-overlay { padding: 8px; }
+            .donation-modal-overlay.is-open-overlay,
+            .donation-modal-overlay.is-success-overlay {
+                padding: 14px;
+            }
+            .is-open-overlay .donation-flow-card.is-open {
+                width: min(100%, 420px);
+                padding: 20px;
+            }
+            .is-success-overlay .donation-flow-card.is-success {
+                width: min(100%, 420px);
+                padding: 24px 20px;
+            }
+            .donation-flow-card.is-code {
+                width: 100%;
+                max-height: calc(100dvh - 16px);
+                padding: 0;
+                border-radius: 16px;
+            }
+            .scan-visual, .scan-content { padding: 16px; }
+            .scan-visual { gap: 14px; }
+            .qr-camera-wrap {
+                min-height: 0;
+                aspect-ratio: 4 / 3;
+                border-radius: 14px;
+            }
+            .qr-camera-wrap::before {
+                top: 18px;
+                max-width: calc(100% - 82px);
+                min-height: 32px;
+                padding: 0 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
             .qr-glass-code {
-                --qr-glass-size: 132px;
+                --qr-glass-size: 112px;
+            }
+            .qr-scan-frame { inset: 48px 18px 16px; }
+            .qr-scanner-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+            .qr-scanner-actions .btn-main,
+            .qr-scanner-actions .btn-soft {
+                width: 100%;
+                min-width: 0;
+                padding-inline: 8px;
+                font-size: 12px;
+            }
+            .scan-content .modal-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .scan-content .modal-actions .btn-main,
+            .scan-content .modal-actions .btn-soft {
+                width: 100%;
+                min-width: 0;
+                padding-inline: 10px;
             }
             .selected-preview-card { grid-template-columns: 1fr; }
         }
@@ -2455,22 +2668,26 @@
     @endphp
 
     <div class="donation-inner">
-        <header class="top-shell">
+        <header class="top-shell" wire:ignore>
             <nav class="top-nav" aria-label="Donation navigation">
                 <a href="/dashboard" class="{{ request()->is('dashboard') ? 'is-active' : '' }}" wire:navigate>Dashboard</a>
-                <a href="{{ route('form-donasi', ['name' => $selectedLocation['title'] ?? 'Rebox Dago']) }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
+                <a href="{{ route('form-donasi') }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
                 <a href="/permintaan" class="{{ request()->is('permintaan*') ? 'is-active' : '' }}" wire:navigate>Permintaan</a>
                 <a href="/riwayat" class="{{ request()->is('riwayat*') ? 'is-active' : '' }}" wire:navigate>Riwayat</a>
                 <a href="/profile" class="{{ request()->is('profile*') ? 'is-active' : '' }}" wire:navigate>Profil</a>
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
+                <button class="profile-pill rebox-profile-identity-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ $user->name }}">
                     @else
                         <span class="profile-avatar-fallback">{{ $initial }}</span>
                     @endif
+                    <span class="profile-identity">
+                        <span class="profile-name">{{ $user->name }}</span>
+                        <span class="profile-role">{{ $user->role }}</span>
+                    </span>
                     <span class="profile-caret" aria-hidden="true"></span>
                 </button>
                 <div class="profile-menu">
@@ -2539,22 +2756,30 @@
 
                             <div class="selected-preview">
                                 <h3 class="selected-preview-title">Lokasi Box yang Dipilih</h3>
-                                <article class="selected-preview-card">
-                                    <div class="location-image">
-                                        <img src="{{ $selectedLocation['image'] }}" alt="{{ $selectedLocation['title'] }}">
-                                        <span class="location-code-pill"><i class="fas fa-key"></i>{{ $selectedLocation['code'] }}</span>
-                                    </div>
-                                    <div class="location-body">
-                                        <h3>{{ $selectedLocation['title'] }}</h3>
-                                        <div class="selected-location-meta">
-                                            <a class="location-map-link" href="{{ $selectedLocation['maps_url'] }}" target="_blank" rel="noopener noreferrer">
-                                                <i class="fas fa-location-dot"></i>
-                                                Klik
-                                            </a>
+                                @if($selectedLocation)
+                                    <article class="selected-preview-card">
+                                        <div class="location-image">
+                                            <img src="{{ $selectedLocation['image'] }}" alt="{{ $selectedLocation['title'] }}">
+                                            <span class="location-code-pill"><i class="fas fa-key"></i>{{ $selectedLocation['code'] }}</span>
                                         </div>
+                                        <div class="location-body">
+                                            <h3>{{ $selectedLocation['title'] }}</h3>
+                                            <div class="selected-location-meta">
+                                                <a class="location-map-link" href="{{ $selectedLocation['maps_url'] }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="fas fa-location-dot"></i>
+                                                    Klik
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <span class="selected-preview-check"><i class="fas fa-check"></i></span>
+                                    </article>
+                                @else
+                                    <div class="selected-preview-empty">
+                                        <i class="fas fa-location-dot"></i>
+                                        <span>Belum ada lokasi dipilih. Pilih salah satu lokasi Rebox di samping.</span>
                                     </div>
-                                    <span class="selected-preview-check"><i class="fas fa-check"></i></span>
-                                </article>
+                                @endif
+                                @error('selectedLocation') <div class="error-alert"><i class="fas fa-circle-exclamation"></i>{{ $message }}</div> @enderror
                             </div>
                         </div>
 
@@ -2632,6 +2857,10 @@
                                     <div class="qr-scanner-box" data-donation-qr-scanner data-expected-code="{{ $selectedLocation['code'] }}">
                                         <div class="qr-camera-wrap">
                                             <video data-donation-qr-video autoplay muted playsinline></video>
+                                            <button type="button" class="qr-camera-switch" data-donation-qr-switch
+                                                aria-label="Ganti ke kamera depan" title="Ganti kamera" disabled>
+                                                <i class="fas fa-camera-rotate" aria-hidden="true"></i>
+                                            </button>
                                             <div class="qr-glass-code" aria-hidden="true">
                                                 <i class="fas fa-qrcode"></i>
                                             </div>
@@ -2709,7 +2938,7 @@
             @endif
 
             @if($step === 'open')
-                <div class="donation-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="open-box-title" wire:key="donation-open-overlay">
+                <div class="donation-modal-overlay is-open-overlay" role="dialog" aria-modal="true" aria-labelledby="open-box-title" wire:key="donation-open-overlay">
                     <section class="donation-flow-card is-open" data-open-step wire:key="donation-open-card">
                         <button type="button" data-expire-box wire:click="expireBox" style="display:none"></button>
 
@@ -2752,7 +2981,7 @@
                 </div>
             @endif
             @if($step === 'success')
-                <div class="donation-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="success-donation-title" wire:key="donation-success-overlay">
+                <div class="donation-modal-overlay is-success-overlay" role="dialog" aria-modal="true" aria-labelledby="success-donation-title" wire:key="donation-success-overlay">
                     <section class="donation-flow-card is-success" wire:key="donation-success-card">
                         <div class="flow-head">
                             <div class="modal-icon"><i class="fas fa-briefcase"></i></div>
@@ -2848,6 +3077,7 @@
         }
 
         function stopDonationQrScanner() {
+            window.reboxDonationQrSession = (window.reboxDonationQrSession || 0) + 1;
             window.reboxDonationQrScanning = false;
 
             if (window.reboxDonationQrFrame) {
@@ -2892,11 +3122,13 @@
             const empty = scanner.querySelector('[data-donation-qr-empty]');
             const startButton = scanner.querySelector('[data-donation-qr-start]');
             const stopButton = scanner.querySelector('[data-donation-qr-stop]');
+            const switchButton = scanner.querySelector('[data-donation-qr-switch]');
             const input = root.querySelector('[data-donation-qr-input]');
             const submitButton = root.querySelector('[data-donation-open-submit]');
             const expectedCode = scanner.dataset.expectedCode || '';
             let scanFrameCount = 0;
             let lastScanAt = 0;
+            let activeFacingMode = window.reboxDonationQrFacingMode || 'environment';
 
             if (scanner.dataset.bound === 'true') {
                 return;
@@ -3059,31 +3291,51 @@
                 }
             };
 
-            startButton?.addEventListener('click', async () => {
+            const updateCameraSwitch = (isActive, isSwitching = false) => {
+                if (!switchButton) return;
+
+                switchButton.disabled = !isActive || isSwitching;
+                switchButton.classList.toggle('is-switching', isSwitching);
+                switchButton.setAttribute(
+                    'aria-label',
+                    activeFacingMode === 'environment' ? 'Ganti ke kamera depan' : 'Ganti ke kamera belakang'
+                );
+            };
+
+            const startCamera = async (facingMode = activeFacingMode, strict = false) => {
                 if (!navigator.mediaDevices?.getUserMedia) {
                     setDonationQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
-                    return;
+                    return false;
                 }
 
                 if (typeof window.jsQR !== 'function') {
                     setDonationQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
-                    return;
+                    return false;
                 }
 
                 try {
+                    if (typeof window.stopRequestQrScanner === 'function') {
+                        window.stopRequestQrScanner();
+                    }
+
                     stopDonationQrScanner();
+                    const cameraSession = window.reboxDonationQrSession;
+                    updateCameraSwitch(false, true);
+                    let cameraStream;
 
                     try {
-                        window.reboxDonationQrStream = await navigator.mediaDevices.getUserMedia({
+                        cameraStream = await navigator.mediaDevices.getUserMedia({
                             video: {
                                 width: { ideal: 960 },
                                 height: { ideal: 540 },
-                                facingMode: 'environment',
+                                facingMode: strict ? { exact: facingMode } : { ideal: facingMode },
                             },
                             audio: false,
                         });
                     } catch (cameraError) {
-                        window.reboxDonationQrStream = await navigator.mediaDevices.getUserMedia({
+                        if (strict) throw cameraError;
+
+                        cameraStream = await navigator.mediaDevices.getUserMedia({
                             video: {
                                 width: { ideal: 960 },
                                 height: { ideal: 540 },
@@ -3092,22 +3344,58 @@
                         });
                     }
 
-                    video.srcObject = window.reboxDonationQrStream;
+                    if (cameraSession !== window.reboxDonationQrSession || !scanner.isConnected || !video?.isConnected) {
+                        cameraStream.getTracks().forEach((track) => track.stop());
+                        return false;
+                    }
+
+                    window.reboxDonationQrStream = cameraStream;
+                    video.srcObject = cameraStream;
                     empty?.classList.add('is-hidden');
                     video.closest('.qr-camera-wrap')?.classList.add('is-scanning');
+                    activeFacingMode = facingMode;
+                    window.reboxDonationQrFacingMode = facingMode;
                     window.reboxDonationQrScanning = true;
                     scanFrameCount = 0;
-                    setDonationQrStatus(scanner, 'Kamera laptop aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.');
+                    setDonationQrStatus(
+                        scanner,
+                        `${facingMode === 'environment' ? 'Kamera belakang' : 'Kamera depan'} aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.`
+                    );
                     await video.play();
+                    updateCameraSwitch(true);
                     scanLoop();
+                    return true;
                 } catch (error) {
+                    updateCameraSwitch(false);
                     setDonationQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                    return false;
                 }
+            };
+
+            startButton?.addEventListener('click', async () => {
+                await startCamera(activeFacingMode);
             });
 
             stopButton?.addEventListener('click', () => {
                 stopDonationQrScanner();
+                updateCameraSwitch(false);
                 setDonationQrStatus(scanner, 'Kamera dimatikan.');
+            });
+
+            switchButton?.addEventListener('click', async () => {
+                if (!window.reboxDonationQrStream) return;
+
+                const previousFacingMode = activeFacingMode;
+                const nextFacingMode = previousFacingMode === 'environment' ? 'user' : 'environment';
+                const switched = await startCamera(nextFacingMode, true);
+
+                if (!switched) {
+                    const restored = await startCamera(previousFacingMode);
+
+                    if (restored) {
+                        setDonationQrStatus(scanner, 'Kamera lain tidak tersedia pada perangkat ini.', true);
+                    }
+                }
             });
         }
 
@@ -3116,6 +3404,8 @@
         }
 
         window.addEventListener('beforeunload', stopDonationQrScanner);
+        window.addEventListener('pagehide', stopDonationQrScanner);
+        document.addEventListener('livewire:navigating', stopDonationQrScanner);
 
         document.addEventListener('click', (event) => {
             const dropdown = document.querySelector('[data-profile-dropdown]');

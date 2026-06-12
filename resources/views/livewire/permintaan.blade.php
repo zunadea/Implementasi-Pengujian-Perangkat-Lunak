@@ -299,6 +299,9 @@
         $user = auth()->user();
         $displayName = $user->name ?? $user->username ?? 'Rhei';
         $initial = strtoupper(substr($displayName, 0, 1));
+        $avatarUrl = $user?->profile_photo
+            ? asset('storage/' . $user->profile_photo)
+            : ($user?->google_avatar ?: null);
         $activeRequest = $selectedRequest ?: ($requests[0] ?? null);
     @endphp
 
@@ -729,6 +732,7 @@
         }
 
         .donor-panel-title {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -746,12 +750,130 @@
         .donor-filter-icon {
             width: 38px;
             height: 38px;
-            border: 0;
+            border: 1px solid transparent;
             border-radius: 12px;
             display: grid;
             place-items: center;
             background: rgba(0, 134, 0, .08);
             color: #169b36;
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+        }
+
+        .donor-filter-icon:hover,
+        .donor-filter-icon.is-active {
+            border-color: rgba(0, 134, 0, .18);
+            background: rgba(0, 134, 0, .14);
+            color: #008600;
+        }
+
+        .donor-filter-icon:hover {
+            transform: translateY(-1px);
+        }
+
+        .donor-filter-icon:focus-visible {
+            outline: 3px solid rgba(139, 209, 125, .42);
+            outline-offset: 2px;
+        }
+
+        .donor-filter-icon i {
+            transition: transform .24s ease;
+        }
+
+        .donor-filter-icon.is-active i {
+            transform: rotate(90deg);
+        }
+
+        .advanced-filter-menu {
+            position: absolute;
+            z-index: 40;
+            top: 48px;
+            right: 0;
+            width: min(280px, calc(100vw - 48px));
+            padding: 18px;
+            border: 1px solid rgba(20, 32, 43, .10);
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 24px 54px rgba(15, 23, 42, .16);
+            text-align: left;
+        }
+
+        .advanced-filter-title {
+            margin: 0 0 10px;
+            color: #14202b;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .advanced-filter-options {
+            display: grid;
+            gap: 9px;
+        }
+
+        .advanced-filter-option {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0;
+            color: #3d4651;
+            font-size: 13px;
+            font-weight: 550;
+            cursor: pointer;
+        }
+
+        .advanced-filter-option input {
+            width: 16px;
+            height: 16px;
+            accent-color: #169b36;
+        }
+
+        .advanced-filter-other {
+            width: 100%;
+            height: 38px;
+            margin-top: 8px;
+            border: 1px solid rgba(20, 32, 43, .12);
+            border-radius: 9px;
+            padding: 0 11px;
+            color: #14202b;
+            outline: 0;
+        }
+
+        .advanced-filter-other:focus {
+            border-color: rgba(0, 134, 0, .42);
+            box-shadow: 0 0 0 3px rgba(0, 134, 0, .08);
+        }
+
+        .advanced-filter-divider {
+            height: 1px;
+            margin: 16px 0;
+            background: rgba(20, 32, 43, .08);
+        }
+
+        .advanced-filter-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .advanced-filter-actions button {
+            min-height: 38px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .advanced-filter-reset {
+            border: 1px solid rgba(0, 134, 0, .22);
+            color: #087321;
+            background: #ffffff;
+        }
+
+        .advanced-filter-apply {
+            border: 0;
+            color: #ffffff;
+            background: #12a936;
         }
 
         .donor-search-box {
@@ -1391,6 +1513,25 @@
             color: #d7262d;
             font-size: 28px;
             transition: transform .22s ease, background .22s ease, box-shadow .22s ease;
+        }
+
+        .donor-recipient-avatar img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        .donor-recipient-avatar.has-photo {
+            overflow: hidden;
+            background: #eef8f0;
+        }
+
+        .donor-recipient-avatar .donor-recipient-initial {
+            color: #008600;
+            font-size: 24px;
+            font-weight: 750;
         }
 
         .donor-recipient-avatar.is-komunitas { color: #169bdb; }
@@ -2882,6 +3023,29 @@
             padding: 18px 24px;
         }
 
+        .fulfillment-location-warning {
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(220, 38, 38, .22);
+            border-radius: 14px;
+            color: #b91c1c;
+            background: #fff4f4;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+            box-shadow: 0 10px 24px rgba(185, 28, 28, .08);
+            animation: riseIn .22s ease both;
+        }
+
+        .fulfillment-location-warning i {
+            flex: 0 0 auto;
+            font-size: 18px;
+        }
+
         .fulfillment-safe-note {
             display: inline-flex;
             align-items: center;
@@ -3495,7 +3659,7 @@
             position: absolute;
             z-index: 5;
             left: 50%;
-            top: 22px;
+            top: 26px;
             transform: translateX(-50%);
             min-height: 36px;
             display: inline-flex;
@@ -3521,6 +3685,55 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        .request-qr-camera-switch {
+            position: absolute;
+            z-index: 6;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            display: inline-grid;
+            place-items: center;
+            padding: 0;
+            border: 0;
+            color: rgba(255, 255, 255, .78);
+            background: transparent;
+            box-shadow: none;
+            cursor: pointer;
+            transition: color .2s ease, transform .2s ease, opacity .2s ease;
+        }
+
+        .request-qr-camera-switch i {
+            font-size: 16px;
+            -webkit-text-stroke: .35px rgba(255, 255, 255, .32);
+            filter:
+                drop-shadow(0 1px 0 rgba(255, 255, 255, .32))
+                drop-shadow(0 5px 10px rgba(0, 0, 0, .28));
+        }
+
+        .request-qr-camera-switch:hover:not(:disabled) {
+            color: #ffffff;
+            transform: rotate(12deg);
+        }
+
+        .request-qr-camera-switch:focus-visible {
+            outline: 2px solid rgba(92, 255, 116, .55);
+            outline-offset: 2px;
+        }
+
+        .request-qr-camera-switch:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .request-qr-camera-switch.is-switching i {
+            animation: requestQrCameraSwitch .7s linear infinite;
+        }
+
+        @keyframes requestQrCameraSwitch {
+            to { transform: rotate(360deg); }
         }
 
         .request-qr-empty {
@@ -3674,7 +3887,7 @@
 
         .request-qr-actions {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             padding: 0;
             margin: 16px 0 0;
             background: transparent;
@@ -3683,7 +3896,7 @@
         .request-qr-actions .primary-btn,
         .request-qr-actions .secondary-btn {
             flex: 1;
-            min-width: 128px;
+            min-width: 145px;
             min-height: 44px;
             border-radius: 13px;
             font-size: 13px;
@@ -4209,6 +4422,247 @@
                 grid-template-columns: 1fr;
             }
 
+            .donor-layout {
+                align-items: start;
+            }
+
+            .donor-list-panel {
+                width: 100%;
+                padding: 24px;
+            }
+
+            .donor-list-head {
+                margin-bottom: 20px;
+            }
+
+            .donor-list-head h2 {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 20px;
+            }
+
+            .donor-list-head h2::before {
+                content: "\f46d";
+                width: 44px;
+                height: 44px;
+                flex: 0 0 44px;
+                border-radius: 14px;
+                display: grid;
+                place-items: center;
+                color: #169b36;
+                background: rgba(0, 134, 0, .08);
+                font-family: "Font Awesome 6 Free";
+                font-size: 20px;
+                font-weight: 900;
+            }
+
+            .donor-count-pill {
+                height: 36px;
+                margin-left: auto;
+                padding-inline: 16px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
+            .donor-request-list {
+                gap: 14px;
+            }
+
+            .donor-request-card {
+                grid-template-columns: minmax(0, 1fr) minmax(190px, .55fr);
+                grid-template-areas:
+                    "recipient recipient"
+                    "need quantity"
+                    "actions actions";
+                gap: 18px 22px;
+                min-height: 0;
+                padding: 22px;
+                cursor: default;
+            }
+
+            .donor-recipient-block {
+                grid-area: recipient;
+                grid-template-columns: 68px minmax(0, 1fr);
+                padding-bottom: 18px;
+                border-bottom: 1px solid rgba(20, 32, 43, .08);
+            }
+
+            .donor-recipient-avatar {
+                width: 68px;
+                height: 68px;
+            }
+
+            .donor-recipient-block h3 {
+                margin-bottom: 8px;
+                font-size: 18px;
+            }
+
+            .donor-need-block {
+                grid-area: need;
+                align-self: stretch;
+                border-left: 0;
+                padding: 4px 0;
+            }
+
+            .donor-need-block span {
+                margin-bottom: 6px;
+            }
+
+            .donor-need-block h3 {
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+
+            .donor-need-block p {
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
+            .donor-qty-box {
+                grid-area: quantity;
+                min-height: 106px;
+                place-items: center start;
+                padding: 16px 20px;
+                text-align: left;
+            }
+
+            .donor-qty-box > div {
+                display: grid;
+                grid-template-columns: 42px 1fr;
+                align-items: center;
+                column-gap: 14px;
+                width: 100%;
+            }
+
+            .donor-qty-box i {
+                grid-row: 1 / 3;
+                width: 42px;
+                height: 42px;
+                display: grid;
+                place-items: center;
+                margin: 0;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, .76);
+                font-size: 22px;
+            }
+
+            .donor-qty-box strong {
+                align-self: end;
+                font-size: 17px;
+            }
+
+            .donor-qty-box span {
+                align-self: start;
+                font-size: 13px;
+            }
+
+            .donor-card-actions {
+                grid-area: actions;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                justify-items: stretch;
+                gap: 16px;
+                border-top: 1px solid rgba(20, 32, 43, .08);
+                border-left: 0;
+                padding: 18px 0 0;
+            }
+
+            .donor-detail-button {
+                grid-column: 2;
+                width: 132px;
+            }
+
+            .donor-time {
+                grid-column: 1;
+                grid-row: 1;
+                display: inline-flex;
+                align-items: center;
+                gap: 9px;
+                font-size: 13px;
+            }
+
+            .donor-time::before {
+                content: "\f017";
+                color: #667085;
+                font-family: "Font Awesome 6 Free";
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .donor-filter-panel {
+                width: 100%;
+                height: auto;
+                padding: 24px;
+            }
+
+            .donor-panel-title {
+                margin-bottom: 20px;
+            }
+
+            .donor-panel-title h2 {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 20px;
+            }
+
+            .donor-panel-title h2::before {
+                content: "\f002";
+                width: 44px;
+                height: 44px;
+                flex: 0 0 44px;
+                border-radius: 14px;
+                display: grid;
+                place-items: center;
+                color: #008600;
+                background: rgba(0, 134, 0, .08);
+                font-family: "Font Awesome 6 Free";
+                font-size: 20px;
+                font-weight: 900;
+            }
+
+            .donor-filter-icon {
+                width: 44px;
+                height: 44px;
+                flex: 0 0 44px;
+            }
+
+            .donor-search-box {
+                height: 54px;
+                margin-bottom: 22px;
+            }
+
+            .donor-filter-label {
+                margin-bottom: 12px;
+                font-size: 14px;
+            }
+
+            .donor-category-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .donor-category-button {
+                height: 58px;
+                min-width: 0;
+                gap: 12px;
+                padding: 0 14px;
+                text-align: left;
+            }
+
+            .donor-category-button i {
+                width: 34px;
+                height: 34px;
+                flex: 0 0 34px;
+                border-radius: 10px;
+                display: grid;
+                place-items: center;
+                background: rgba(0, 134, 0, .06);
+            }
+
             .donor-need-block,
             .donor-card-actions {
                 border-left: 0;
@@ -4226,7 +4680,7 @@
             }
 
             .donation-motion-card {
-                min-height: 132px;
+                display: none;
             }
 
             .fulfillment-recipient,
@@ -4242,7 +4696,24 @@
             }
 
             .fulfillment-page .location-list {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                display: flex;
+                gap: 16px;
+                max-height: none;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 2px 4px 16px;
+                scroll-snap-type: x mandatory;
+                scroll-padding-inline: 4px;
+                overscroll-behavior-inline: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+            }
+
+            .fulfillment-page .location-list .location-card {
+                width: clamp(250px, 72vw, 320px);
+                min-width: clamp(250px, 72vw, 320px);
+                flex: 0 0 clamp(250px, 72vw, 320px);
+                scroll-snap-align: start;
             }
 
             .fulfillment-inventory {
@@ -4261,13 +4732,48 @@
 
             .request-qr-shell {
                 grid-template-columns: 1fr;
-                max-height: calc(100vh - 48px);
-                overflow-y: auto;
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
             }
 
             .request-qr-visual,
             .request-qr-content {
                 padding: 20px;
+            }
+
+            .code-modal-overlay {
+                place-items: start center;
+                padding: 16px;
+                overflow-y: auto;
+            }
+
+            .request-qr-flow {
+                width: min(100%, 680px);
+                max-height: calc(100dvh - 32px);
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .request-qr-visual,
+            .request-qr-content,
+            .request-qr-box,
+            .request-location-card,
+            .request-manual-card {
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            .request-location-main,
+            .request-scan-hint {
+                flex-wrap: wrap;
+            }
+
+            .request-qr-copy,
+            .request-location-card,
+            .request-manual-card,
+            .request-qr-status {
+                overflow-wrap: anywhere;
             }
 
             .request-qr-camera {
@@ -4310,6 +4816,271 @@
         }
 
         @media (max-width: 720px) {
+            .request-page {
+                padding-inline: 14px;
+            }
+
+            .donor-list-panel {
+                padding: 18px 16px;
+                border-radius: 16px;
+            }
+
+            .donor-list-head {
+                margin-bottom: 16px;
+            }
+
+            .donor-list-head h2 {
+                width: 100%;
+                gap: 9px;
+                font-size: 16px;
+            }
+
+            .donor-list-head h2::before {
+                width: 38px;
+                height: 38px;
+                flex-basis: 38px;
+                border-radius: 11px;
+                font-size: 17px;
+            }
+
+            .donor-count-pill {
+                height: 30px;
+                padding-inline: 10px;
+                font-size: 10px;
+            }
+
+            .donor-request-card {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "recipient"
+                    "need"
+                    "quantity"
+                    "actions";
+                gap: 14px;
+                padding: 16px;
+                border-radius: 15px;
+            }
+
+            .donor-recipient-block {
+                grid-template-columns: 56px minmax(0, 1fr);
+                gap: 12px;
+                padding-bottom: 14px;
+            }
+
+            .donor-recipient-avatar {
+                width: 56px;
+                height: 56px;
+            }
+
+            .donor-recipient-avatar .donor-recipient-initial {
+                font-size: 20px;
+            }
+
+            .donor-recipient-block h3 {
+                margin-bottom: 6px;
+                font-size: 15px;
+            }
+
+            .donor-status-badge {
+                height: 22px;
+                padding-inline: 8px;
+                font-size: 9px;
+            }
+
+            .donor-need-block {
+                padding: 0;
+            }
+
+            .donor-need-block span {
+                margin-bottom: 4px;
+                font-size: 10px;
+            }
+
+            .donor-need-block h3 {
+                margin-bottom: 7px;
+                font-size: 16px;
+            }
+
+            .donor-need-block p {
+                font-size: 11px;
+                line-height: 1.45;
+            }
+
+            .donor-qty-box {
+                min-height: 76px;
+                padding: 12px 14px;
+            }
+
+            .donor-qty-box > div {
+                grid-template-columns: 36px 1fr;
+                column-gap: 11px;
+            }
+
+            .donor-qty-box i {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+
+            .donor-qty-box strong {
+                font-size: 14px;
+            }
+
+            .donor-qty-box span {
+                font-size: 11px;
+            }
+
+            .donor-card-actions {
+                gap: 10px;
+                padding-top: 14px;
+            }
+
+            .donor-detail-button {
+                width: 106px;
+                height: 38px;
+                border-radius: 10px;
+                font-size: 11px;
+            }
+
+            .donor-time {
+                gap: 6px;
+                font-size: 10px;
+            }
+
+            .donor-time::before {
+                font-size: 13px;
+            }
+
+            .donor-filter-panel {
+                padding: 18px 16px;
+                border-radius: 16px;
+            }
+
+            .donor-panel-title {
+                margin-bottom: 16px;
+            }
+
+            .donor-panel-title h2 {
+                gap: 9px;
+                font-size: 16px;
+            }
+
+            .donor-panel-title h2::before,
+            .donor-filter-icon {
+                width: 38px;
+                height: 38px;
+                flex-basis: 38px;
+                border-radius: 11px;
+            }
+
+            .donor-panel-title h2::before {
+                font-size: 17px;
+            }
+
+            .donor-search-box {
+                height: 48px;
+                margin-bottom: 18px;
+                padding-inline: 13px;
+            }
+
+            .donor-search-box input {
+                min-width: 0;
+                font-size: 12px;
+            }
+
+            .donor-filter-label {
+                margin-bottom: 10px;
+                font-size: 12px;
+            }
+
+            .donor-category-list {
+                gap: 8px;
+            }
+
+            .donor-category-button {
+                height: 50px;
+                gap: 7px;
+                padding: 0 8px;
+                font-size: 11px;
+            }
+
+            .donor-category-button i {
+                width: 28px;
+                height: 28px;
+                flex-basis: 28px;
+                border-radius: 8px;
+                font-size: 13px;
+            }
+
+            .code-modal-overlay {
+                padding: 8px;
+            }
+
+            .request-qr-flow {
+                width: 100%;
+                max-height: calc(100dvh - 16px);
+                border-radius: 16px;
+            }
+
+            .request-qr-visual,
+            .request-qr-content {
+                padding: 16px;
+            }
+
+            .request-qr-visual {
+                gap: 14px;
+            }
+
+            .request-qr-camera {
+                min-height: 0;
+                aspect-ratio: 4 / 3;
+                border-radius: 14px;
+            }
+
+            .request-qr-camera::before {
+                top: 18px;
+                max-width: calc(100% - 82px);
+                min-height: 32px;
+                padding: 0 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .request-qr-glass-code {
+                --qr-glass-size: 112px;
+            }
+
+            .request-qr-frame {
+                inset: 48px 18px 16px;
+            }
+
+            .request-qr-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .request-qr-actions .primary-btn,
+            .request-qr-actions .secondary-btn {
+                width: 100%;
+                min-width: 0;
+                padding-inline: 8px;
+                font-size: 12px;
+            }
+
+            .code-modal-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .code-modal-actions .primary-btn,
+            .code-modal-actions .secondary-btn {
+                width: 100%;
+                min-width: 0;
+                padding-inline: 10px;
+            }
+
             .request-page.is-recipient-page::before {
                 right: -220px;
                 width: 980px;
@@ -4356,7 +5127,15 @@
             }
 
             .fulfillment-page .location-list {
-                grid-template-columns: 1fr;
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .fulfillment-page .location-list .location-card {
+                width: min(82vw, 290px);
+                min-width: min(82vw, 290px);
+                flex-basis: min(82vw, 290px);
             }
 
             .fulfillment-summary,
@@ -4393,11 +5172,11 @@
         }
     </style>
 
-    <div class="top-shell">
+    <div class="top-shell" wire:ignore>
         <nav class="top-nav {{ auth()->user()?->role === 'penerima' ? 'is-recipient' : '' }}" aria-label="Navigasi Rebox">
             <a href="/dashboard" class="{{ request()->is('dashboard*') ? 'is-active' : '' }}" wire:navigate>Dashboard</a>
             @if(auth()->user()?->role !== 'penerima')
-                <a href="{{ route('form-donasi', ['name' => 'Rebox Dago']) }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
+                <a href="{{ route('form-donasi') }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
             @endif
             <a href="/permintaan" class="{{ request()->is('permintaan*') ? 'is-active' : '' }}" wire:navigate>Permintaan</a>
             <a href="/riwayat" class="{{ request()->is('riwayat*') ? 'is-active' : '' }}" wire:navigate>Riwayat</a>
@@ -4405,8 +5184,16 @@
         </nav>
 
         <div class="profile-dropdown" data-profile-dropdown>
-            <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
-                <span class="profile-avatar-fallback">{{ $initial }}</span>
+            <button class="profile-pill rebox-profile-identity-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
+                @if($avatarUrl)
+                    <img src="{{ $avatarUrl }}" alt="Foto profil {{ $displayName }}">
+                @else
+                    <span class="profile-avatar-fallback">{{ $initial }}</span>
+                @endif
+                <span class="profile-identity">
+                    <span class="profile-name">{{ $displayName }}</span>
+                    <span class="profile-role">{{ auth()->user()?->role }}</span>
+                </span>
                 <span class="profile-caret" aria-hidden="true"></span>
             </button>
 
@@ -4461,6 +5248,21 @@
                                 </div>
 
                                 <div class="form-field">
+                                    <label>Jenis Penerima</label>
+                                    <div class="input-box">
+                                        <i class="fas fa-people-roof"></i>
+                                        <select wire:model="request_jenis_penerima">
+                                            <option value="">Pilih jenis penerima</option>
+                                            <option value="Komunitas">Komunitas</option>
+                                            <option value="Panti Asuhan">Panti Asuhan</option>
+                                            <option value="Panti Jompo">Panti Jompo</option>
+                                            <option value="Panti Disabilitas">Panti Disabilitas</option>
+                                        </select>
+                                    </div>
+                                    @error('request_jenis_penerima') <span class="error-text">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="form-field">
                                     <label>Jumlah Kebutuhan</label>
                                     <div class="input-box">
                                         <i class="fas fa-list-ol"></i>
@@ -4507,7 +5309,7 @@
                                 <i class="fas fa-question"></i>
                             </div>
                             <h3>Ajukan permintaan ini?</h3>
-                            <p>Pastikan data barang, kategori, jumlah, dan deskripsi sudah benar sebelum dikirim ke daftar permintaan donatur.</p>
+                            <p>Pastikan data barang, kategori, jenis penerima, jumlah, dan deskripsi sudah benar sebelum dikirim ke daftar permintaan donatur.</p>
                             <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
                                 <button type="button" class="secondary-btn" wire:click="cancelSubmitRequest">Tidak</button>
                                 <button type="button" class="primary-btn" wire:click="confirmSubmitRequest">Iya</button>
@@ -4545,7 +5347,71 @@
                 <aside class="donor-filter-panel">
                     <div class="donor-panel-title">
                         <h2>Filter Pencarian</h2>
-                        <span class="donor-filter-icon"><i class="fas fa-sliders"></i></span>
+                        <button
+                            type="button"
+                            class="donor-filter-icon {{ $show_filter_menu ? 'is-active' : '' }}"
+                            wire:click="toggleFilters"
+                            aria-expanded="{{ $show_filter_menu ? 'true' : 'false' }}"
+                            aria-controls="advanced-filter-menu"
+                            title="Filter lanjutan"
+                        >
+                            <i class="fas fa-sliders" aria-hidden="true"></i>
+                        </button>
+
+                        @if($show_filter_menu)
+                            <div id="advanced-filter-menu" class="advanced-filter-menu" wire:key="advanced-filter-menu">
+                                <p class="advanced-filter-title">Kategori Barang</p>
+                                <div class="advanced-filter-options">
+                                    <label class="advanced-filter-option">
+                                        <input
+                                            type="checkbox"
+                                            wire:click="selectAllItemCategories"
+                                            @checked(in_array('Semua Kategori', $draft_item_categories, true))
+                                        >
+                                        <span>Semua Kategori</span>
+                                    </label>
+
+                                    @foreach(['Elektronik', 'Pakaian', 'Kebutuhan Pokok', 'Lainnya'] as $itemCategory)
+                                        <label class="advanced-filter-option">
+                                            <input
+                                                type="checkbox"
+                                                wire:click="toggleItemCategory('{{ $itemCategory }}')"
+                                                @checked(in_array($itemCategory, $draft_item_categories, true))
+                                            >
+                                            <span>{{ $itemCategory }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+
+                                @if(in_array('Lainnya', $draft_item_categories, true))
+                                    <input
+                                        type="text"
+                                        class="advanced-filter-other"
+                                        wire:model="draft_other_category"
+                                        placeholder="Ketik kategori lainnya"
+                                    >
+                                @endif
+
+                                <div class="advanced-filter-divider"></div>
+
+                                <p class="advanced-filter-title">Urutkan</p>
+                                <div class="advanced-filter-options">
+                                    <label class="advanced-filter-option">
+                                        <input type="radio" wire:model="draft_sort_order" value="terbaru">
+                                        <span>Terbaru</span>
+                                    </label>
+                                    <label class="advanced-filter-option">
+                                        <input type="radio" wire:model="draft_sort_order" value="terlama">
+                                        <span>Paling Lama</span>
+                                    </label>
+                                </div>
+
+                                <div class="advanced-filter-actions">
+                                    <button type="button" class="advanced-filter-reset" wire:click="resetAdvancedFilters">Reset</button>
+                                    <button type="button" class="advanced-filter-apply" wire:click="applyAdvancedFilters">Terapkan</button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <label class="donor-search-box">
@@ -4579,19 +5445,16 @@
                     <div class="donor-request-list">
                         @forelse ($requests as $item)
                             @php
-                                $typeKey = strtolower(str_replace(' ', '-', $item['jenis_penerima']));
-                                $typeIcon = match ($item['jenis_penerima']) {
-                                    'Komunitas' => 'fas fa-people-group',
-                                    'Panti Asuhan' => 'fas fa-hands-holding-child',
-                                    'Panti Jompo' => 'fas fa-person-cane',
-                                    'Panti Disabilitas' => 'fas fa-wheelchair',
-                                    default => 'fas fa-hand-holding-heart',
-                                };
+                                $recipientInitial = strtoupper(substr($item['penerima'] ?? 'P', 0, 1));
                             @endphp
                             <article class="donor-request-card" wire:key="donor-request-{{ $item['id'] }}" wire:click="showDetail({{ $item['id'] }})">
                                 <div class="donor-recipient-block">
-                                    <div class="donor-recipient-avatar is-{{ $typeKey }}">
-                                        <i class="{{ $typeIcon }}"></i>
+                                    <div class="donor-recipient-avatar {{ !empty($item['penerima_photo']) ? 'has-photo' : '' }}">
+                                        @if(!empty($item['penerima_photo']))
+                                            <img src="{{ $item['penerima_photo'] }}" alt="Foto profil {{ $item['penerima'] }}">
+                                        @else
+                                            <span class="donor-recipient-initial">{{ $recipientInitial }}</span>
+                                        @endif
                                     </div>
                                     <div>
                                         <h3>{{ $item['penerima'] }}</h3>
@@ -4773,6 +5636,13 @@
                     </aside>
                 </div>
 
+                @error('selectedLocation')
+                    <div class="fulfillment-location-warning" role="alert">
+                        <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+                        <span>{{ $message }}</span>
+                    </div>
+                @enderror
+
                 <section class="fulfillment-action">
                     <span class="fulfillment-safe-note">
                         <i class="fas fa-shield-heart"></i>
@@ -4861,13 +5731,15 @@
                         <button type="button" class="primary-btn" wire:click="goToCode" style="width:100%;">
                             Lanjutkan <i class="fas fa-arrow-right"></i>
                         </button>
+                        @error('selectedLocation') <span class="error-text">{{ $message }}</span> @enderror
                     </aside>
                 </div>
             </section>
         @endif
 
         @if ($show_code_modal)
-            <div class="code-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="code-modal-title">
+            <div class="code-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="code-modal-title"
+                wire:key="request-code-modal-{{ $selectedRequestId }}-{{ $selectedLocation['code'] ?? 'none' }}">
             <section class="donor-flow-card glass-card request-qr-flow">
                 <form wire:submit.prevent="openBox">
                     <div class="request-qr-shell">
@@ -4879,7 +5751,11 @@
                             </div>
                             <div class="request-qr-box" data-request-qr-scanner data-expected-code="{{ $selectedLocation['code'] ?? '' }}">
                                 <div class="request-qr-camera">
-                                    <video playsinline muted data-request-qr-video></video>
+                                    <video autoplay playsinline muted data-request-qr-video></video>
+                                    <button type="button" class="request-qr-camera-switch" data-request-qr-switch
+                                        aria-label="Ganti ke kamera depan" title="Ganti kamera" disabled>
+                                        <i class="fas fa-camera-rotate" aria-hidden="true"></i>
+                                    </button>
                                     <div class="request-qr-glass-code" aria-hidden="true">
                                         <i class="fas fa-qrcode"></i>
                                     </div>
@@ -5044,12 +5920,15 @@
     <script src="{{ asset('jsQR.min.js') }}"></script>
     <script>
         function stopRequestQrScanner() {
+            window.reboxRequestQrSession = (window.reboxRequestQrSession || 0) + 1;
+
             if (window.reboxRequestQrFrame) {
                 window.cancelAnimationFrame(window.reboxRequestQrFrame);
                 window.reboxRequestQrFrame = null;
             }
 
             window.reboxRequestQrScanning = false;
+            window.reboxRequestQrLastValue = '';
 
             if (window.reboxRequestQrStream) {
                 window.reboxRequestQrStream.getTracks().forEach((track) => track.stop());
@@ -5087,18 +5966,37 @@
                 return;
             }
 
-            if (scanner.dataset.ready === 'true') return;
-            scanner.dataset.ready = 'true';
-
             const expectedCode = scanner.dataset.expectedCode;
             const video = scanner.querySelector('[data-request-qr-video]');
             const empty = scanner.querySelector('[data-request-qr-empty]');
             const startButton = scanner.querySelector('[data-request-qr-start]');
             const stopButton = scanner.querySelector('[data-request-qr-stop]');
-            const input = document.querySelector('[data-request-qr-input]');
-            const submitButton = document.querySelector('[data-request-open-submit]');
+            const switchButton = scanner.querySelector('[data-request-qr-switch]');
+            const input = root.querySelector('[data-request-qr-input]');
+            const submitButton = root.querySelector('[data-request-open-submit]');
             let lastScanAt = 0;
             let scanFrameCount = 0;
+            let activeFacingMode = window.reboxRequestQrFacingMode || 'environment';
+
+            if (
+                scanner.dataset.ready === 'true'
+                && scanner.reboxStartButton === startButton
+                && scanner.reboxStopButton === stopButton
+                && scanner.reboxSwitchButton === switchButton
+                && scanner.reboxVideo === video
+            ) {
+                return;
+            }
+
+            if (scanner.dataset.ready === 'true') {
+                stopRequestQrScanner();
+            }
+
+            scanner.dataset.ready = 'true';
+            scanner.reboxStartButton = startButton;
+            scanner.reboxStopButton = stopButton;
+            scanner.reboxSwitchButton = switchButton;
+            scanner.reboxVideo = video;
 
             const submitScannedCode = (code) => {
                 const component = window.Livewire?.find(scanner.closest('[wire\\:id]')?.getAttribute('wire:id'));
@@ -5228,31 +6126,53 @@
                 }
             };
 
-            startButton?.addEventListener('click', async () => {
+            const updateCameraSwitch = (isActive, isSwitching = false) => {
+                if (!switchButton) return;
+
+                switchButton.disabled = !isActive || isSwitching;
+                switchButton.classList.toggle('is-switching', isSwitching);
+                switchButton.setAttribute(
+                    'aria-label',
+                    activeFacingMode === 'environment' ? 'Ganti ke kamera depan' : 'Ganti ke kamera belakang'
+                );
+            };
+
+            const startCamera = async (facingMode = activeFacingMode, strict = false) => {
                 if (!navigator.mediaDevices?.getUserMedia) {
                     setRequestQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
-                    return;
+                    return false;
                 }
 
                 if (typeof window.jsQR !== 'function') {
                     setRequestQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
-                    return;
+                    return false;
                 }
 
                 try {
+                    if (typeof window.stopDonationQrScanner === 'function') {
+                        window.stopDonationQrScanner();
+                    }
+
                     stopRequestQrScanner();
+                    const cameraSession = window.reboxRequestQrSession;
+                    startButton.disabled = true;
+                    updateCameraSwitch(false, true);
+                    setRequestQrStatus(scanner, 'Menyiapkan kamera...');
+                    let cameraStream;
 
                     try {
-                        window.reboxRequestQrStream = await navigator.mediaDevices.getUserMedia({
+                        cameraStream = await navigator.mediaDevices.getUserMedia({
                             video: {
                                 width: { ideal: 960 },
                                 height: { ideal: 540 },
-                                facingMode: 'environment',
+                                facingMode: strict ? { exact: facingMode } : { ideal: facingMode },
                             },
                             audio: false,
                         });
                     } catch (cameraError) {
-                        window.reboxRequestQrStream = await navigator.mediaDevices.getUserMedia({
+                        if (strict) throw cameraError;
+
+                        cameraStream = await navigator.mediaDevices.getUserMedia({
                             video: {
                                 width: { ideal: 960 },
                                 height: { ideal: 540 },
@@ -5261,22 +6181,64 @@
                         });
                     }
 
-                    video.srcObject = window.reboxRequestQrStream;
+                    if (cameraSession !== window.reboxRequestQrSession || !scanner.isConnected || !video?.isConnected) {
+                        cameraStream.getTracks().forEach((track) => track.stop());
+                        return;
+                    }
+
+                    window.reboxRequestQrStream = cameraStream;
+                    video.srcObject = cameraStream;
                     empty?.classList.add('is-hidden');
                     video.closest('.request-qr-camera')?.classList.add('is-scanning');
+                    activeFacingMode = facingMode;
+                    window.reboxRequestQrFacingMode = facingMode;
                     window.reboxRequestQrScanning = true;
                     scanFrameCount = 0;
-                    setRequestQrStatus(scanner, 'Kamera laptop aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.');
+                    setRequestQrStatus(
+                        scanner,
+                        `${facingMode === 'environment' ? 'Kamera belakang' : 'Kamera depan'} aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.`
+                    );
                     await video.play();
+                    updateCameraSwitch(true);
                     scanLoop();
+                    return true;
                 } catch (error) {
-                    setRequestQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                    if (scanner.isConnected) {
+                        setRequestQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                    }
+                    updateCameraSwitch(false);
+                    return false;
+                } finally {
+                    if (startButton.isConnected) {
+                        startButton.disabled = false;
+                    }
                 }
+            };
+
+            startButton?.addEventListener('click', async () => {
+                await startCamera(activeFacingMode);
             });
 
             stopButton?.addEventListener('click', () => {
                 stopRequestQrScanner();
+                updateCameraSwitch(false);
                 setRequestQrStatus(scanner, 'Kamera dimatikan.');
+            });
+
+            switchButton?.addEventListener('click', async () => {
+                if (!window.reboxRequestQrStream) return;
+
+                const previousFacingMode = activeFacingMode;
+                const nextFacingMode = previousFacingMode === 'environment' ? 'user' : 'environment';
+                const switched = await startCamera(nextFacingMode, true);
+
+                if (!switched) {
+                    const restored = await startCamera(previousFacingMode);
+
+                    if (restored) {
+                        setRequestQrStatus(scanner, 'Kamera lain tidak tersedia pada perangkat ini.', true);
+                    }
+                }
             });
         }
 
@@ -5304,6 +6266,8 @@
             document.querySelectorAll('[data-profile-dropdown].is-open').forEach((dropdown) => dropdown.classList.remove('is-open'));
         });
         window.addEventListener('beforeunload', stopRequestQrScanner);
+        window.addEventListener('pagehide', stopRequestQrScanner);
+        document.addEventListener('livewire:navigating', stopRequestQrScanner);
         document.addEventListener('DOMContentLoaded', queueRequestInit);
         document.addEventListener('livewire:navigated', queueRequestInit);
         document.addEventListener('livewire:initialized', queueRequestInit);

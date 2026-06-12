@@ -837,7 +837,7 @@
             transition: transform .34s cubic-bezier(.22, 1, .36, 1), background .22s ease, box-shadow .22s ease;
         }
 
-        .donor-history-tabs.is-rebox::before {
+        .donor-history-tabs.is-salurkan::before {
             transform: translateX(100%);
         }
 
@@ -1060,13 +1060,16 @@
         .donor-history-list {
             display: grid;
             gap: 12px;
+            min-width: 0;
         }
 
         .donor-history-card {
+            width: 100%;
+            min-width: 0;
             min-height: 142px;
             display: grid;
-            grid-template-columns: 118px minmax(260px, 1.3fr) minmax(150px, .72fr) minmax(110px, .45fr) minmax(145px, .58fr) minmax(150px, .64fr) 44px;
-            gap: 22px;
+            grid-template-columns: 104px minmax(190px, 1.45fr) minmax(130px, .8fr) minmax(88px, .5fr) minmax(130px, .75fr) minmax(145px, .8fr) 40px;
+            gap: 16px;
             align-items: center;
             border: 1px solid rgba(20, 32, 43, .07);
             border-radius: 18px;
@@ -1101,6 +1104,10 @@
         }
 
         .donor-history-main {
+            min-width: 0;
+        }
+
+        .donor-history-card > * {
             min-width: 0;
         }
 
@@ -1182,6 +1189,8 @@
             font-weight: 560;
             line-height: 1;
             text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
             justify-self: end;
             box-shadow: 0 10px 18px rgba(79, 131, 241, .16);
             transition:
@@ -1244,6 +1253,7 @@
             font-size: 15px;
             font-weight: 650;
             line-height: 1.35;
+            overflow-wrap: anywhere;
         }
 
         .donor-data-block small {
@@ -1265,9 +1275,11 @@
             display: inline-flex;
             align-items: center;
             gap: 9px;
+            min-width: 0;
         }
 
         .donor-status-box {
+            max-width: 100%;
             min-height: 58px;
             border-radius: 14px;
             display: inline-flex;
@@ -1356,6 +1368,11 @@
             text-decoration: none;
             box-shadow: 0 10px 20px rgba(15, 23, 42, .05);
             transition: transform .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .donor-history-arrow .mobile-detail-label,
+        .donor-history-arrow .mobile-arrow-icon {
+            display: none;
         }
 
         .donor-pagination {
@@ -1694,6 +1711,43 @@
             box-shadow: 0 28px 80px rgba(15, 23, 42, .16);
             padding: 26px;
             animation: recipientModalPop .28s ease both;
+        }
+
+        .missing-location-card {
+            width: min(420px, 100%);
+            overflow: visible;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .missing-location-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 16px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: var(--rebox-green);
+            background: #eaf8ed;
+            font-size: 23px;
+        }
+
+        .missing-location-card h2 {
+            margin: 0 0 9px;
+            color: #14202b;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .missing-location-card p {
+            margin: 0 0 22px;
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .missing-location-card .recipient-action-primary {
+            width: 100%;
         }
 
         .recipient-modal-head {
@@ -2195,6 +2249,8 @@
 
             .donor-history-card {
                 grid-template-columns: 92px minmax(0, 1fr) minmax(120px, .5fr);
+                position: relative;
+                padding-bottom: 70px;
             }
 
             .donor-data-block {
@@ -2202,9 +2258,53 @@
                 padding-left: 0;
             }
 
-            .donor-status-box,
-            .donor-history-arrow {
+            .donor-status-box {
                 grid-column: auto;
+            }
+
+            .donor-history-arrow {
+                position: absolute;
+                right: 18px;
+                bottom: 16px;
+                width: auto;
+                min-width: 92px;
+                height: 40px;
+                border: 0;
+                border-radius: 11px;
+                color: #ffffff;
+                background: var(--rebox-green);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                padding: 0 15px;
+                box-shadow: 0 10px 22px rgba(0, 134, 0, .22);
+            }
+
+            .donor-history-arrow:hover {
+                color: #ffffff;
+                border-color: transparent;
+                background: #007600;
+            }
+
+            .donor-history-arrow .desktop-arrow-icon {
+                display: none;
+            }
+
+            .donor-history-arrow .mobile-detail-label,
+            .donor-history-arrow .mobile-arrow-icon {
+                display: inline-block;
+                color: #ffffff;
+            }
+
+            .donor-history-arrow .mobile-detail-label {
+                font-size: 13px;
+                font-weight: 700;
+                line-height: 1;
+            }
+
+            .donor-history-arrow .mobile-arrow-icon {
+                font-size: 18px;
             }
 
             .recipient-filter-bar {
@@ -2219,6 +2319,139 @@
             .recipient-status-area,
             .recipient-detail-btn {
                 grid-column: auto;
+            }
+
+            .recipient-modal-overlay:has(.rebox-detail-modal) {
+                align-items: start;
+                padding: 22px 14px;
+                overflow-y: auto;
+                background:
+                    radial-gradient(circle at 18% 10%, rgba(162, 170, 255, .22), transparent 34%),
+                    radial-gradient(circle at 86% 8%, rgba(139, 245, 181, .22), transparent 32%),
+                    rgba(249, 251, 255, .78);
+                backdrop-filter: blur(18px);
+            }
+
+            .rebox-detail-modal {
+                width: min(760px, 100%);
+                max-height: none;
+                margin: 18px auto;
+                padding: 42px 44px 34px;
+                overflow: visible;
+                border: 1px solid rgba(255, 255, 255, .82);
+                border-radius: 54px;
+                background:
+                    radial-gradient(circle at 8% 44%, rgba(222, 209, 255, .34), transparent 34%),
+                    radial-gradient(circle at 92% 42%, rgba(205, 247, 229, .34), transparent 36%),
+                    rgba(255, 255, 255, .82);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, .92),
+                    0 28px 70px rgba(77, 91, 130, .15);
+            }
+
+            .rebox-detail-modal .recipient-modal-head {
+                align-items: flex-start;
+                margin-bottom: 22px;
+                padding: 0 14px 24px;
+                border-bottom: 2px solid rgba(255, 255, 255, .88);
+            }
+
+            .rebox-detail-modal .recipient-request-code {
+                display: inline-flex;
+                align-items: center;
+                min-height: 46px;
+                padding: 0 20px;
+                border-radius: 18px;
+                color: #07952b;
+                background: rgba(224, 247, 230, .9);
+                font-size: 18px;
+                font-weight: 800;
+            }
+
+            .rebox-detail-modal .recipient-modal-head h2 {
+                margin: 24px 0 10px;
+                font-size: 34px;
+                font-weight: 750;
+            }
+
+            .rebox-detail-modal .recipient-modal-head p {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .rebox-detail-modal .recipient-modal-close {
+                width: 54px;
+                height: 54px;
+                flex: 0 0 54px;
+                border-radius: 50%;
+                color: #101828;
+                background: rgba(255, 255, 255, .82);
+                font-size: 22px;
+                box-shadow: 0 10px 24px rgba(75, 88, 120, .12);
+            }
+
+            .rebox-detail-modal .recipient-detail-grid {
+                gap: 14px;
+                margin-bottom: 24px;
+            }
+
+            .rebox-detail-modal .recipient-detail-item {
+                min-height: 102px;
+                padding: 22px 26px;
+                border: 1px solid rgba(255, 255, 255, .86);
+                border-radius: 24px;
+                background: rgba(255, 255, 255, .46);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, .9),
+                    0 14px 30px rgba(89, 103, 145, .08);
+            }
+
+            .rebox-detail-modal .recipient-detail-item span {
+                color: #58709d;
+                font-size: 14px;
+                font-weight: 800;
+                letter-spacing: .04em;
+            }
+
+            .rebox-detail-modal .recipient-detail-item strong,
+            .rebox-detail-modal .recipient-detail-item p {
+                font-size: 19px;
+                font-weight: 650;
+            }
+
+            .rebox-detail-modal .feedback-complete-box {
+                margin-top: 0;
+                padding: 24px 28px 28px;
+                border: 1px solid rgba(255, 255, 255, .86);
+                border-radius: 26px;
+                background: rgba(255, 255, 255, .46);
+                color: #4d638d;
+                font-size: 17px;
+                box-shadow: 0 14px 32px rgba(89, 103, 145, .08);
+            }
+
+            .rebox-detail-modal .feedback-complete-box > strong {
+                display: block;
+                margin-bottom: 12px;
+            }
+
+            .rebox-detail-modal .feedback-preview {
+                max-height: 340px;
+                margin-top: 0;
+                border: 0;
+                border-radius: 22px;
+            }
+
+            .rebox-detail-modal .recipient-modal-actions {
+                margin-top: 8px;
+            }
+
+            .rebox-detail-modal .recipient-modal-actions .recipient-action-primary {
+                width: 100%;
+                min-height: 58px;
+                border-radius: 18px;
+                font-size: 20px;
+                box-shadow: 0 16px 30px rgba(0, 134, 0, .24);
             }
         }
 
@@ -2249,10 +2482,6 @@
                 height: 170px;
             }
 
-            .donor-history-arrow {
-                width: 100%;
-            }
-
             .recipient-history-hero {
                 display: block;
             }
@@ -2280,15 +2509,85 @@
                 width: 74px;
                 height: 74px;
             }
+
+            .rebox-detail-modal {
+                padding: 26px 18px 22px;
+                border-radius: 32px;
+            }
+
+            .rebox-detail-modal .recipient-modal-head {
+                padding: 0 4px 20px;
+                gap: 10px;
+            }
+
+            .rebox-detail-modal .recipient-request-code {
+                min-height: 38px;
+                padding: 0 13px;
+                border-radius: 13px;
+                font-size: 14px;
+            }
+
+            .rebox-detail-modal .recipient-modal-head h2 {
+                margin-top: 18px;
+                font-size: 24px;
+            }
+
+            .rebox-detail-modal .recipient-modal-head p {
+                font-size: 14px;
+            }
+
+            .rebox-detail-modal .recipient-modal-close {
+                width: 44px;
+                height: 44px;
+                flex-basis: 44px;
+                font-size: 18px;
+            }
+
+            .rebox-detail-modal .recipient-detail-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .rebox-detail-modal .recipient-detail-item {
+                min-height: 88px;
+                padding: 16px 14px;
+                border-radius: 18px;
+            }
+
+            .rebox-detail-modal .recipient-detail-item span {
+                font-size: 11px;
+            }
+
+            .rebox-detail-modal .recipient-detail-item strong,
+            .rebox-detail-modal .recipient-detail-item p {
+                overflow-wrap: anywhere;
+                font-size: 15px;
+            }
+
+            .rebox-detail-modal .feedback-complete-box {
+                padding: 18px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+
+            .rebox-detail-modal .feedback-preview {
+                max-height: 260px;
+                border-radius: 16px;
+            }
+
+            .rebox-detail-modal .recipient-modal-actions .recipient-action-primary {
+                min-height: 50px;
+                font-size: 16px;
+            }
         }
     </style>
 
     <div class="riwayat-inner">
-        <header class="top-shell">
+        <header class="top-shell" wire:ignore>
             <nav class="top-nav {{ auth()->user()?->role === 'penerima' ? 'is-recipient' : '' }}" aria-label="Riwayat navigation">
                 <a href="/dashboard" class="{{ request()->is('dashboard') ? 'is-active' : '' }}" wire:navigate>Dashboard</a>
                 @if(auth()->user()?->role !== 'penerima')
-                    <a href="{{ route('form-donasi', ['name' => 'Rebox Dago']) }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
+                    <a href="{{ route('form-donasi') }}" class="{{ request()->is('form-donasi*') ? 'is-active' : '' }}" wire:navigate>Donasi</a>
                 @endif
                 <a href="/permintaan" class="{{ request()->is('permintaan*') ? 'is-active' : '' }}" wire:navigate>Permintaan</a>
                 <a href="/riwayat" class="{{ request()->is('riwayat*') ? 'is-active' : '' }}" wire:navigate>Riwayat</a>
@@ -2296,12 +2595,16 @@
             </nav>
 
             <div class="profile-dropdown" data-profile-dropdown>
-                <button class="profile-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
+                <button class="profile-pill rebox-profile-identity-pill" type="button" aria-label="Buka menu profil" onclick="event.preventDefault(); event.stopImmediatePropagation(); this.closest('[data-profile-dropdown]')?.classList.toggle('is-open');">
                     @if($avatarUrl)
                         <img src="{{ $avatarUrl }}" alt="{{ $displayName }}">
                     @else
                         <span class="profile-avatar-fallback">{{ $initial }}</span>
                     @endif
+                    <span class="profile-identity">
+                        <span class="profile-name">{{ $displayName }}</span>
+                        <span class="profile-role">{{ auth()->user()?->role }}</span>
+                    </span>
                     <span class="profile-caret" aria-hidden="true"></span>
                 </button>
 
@@ -2500,14 +2803,14 @@
         @else
         <section class="donor-history-panel">
             <div class="donor-history-toolbar">
-                <div class="donor-history-tabs {{ $tab === 'rebox' ? 'is-rebox' : '' }}" role="tablist" aria-label="Jenis riwayat donatur">
-                    <button type="button" wire:click="setTab('salurkan')" class="{{ $tab === 'salurkan' ? 'is-active' : '' }}">
-                        <i class="fas fa-paper-plane"></i>
-                        Salurkan
-                    </button>
+                <div class="donor-history-tabs {{ $tab === 'salurkan' ? 'is-salurkan' : '' }}" role="tablist" aria-label="Jenis riwayat donatur">
                     <button type="button" wire:click="setTab('rebox')" class="{{ $tab === 'rebox' ? 'is-active' : '' }}">
                         <i class="fas fa-cube"></i>
                         Rebox
+                    </button>
+                    <button type="button" wire:click="setTab('salurkan')" class="{{ $tab === 'salurkan' ? 'is-active' : '' }}">
+                        <i class="fas fa-paper-plane"></i>
+                        Salurkan
                     </button>
                 </div>
 
@@ -2576,10 +2879,17 @@
                                 </div>
 
                                 @if ($tab === 'salurkan')
-                                    <a class="recipient-map-link" href="{{ $history['maps_url'] ?? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($history['tujuan'] ?? 'Penerima Rebox') }}" target="_blank" rel="noopener noreferrer">
-                                        <i class="fas fa-location-dot"></i>
-                                        maps
-                                    </a>
+                                    @if($history['has_maps_location'])
+                                        <a class="recipient-map-link" href="{{ $history['maps_url'] }}" target="_blank" rel="noopener noreferrer">
+                                            <i class="fas fa-location-dot"></i>
+                                            maps
+                                        </a>
+                                    @else
+                                        <button type="button" class="recipient-map-link" wire:click="showMissingLocation">
+                                            <i class="fas fa-location-dot"></i>
+                                            maps
+                                        </button>
+                                    @endif
                                 @else
                                     <p>Dimasukkan ke {{ $history['lokasi_box'] }}.</p>
                                 @endif
@@ -2641,9 +2951,13 @@
                                 aria-label="Lihat detail {{ $history['nama_barang'] }}"
                                 @if($tab === 'salurkan')
                                     wire:click="openDonorSalurkanDetail({{ $history['id'] }})"
+                                @else
+                                    wire:click="openDonorReboxDetail({{ $history['id'] }})"
                                 @endif
                             >
-                                <i class="fas fa-chevron-right"></i>
+                                <i class="fas fa-chevron-right desktop-arrow-icon"></i>
+                                <span class="mobile-detail-label">Detail</span>
+                                <i class="fas fa-chevron-right mobile-arrow-icon"></i>
                             </button>
                         </article>
                     @endforeach
@@ -2678,8 +2992,66 @@
             @endif
         </section>
             @if($showDonorDetail && !empty($selectedDonorRequest))
-                <div class="recipient-modal-overlay" wire:key="donor-salurkan-detail-modal">
-                    <section class="recipient-modal-card">
+                <div class="recipient-modal-overlay" wire:key="donor-{{ $selectedDonorDetailType }}-detail-{{ $selectedDonorRequestId }}">
+                    <section class="recipient-modal-card {{ $selectedDonorDetailType === 'rebox' ? 'rebox-detail-modal' : '' }}">
+                        @if($selectedDonorDetailType === 'rebox')
+                            <div class="recipient-modal-head">
+                                <div>
+                                    <span class="recipient-request-code">{{ $selectedDonorRequest['code'] }}</span>
+                                    <h2>Detail Donasi {{ $selectedDonorRequest['nama_barang'] }}</h2>
+                                    <p>Barang telah dimasukkan ke {{ $selectedDonorRequest['lokasi_box'] }}.</p>
+                                </div>
+                                <button type="button" class="recipient-modal-close" wire:click="closeDonorDetail" aria-label="Tutup detail donasi Rebox">
+                                    <i class="fas fa-xmark"></i>
+                                </button>
+                            </div>
+
+                            <div class="recipient-detail-grid">
+                                <div class="recipient-detail-item">
+                                    <span>Status</span>
+                                    <strong>{{ $selectedDonorRequest['status'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item">
+                                    <span>Lokasi Rebox</span>
+                                    <strong>{{ $selectedDonorRequest['lokasi_box'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item">
+                                    <span>Barang</span>
+                                    <strong>{{ $selectedDonorRequest['nama_barang'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item">
+                                    <span>Kategori</span>
+                                    <strong>{{ $selectedDonorRequest['kategori'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item">
+                                    <span>Jumlah</span>
+                                    <strong>{{ $selectedDonorRequest['jumlah'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item">
+                                    <span>Kondisi</span>
+                                    <strong>{{ $selectedDonorRequest['kondisi'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item is-wide">
+                                    <span>Waktu Donasi</span>
+                                    <strong>{{ $selectedDonorRequest['created_at'] }}</strong>
+                                </div>
+                                <div class="recipient-detail-item is-wide">
+                                    <span>Deskripsi Barang</span>
+                                    <p>{{ $selectedDonorRequest['deskripsi'] }}</p>
+                                </div>
+                            </div>
+
+                            <div class="feedback-complete-box">
+                                <strong>Foto barang yang didonasikan.</strong>
+                                <a href="{{ $selectedDonorRequest['image'] }}" target="_blank" rel="noopener noreferrer">
+                                    <img src="{{ $selectedDonorRequest['image'] }}" class="feedback-preview" alt="Foto {{ $selectedDonorRequest['nama_barang'] }}">
+                                </a>
+                            </div>
+
+                            <div class="recipient-modal-actions">
+                                <button type="button" class="recipient-action-primary" wire:click="closeDonorDetail">Tutup</button>
+                            </div>
+                        @else
                         <div class="recipient-modal-head">
                             <div>
                                 <span class="recipient-request-code">{{ $selectedDonorRequest['code'] }}</span>
@@ -2758,14 +3130,34 @@
                         @endif
 
                         <div class="recipient-modal-actions">
-                            <a class="recipient-action-secondary" href="{{ $selectedDonorRequest['maps_url'] }}" target="_blank" rel="noopener noreferrer">
-                                Buka Maps
-                            </a>
+                            @if($selectedDonorRequest['has_maps_location'])
+                                <a class="recipient-action-secondary" href="{{ $selectedDonorRequest['maps_url'] }}" target="_blank" rel="noopener noreferrer">
+                                    Buka Maps
+                                </a>
+                            @else
+                                <button type="button" class="recipient-action-secondary" wire:click="showMissingLocation">
+                                    Buka Maps
+                                </button>
+                            @endif
                             <button type="button" class="recipient-action-primary" wire:click="closeDonorDetail">Tutup</button>
                         </div>
+                        @endif
                     </section>
                 </div>
             @endif
+        @endif
+
+        @if($showMissingLocationNotice)
+            <div class="recipient-modal-overlay" wire:key="missing-recipient-location">
+                <section class="recipient-modal-card missing-location-card" role="dialog" aria-modal="true" aria-labelledby="missing-location-title">
+                    <div class="missing-location-icon" aria-hidden="true">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <h2 id="missing-location-title">Lokasi Belum Diisi</h2>
+                    <p>Penerima belum mengisi link lokasi Google Maps. Silakan hubungi penerima untuk meminta lokasi pengiriman yang benar.</p>
+                    <button type="button" class="recipient-action-primary" wire:click="closeMissingLocation">Mengerti</button>
+                </section>
+            </div>
         @endif
     </div>
 

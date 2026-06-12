@@ -100,6 +100,13 @@ class Permintaan extends Component
     public string $search = '';
     public string $location_search = '';
     public string $category_filter = 'Semua';
+    public bool $show_filter_menu = false;
+    public array $draft_item_categories = ['Semua Kategori'];
+    public array $item_category_filters = ['Semua Kategori'];
+    public string $draft_other_category = '';
+    public string $other_category_filter = '';
+    public string $draft_sort_order = 'terbaru';
+    public string $sort_order = 'terbaru';
     public string $kode_box_input = '';
     public int $request_page = 1;
     public int $request_per_page = 3;
@@ -117,6 +124,7 @@ class Permintaan extends Component
 
     public string $request_nama_barang = '';
     public string $request_kategori = '';
+    public string $request_jenis_penerima = '';
     public int|string $request_jumlah = '';
     public string $request_deskripsi = '';
     public string $request_maps_link = '';
@@ -125,8 +133,6 @@ class Permintaan extends Component
 
     public function mount(): void
     {
-        $this->selectedLocation = $this->locations()[0];
-
         if (Auth::user()?->role === 'penerima') {
             $this->step = 'recipient_form';
         }
@@ -136,6 +142,65 @@ class Permintaan extends Component
     {
         $this->category_filter = $category;
         $this->request_page = 1;
+    }
+
+    public function toggleFilters(): void
+    {
+        $this->show_filter_menu = ! $this->show_filter_menu;
+
+        if ($this->show_filter_menu) {
+            $this->draft_item_categories = $this->item_category_filters;
+            $this->draft_other_category = $this->other_category_filter;
+            $this->draft_sort_order = $this->sort_order;
+        }
+    }
+
+    public function selectAllItemCategories(): void
+    {
+        $this->draft_item_categories = ['Semua Kategori'];
+        $this->draft_other_category = '';
+    }
+
+    public function toggleItemCategory(string $category): void
+    {
+        $categories = array_values(array_filter(
+            $this->draft_item_categories,
+            fn ($item) => $item !== 'Semua Kategori'
+        ));
+
+        if (in_array($category, $categories, true)) {
+            $categories = array_values(array_filter($categories, fn ($item) => $item !== $category));
+        } else {
+            $categories[] = $category;
+        }
+
+        $this->draft_item_categories = $categories ?: ['Semua Kategori'];
+
+        if ($category === 'Lainnya' && ! in_array('Lainnya', $this->draft_item_categories, true)) {
+            $this->draft_other_category = '';
+        }
+    }
+
+    public function resetAdvancedFilters(): void
+    {
+        $this->draft_item_categories = ['Semua Kategori'];
+        $this->draft_other_category = '';
+        $this->draft_sort_order = 'terbaru';
+        $this->item_category_filters = ['Semua Kategori'];
+        $this->other_category_filter = '';
+        $this->sort_order = 'terbaru';
+        $this->request_page = 1;
+    }
+
+    public function applyAdvancedFilters(): void
+    {
+        $this->item_category_filters = $this->draft_item_categories ?: ['Semua Kategori'];
+        $this->other_category_filter = trim($this->draft_other_category);
+        $this->sort_order = in_array($this->draft_sort_order, ['terbaru', 'terlama'], true)
+            ? $this->draft_sort_order
+            : 'terbaru';
+        $this->request_page = 1;
+        $this->show_filter_menu = false;
     }
 
     public function updatedSearch(): void
@@ -183,6 +248,10 @@ class Permintaan extends Component
             return;
         }
 
+        $this->selectedLocation = [];
+        $this->location_search = '';
+        $this->kode_box_input = '';
+        $this->resetErrorBag('selectedLocation');
         $this->step = 'location';
     }
 
@@ -194,16 +263,30 @@ class Permintaan extends Component
             return;
         }
 
+        if (($this->selectedLocation['id'] ?? null) === $location['id']) {
+            $this->selectedLocation = [];
+            $this->kode_box_input = '';
+            $this->resetErrorBag('selectedLocation');
+            return;
+        }
+
         $this->selectedLocation = $location;
         $this->kode_box_input = '';
+        $this->resetErrorBag('selectedLocation');
     }
 
     public function goToCode(): void
     {
-        if (! $this->selectedLocation || ! $this->selectedRequest) {
+        if (! $this->selectedLocation) {
+            $this->addError('selectedLocation', 'Pilih lokasi Rebox terlebih dahulu.');
             return;
         }
 
+        if (! $this->selectedRequest) {
+            return;
+        }
+
+        $this->resetErrorBag('selectedLocation');
         $this->kode_box_input = '';
         $this->resetErrorBag('kode_box_input');
         $this->show_fulfillment_modal = false;
@@ -310,6 +393,7 @@ class Permintaan extends Component
             'user_id' => Auth::id(),
             'nama_barang' => $this->request_nama_barang,
             'kategori' => $this->request_kategori,
+            'jenis_penerima' => $this->request_jenis_penerima,
             'jumlah' => (int) $this->request_jumlah,
             'deskripsi' => $this->request_deskripsi,
             'urgensi' => 'Normal',
@@ -322,13 +406,14 @@ class Permintaan extends Component
             'id' => $request->id,
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
+            'jenis_penerima' => $request->jenis_penerima,
             'jumlah' => $request->jumlah,
             'deskripsi' => $request->deskripsi,
             'maps_url' => $request->google_maps_link,
             'status' => $request->status,
         ];
 
-        $this->reset(['request_nama_barang', 'request_kategori', 'request_jumlah', 'request_deskripsi', 'request_maps_link', 'show_request_confirm']);
+        $this->reset(['request_nama_barang', 'request_kategori', 'request_jenis_penerima', 'request_jumlah', 'request_deskripsi', 'request_maps_link', 'show_request_confirm']);
         $this->step = 'recipient_success';
     }
 
@@ -344,6 +429,7 @@ class Permintaan extends Component
         $this->validate([
             'request_nama_barang' => ['required', 'string', 'min:3', 'max:100'],
             'request_kategori' => ['required', 'string', 'in:Pakaian,Buku,Elektronik,Lainnya'],
+            'request_jenis_penerima' => ['required', 'string', 'in:Komunitas,Panti Asuhan,Panti Jompo,Panti Disabilitas'],
             'request_jumlah' => ['required', 'integer', 'min:1', 'max:1000'],
             'request_deskripsi' => ['required', 'string', 'min:10', 'max:700'],
             'request_maps_link' => ['required', 'url', 'max:700'],
@@ -351,6 +437,8 @@ class Permintaan extends Component
             'request_nama_barang.required' => 'Nama barang wajib diisi.',
             'request_nama_barang.min' => 'Nama barang minimal 3 karakter.',
             'request_kategori.required' => 'Kategori wajib dipilih.',
+            'request_jenis_penerima.required' => 'Jenis penerima wajib dipilih.',
+            'request_jenis_penerima.in' => 'Jenis penerima tidak valid.',
             'request_jumlah.required' => 'Jumlah kebutuhan wajib diisi.',
             'request_jumlah.integer' => 'Jumlah kebutuhan harus berupa angka.',
             'request_jumlah.max' => 'Jumlah kebutuhan maksimal 1000.',
@@ -381,8 +469,28 @@ class Permintaan extends Component
     {
         $query = strtolower(trim($this->search));
 
-        return collect($this->requests())
+        $requests = collect($this->requests())
             ->filter(fn ($item) => $this->category_filter === 'Semua' || $item['jenis_penerima'] === $this->category_filter)
+            ->filter(function ($item) {
+                if (in_array('Semua Kategori', $this->item_category_filters, true)) {
+                    return true;
+                }
+
+                if (in_array($item['kategori_barang'], $this->item_category_filters, true)) {
+                    return true;
+                }
+
+                if (! in_array('Lainnya', $this->item_category_filters, true)) {
+                    return false;
+                }
+
+                $query = strtolower(trim($this->other_category_filter));
+
+                return $query === ''
+                    ? ! in_array($item['kategori_barang'], ['Elektronik', 'Pakaian', 'Kebutuhan Pokok'], true)
+                    : str_contains(strtolower($item['kategori_barang']), $query)
+                    || str_contains(strtolower($item['nama_barang']), $query);
+            })
             ->filter(function ($item) use ($query) {
                 if ($query === '') {
                     return true;
@@ -391,9 +499,13 @@ class Permintaan extends Component
                 return str_contains(strtolower($item['penerima']), $query)
                     || str_contains(strtolower($item['nama_barang']), $query)
                     || str_contains(strtolower($item['lokasi']), $query);
-            })
-            ->values()
-            ->all();
+            });
+
+        $requests = $this->sort_order === 'terlama'
+            ? $requests->sortBy('created_at_timestamp')
+            : $requests->sortByDesc('created_at_timestamp');
+
+        return $requests->values()->all();
     }
 
     public function filteredLocations(): array
@@ -414,7 +526,11 @@ class Permintaan extends Component
 
     public function inventory(): array
     {
-        $donations = Donation::where('rebox_id', $this->selectedLocation['id'] ?? 1)
+        if (empty($this->selectedLocation['id'])) {
+            return [];
+        }
+
+        $donations = Donation::where('rebox_id', $this->selectedLocation['id'])
             ->latest()
             ->take(8)
             ->get()
@@ -457,12 +573,15 @@ class Permintaan extends Component
                 'jumlah' => $item->jumlah,
                 'deskripsi' => $item->deskripsi,
                 'penerima' => $item->user?->name ?? 'Penerima Rebox',
-                'penerima_photo' => $item->user?->profile_photo ? asset('storage/' . $item->user->profile_photo) : null,
-                'jenis_penerima' => 'Komunitas',
+                'penerima_photo' => $item->user?->profile_photo
+                    ? asset('storage/' . $item->user->profile_photo)
+                    : ($item->user?->google_avatar ?: null),
+                'jenis_penerima' => $item->jenis_penerima ?: 'Komunitas',
                 'lokasi' => $item->lokasi_hub ?: 'Bandung',
                 'maps_url' => $item->google_maps_link ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($item->lokasi_hub ?: 'Bandung'),
                 'status' => 'Butuh bantuan',
                 'date_label' => $item->created_at?->diffForHumans() ?? 'Baru saja',
+                'created_at_timestamp' => $item->created_at?->timestamp ?? 0,
             ])
             ->all();
     }

@@ -36,7 +36,7 @@ class Riwayat extends Component
 {
     use WithFileUploads;
 
-    public string $tab = 'salurkan';
+    public string $tab = 'rebox';
     public int $donorHistoryPage = 1;
     public int $donorHistoryPerPage = 3;
     public string $donorTimeFilter = 'all';
@@ -47,6 +47,8 @@ class Riwayat extends Component
     public ?int $selectedDonorRequestId = null;
     public array $selectedDonorRequest = [];
     public bool $showDonorDetail = false;
+    public string $selectedDonorDetailType = '';
+    public bool $showMissingLocationNotice = false;
     public bool $showFeedbackForm = false;
     public $feedback_photo;
     public string $feedback_nama_barang = '';
@@ -126,6 +128,21 @@ class Riwayat extends Component
 
         $this->selectedDonorRequestId = $id;
         $this->selectedDonorRequest = $this->formatDonorSalurkanRequest($request);
+        $this->selectedDonorDetailType = 'salurkan';
+        $this->showDonorDetail = true;
+    }
+
+    public function openDonorReboxDetail(int $id): void
+    {
+        $donation = Donation::where('user_id', Auth::id())->find($id);
+
+        if (! $donation) {
+            return;
+        }
+
+        $this->selectedDonorRequestId = $id;
+        $this->selectedDonorRequest = $this->formatDonorReboxDonation($donation);
+        $this->selectedDonorDetailType = 'rebox';
         $this->showDonorDetail = true;
     }
 
@@ -134,6 +151,17 @@ class Riwayat extends Component
         $this->showDonorDetail = false;
         $this->selectedDonorRequestId = null;
         $this->selectedDonorRequest = [];
+        $this->selectedDonorDetailType = '';
+    }
+
+    public function showMissingLocation(): void
+    {
+        $this->showMissingLocationNotice = true;
+    }
+
+    public function closeMissingLocation(): void
+    {
+        $this->showMissingLocationNotice = false;
     }
 
     public function openFeedbackForm(): void
@@ -279,6 +307,7 @@ class Riwayat extends Component
                 $dateTime = $this->formatIndonesiaDateTime($donation->created_at);
 
                 return [
+                    'id' => $donation->id,
                     'donatur' => Auth::user()?->name ?? 'Donatur Rebox',
                     'role' => Auth::user()?->role ?? 'Donatur',
                     'date' => $dateTime['date'],
@@ -294,6 +323,28 @@ class Riwayat extends Component
             })
             ->values()
             ->all();
+    }
+
+    private function formatDonorReboxDonation(Donation $donation): array
+    {
+        $dateTime = $this->formatIndonesiaDateTime($donation->created_at);
+        $reboxNames = $this->reboxNames();
+
+        return [
+            'id' => $donation->id,
+            'code' => '#RBX-' . $donation->created_at?->format('Y') . '-' . str_pad((string) $donation->id, 5, '0', STR_PAD_LEFT),
+            'nama_barang' => $donation->nama_barang,
+            'kategori' => $donation->kategori ?: 'Lainnya',
+            'jumlah' => $donation->jumlah . ' Pcs',
+            'kondisi' => $donation->kondisi ?: '-',
+            'deskripsi' => $donation->deskripsi ?: 'Tidak ada deskripsi tambahan.',
+            'lokasi_box' => $reboxNames[$donation->rebox_id] ?? 'Rebox Dago',
+            'status' => ucfirst($donation->status ?: 'Tersimpan'),
+            'created_at' => $dateTime['date'] . ', ' . $dateTime['time'],
+            'image' => $donation->foto && Storage::disk('public')->exists($donation->foto)
+                ? asset('storage/' . $donation->foto)
+                : asset('images/GambarcardRebox1.png'),
+        ];
     }
 
     private function salurkanHistory(): array
@@ -316,7 +367,8 @@ class Riwayat extends Component
                     'timestamp' => $dateTime['timestamp'],
                     'nama_barang' => $request->nama_barang,
                     'tujuan' => $request->user?->name ?? 'Penerima Rebox',
-                    'maps_url' => $request->google_maps_link ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($request->lokasi_hub ?: ($request->user?->name ?? 'Penerima Rebox') . ' Bandung'),
+                    'maps_url' => filled($request->google_maps_link) ? trim($request->google_maps_link) : null,
+                    'has_maps_location' => filled($request->google_maps_link),
                     'jumlah' => $request->jumlah . ' Pcs',
                     'kategori' => $request->kategori,
                     'status' => $status,
@@ -334,7 +386,7 @@ class Riwayat extends Component
     {
         $isComplete = $this->hasRecipientFeedback($request);
         $fulfilledAt = $this->formatIndonesiaDateTime($request->fulfilled_at ?? $request->updated_at ?? $request->created_at);
-        $mapsUrl = $request->google_maps_link ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($request->lokasi_hub ?: ($request->user?->name ?? 'Penerima Rebox') . ' Bandung');
+        $mapsUrl = filled($request->google_maps_link) ? trim($request->google_maps_link) : null;
 
         return [
             'id' => $request->id,
@@ -347,6 +399,7 @@ class Riwayat extends Component
             'penerima_email' => $request->user?->email ?? '-',
             'lokasi_hub' => $request->lokasi_hub ?: 'Lokasi penerima belum diisi.',
             'maps_url' => $mapsUrl,
+            'has_maps_location' => filled($mapsUrl),
             'status' => $isComplete ? 'Selesai' : 'Proses',
             'status_note' => $isComplete
                 ? 'Penerima sudah mengisi feedback dan mengunggah bukti barang diterima.'

@@ -1,12 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-use App\Livewire\Register;
-use App\Livewire\Login;
-use App\Livewire\Dashboard;
-use App\Livewire\Logout;
-=======
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,17 +9,13 @@ use App\Livewire\Register;
 use App\Livewire\Login;
 use App\Livewire\Dashboard;
 use App\Livewire\Landing;
->>>>>>> zunadeafiturv1
 use App\Livewire\Permintaan;
 use App\Livewire\Riwayat;
 use App\Livewire\FormDonasi;
 use App\Livewire\RiwayatPermintaan;
 use App\Livewire\Profile;
-<<<<<<< HEAD
-use App\Livewire\LokasiRebox;
-=======
+use App\Livewire\AdminVerification;
 use App\Http\Controllers\GoogleAuthController;
->>>>>>> zunadeafiturv1
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +23,6 @@ use App\Http\Controllers\GoogleAuthController;
 |--------------------------------------------------------------------------
 */
 
-<<<<<<< HEAD
-Route::get('/', function () {
-    return redirect()->to('/login');
-});
-
-// Akses untuk Guest (Belum Login)
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', Register::class)->name('register');
-    Route::get('/login', Login::class)->name('login');
-=======
 Route::get('/', Landing::class)->name('landing');
 
 // Akses untuk Guest (Belum Login)
@@ -81,7 +61,7 @@ Route::group(['middleware' => 'guest'], function () {
         $data = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            'role' => ['required', 'in:donatur,penerima'],
+            'role' => ['nullable', 'in:donatur,penerima'],
         ], [
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
@@ -89,12 +69,20 @@ Route::group(['middleware' => 'guest'], function () {
             'role.required' => 'Pilih peran akun Anda.',
         ]);
 
-        $user = User::where('email', $data['email'])
-            ->where('role', $data['role'])
-            ->first();
+        $user = User::where('email', $data['email'])->first();
 
         if (! $user) {
-            return back()->withInput($request->only('email', 'role'))->with('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+            return back()->withInput($request->only('email'))->with('error', 'Akun tidak ditemukan.');
+        }
+
+        if ($user->role !== 'admin') {
+            $request->validate([
+                'role' => ['required', 'in:donatur,penerima'],
+            ]);
+
+            if ($user->role !== ($data['role'] ?? null)) {
+                return back()->withInput($request->only('email', 'role'))->with('error', 'Akun tidak ditemukan atau peran tidak sesuai.');
+            }
         }
 
         if (! Hash::check($data['password'], $user->password)) {
@@ -104,7 +92,9 @@ Route::group(['middleware' => 'guest'], function () {
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard')->with('message', 'Selamat datang kembali!');
+        return redirect()
+            ->route($user->role === 'admin' ? 'admin.verification' : 'dashboard')
+            ->with('message', 'Selamat datang kembali!');
     })->name('login.store');
 
     Route::get('/register', Register::class)->name('register');
@@ -113,15 +103,14 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('login.google.callback');
     Route::get('/auth/google/role', [GoogleAuthController::class, 'showRoleForm'])->name('google.role');
     Route::post('/auth/google/role', [GoogleAuthController::class, 'storeRole'])->name('google.role.store');
->>>>>>> zunadeafiturv1
 });
 
 // Akses Umum (Sudah Login)
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/admin/verifikasi', AdminVerification::class)
+        ->middleware('admin')
+        ->name('admin.verification');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-<<<<<<< HEAD
-    Route::get('/logout', Logout::class)->name('logout');
-=======
     Route::match(['get', 'post'], '/logout', function (Request $request) {
         Auth::logout();
 
@@ -130,7 +119,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         return redirect()->route('login');
     })->name('logout');
->>>>>>> zunadeafiturv1
     Route::get('/profile', Profile::class)->name('profile');
     
     // --- FITUR PENERIMA ---
@@ -139,12 +127,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     // --- FITUR DONATUR ---
     Route::get('/riwayat-permintaan', RiwayatPermintaan::class)->name('riwayat.permintaan');
-    Route::get('/form-donasi/{name}', FormDonasi::class)->name('form-donasi');
-<<<<<<< HEAD
-    Route::get('/lokasi-rebox', LokasiRebox::class)
-    ->middleware('auth')
-    ->name('lokasi-rebox');
+    Route::get('/form-donasi/{name?}', FormDonasi::class)->name('form-donasi');
 });
-=======
-});
->>>>>>> zunadeafiturv1
