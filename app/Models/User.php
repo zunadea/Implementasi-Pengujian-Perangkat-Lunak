@@ -22,8 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role', // TAMBAHKAN INI
-<<<<<<< HEAD
-=======
         'google_id',
         'google_avatar',
         'email_verified_at',
@@ -32,7 +30,6 @@ class User extends Authenticatable
         'verification_nik',
         'verification_nik_name',
         'verification_submitted_at',
->>>>>>> zunadeafiturv1
     ];
 
     /**
@@ -52,13 +49,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-<<<<<<< HEAD
-        'password' => 'hashed',
-    ];
-}
-=======
         'verification_submitted_at' => 'datetime',
         'password' => 'hashed',
     ];
 }
->>>>>>> zunadeafiturv1
