@@ -162,7 +162,7 @@ class Permintaan extends Component
             return;
         }
 
-        $this->selectedLocation = [];
+        $this->selectedLocation = $this->locations()[0] ?? [];
         $this->location_search = '';
         $this->kode_box_input = '';
         $this->resetErrorBag('selectedLocation');

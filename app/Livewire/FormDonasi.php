@@ -31,6 +31,7 @@ class FormDonasi extends Component
     public function mount(?string $name = null): void
     {
         if (! $name) {
+            $this->selectLocation($this->locations()[0]['name']);
             return;
         }
 
@@ -39,7 +40,10 @@ class FormDonasi extends Component
 
         if ($location) {
             $this->selectLocation($location['name']);
+            return;
         }
+
+        $this->selectLocation($this->locations()[0]['name']);
     }
 
     public function locations(): array
@@ -72,15 +76,6 @@ class FormDonasi extends Component
         $location = collect($this->locations())->firstWhere('name', $name);
 
         if (! $location) {
-            return;
-        }
-
-        if (($this->selectedLocation['id'] ?? null) === $location['id']) {
-            $this->selectedLocation = [];
-            $this->nama_lokasi = null;
-            $this->rebox_id = null;
-            $this->kode_box_input = '';
-            $this->resetErrorBag('selectedLocation');
             return;
         }
 
