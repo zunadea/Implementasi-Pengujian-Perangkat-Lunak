@@ -28,16 +28,23 @@ class RiwayatPermintaan extends Component
     /**
      * Fungsi untuk Donatur menyetujui/memenuhi permintaan.
      */
-    public function setujuiPermintaan($id)
+    public function setujuiPermintaan(int $id): void
     {
-        $permintaan = PermintaanModel::findOrFail($id);
-        
-        // Ubah status menjadi 'Disetujui' atau 'Diproses'
-        $permintaan->update([
-            'status' => 'Disetujui'
-        ]);
+        $updated = PermintaanModel::whereKey($id)
+            ->whereIn('status', ['Pending', 'pending', 'Menunggu', 'menunggu'])
+            ->whereNull('fulfilled_by_user_id')
+            ->update([
+                'status' => 'Disetujui',
+                'fulfilled_by_user_id' => Auth::id(),
+                'fulfilled_at' => now(),
+            ]);
 
-        session()->flash('message', 'Terima kasih! Anda telah menyetujui untuk memenuhi kebutuhan ini.');
+        if (! $updated) {
+            session()->flash('error', 'Permintaan ini sudah dipenuhi oleh donatur lain.');
+            return;
+        }
+
+        session()->flash('message', 'Permintaan berhasil disetujui dan masuk ke riwayat penyaluran Anda.');
     }
 
     public function render()
@@ -47,7 +54,8 @@ class RiwayatPermintaan extends Component
          * Diurutkan berdasarkan Urgensi (Mendesak dulu) kemudian waktu terbaru.
          */
         $riwayat = PermintaanModel::with('user') // Pastikan ada relasi 'user' di model Anda
-            ->where('status', 'Pending')
+            ->whereIn('status', ['Pending', 'pending', 'Menunggu', 'menunggu'])
+            ->whereNull('fulfilled_by_user_id')
             ->orderByRaw("FIELD(urgensi, 'Mendesak', 'Penting', 'Normal')")
             ->latest()
             ->paginate(10);

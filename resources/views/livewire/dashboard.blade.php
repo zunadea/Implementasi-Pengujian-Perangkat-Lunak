@@ -1493,7 +1493,7 @@
             }
         }
 
-        @media (max-width: 940px) {
+        @media (max-width: 1024px) {
             .top-shell.rebox-menu-ready > .profile-dropdown .profile-pill {
                 width: min(230px, 62vw);
                 max-width: none;

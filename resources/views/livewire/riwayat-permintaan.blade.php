@@ -9,6 +9,14 @@
             </button>
         </div>
     @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert" style="border-radius: 14px;">
+            <i class="fas fa-circle-exclamation mr-2"></i> {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     {{-- HEADER --}}
     <div class="d-flex justify-content-between align-items-center mb-4">

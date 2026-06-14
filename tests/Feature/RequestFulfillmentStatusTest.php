@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\Permintaan;
 use App\Livewire\Riwayat;
+use App\Livewire\RiwayatPermintaan;
 use App\Models\PermintaanModel;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,6 +73,43 @@ class RequestFulfillmentStatusTest extends TestCase
             'status' => 'Diproses',
             'fulfilled_by_user_id' => $donor->id,
         ]);
+    }
+
+    public function test_legacy_request_list_records_the_donor_when_approving(): void
+    {
+        $recipient = User::factory()->create(['role' => 'penerima']);
+        $donor = User::factory()->create(['role' => 'donatur']);
+        $request = $this->createRequest($recipient, [
+            'status' => 'Pending',
+            'fulfilled_by_user_id' => null,
+            'fulfilled_at' => null,
+        ]);
+
+        Livewire::actingAs($donor)
+            ->test(RiwayatPermintaan::class)
+            ->call('setujuiPermintaan', $request->id);
+
+        $request->refresh();
+
+        $this->assertSame('Disetujui', $request->status);
+        $this->assertSame($donor->id, $request->fulfilled_by_user_id);
+        $this->assertNotNull($request->fulfilled_at);
+    }
+
+    public function test_legacy_request_list_cannot_overwrite_the_first_donor(): void
+    {
+        [$recipient, $firstDonor, $request] = $this->approvedRequest();
+        $otherDonor = User::factory()->create(['role' => 'donatur']);
+
+        Livewire::actingAs($otherDonor)
+            ->test(RiwayatPermintaan::class)
+            ->call('setujuiPermintaan', $request->id);
+
+        $request->refresh();
+
+        $this->assertSame($firstDonor->id, $request->fulfilled_by_user_id);
+        $this->assertSame('Disetujui', $request->status);
+        $this->assertSame($recipient->id, $request->user_id);
     }
 
     public function test_another_donor_cannot_start_delivery(): void

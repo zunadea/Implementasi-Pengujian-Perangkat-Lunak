@@ -1700,7 +1700,7 @@
             .detail-grid { grid-template-columns: repeat(3, 288px); }
         }
 
-        @media (max-width: 940px) {
+        @media (max-width: 1024px) {
             .rebox-landing-page .dashboard-inner::after {
                 height: 740px;
                 background-position: top center;
@@ -2104,7 +2104,7 @@
             }
         }
 
-        @media (max-width: 940px) {
+        @media (max-width: 1024px) {
             .carousel-stage {
                 grid-template-columns: repeat(2, 48px);
                 grid-template-rows: auto 48px;
