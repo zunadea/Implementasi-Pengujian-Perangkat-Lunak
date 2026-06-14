@@ -1872,6 +1872,13 @@
             padding: 0;
         }
 
+        .fulfillment-mobile-profile,
+        .fulfillment-card-icon,
+        .fulfillment-description-icon,
+        .fulfillment-description-toggle {
+            display: none;
+        }
+
         .fulfillment-recipient,
         .fulfillment-need,
         .fulfillment-meta {
@@ -2300,6 +2307,18 @@
             justify-content: space-between;
             gap: 18px;
             padding: 18px 24px;
+        }
+
+        .fulfillment-action-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .fulfillment-action-label-mobile {
+            display: none;
         }
 
         .fulfillment-location-warning {
@@ -3705,7 +3724,14 @@
                 align-items: start;
             }
 
+            .donor-filter-panel {
+                position: relative;
+                z-index: 2;
+            }
+
             .donor-list-panel {
+                position: relative;
+                z-index: 1;
                 width: 100%;
                 padding: 24px;
             }
@@ -3948,7 +3974,6 @@
                 padding-left: 0;
             }
 
-            .fulfillment-summary-main,
             .fulfillment-top,
             .fulfillment-grid {
                 grid-template-columns: 1fr;
@@ -3956,22 +3981,201 @@
 
             .fulfillment-summary {
                 width: 100%;
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            .fulfillment-summary:hover {
+                transform: none;
+                border-color: transparent;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            .fulfillment-mobile-profile {
+                display: grid;
+                grid-template-columns: 82px minmax(0, 1fr);
+                align-items: center;
+                gap: 18px;
+                margin-bottom: 22px;
+            }
+
+            .fulfillment-mobile-avatar {
+                position: relative;
+                width: 82px;
+                height: 82px;
+                border: 7px solid #ffffff;
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                overflow: hidden;
+                background: linear-gradient(145deg, #6534ca, #3f1aa2);
+                color: #ffffff;
+                font-size: 32px;
+                font-weight: 700;
+                box-shadow: 0 12px 30px rgba(70, 36, 160, .22);
+            }
+
+            .fulfillment-mobile-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .fulfillment-mobile-greeting {
+                margin: 0 0 3px;
+                color: #667085;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .fulfillment-mobile-name {
+                margin: 0;
+                color: #111827;
+                font-size: clamp(18px, 3vw, 25px);
+                font-weight: 750;
+                line-height: 1.2;
+                overflow-wrap: anywhere;
+            }
+
+            .fulfillment-mobile-role {
+                width: fit-content;
+                margin-top: 9px;
+                padding: 7px 11px;
+                border-radius: 10px;
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                background: rgba(22, 163, 74, .10);
+                color: #159437;
+                font-size: 12px;
+                font-weight: 700;
+            }
+
+            .fulfillment-summary-main {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+                align-items: stretch;
+            }
+
+            .fulfillment-summary-main > .fulfillment-avatar {
+                display: none;
             }
 
             .donation-motion-card {
                 display: none;
             }
 
-            .fulfillment-recipient,
             .fulfillment-need,
             .fulfillment-meta {
-                border-right: 0;
-                padding-right: 0;
+                min-height: 104px;
+                padding: 16px !important;
+                border: 1px solid rgba(20, 32, 43, .08) !important;
+                border-radius: 17px;
+                background: #ffffff;
+                box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+            }
+
+            .fulfillment-need,
+            .fulfillment-meta {
+                display: grid;
+                grid-template-columns: 44px minmax(0, 1fr);
+                align-items: center;
+                gap: 12px;
+            }
+
+            .fulfillment-card-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                display: grid;
+                place-items: center;
+                font-size: 20px;
+            }
+
+            .fulfillment-card-icon.is-need {
+                color: #6332ce;
+                background: #f0eaff;
+            }
+
+            .fulfillment-card-icon.is-quantity {
+                color: #3488e8;
+                background: #eaf3ff;
+            }
+
+            .fulfillment-card-icon.is-category {
+                color: #159a47;
+                background: #e9f8ee;
+            }
+
+            .fulfillment-card-icon.is-recipient {
+                color: #e9a000;
+                background: #fff5dc;
             }
 
             .fulfillment-description {
-                padding-left: 0;
-                padding-right: 0;
+                margin-top: 12px;
+                padding: 16px;
+                border: 1px solid rgba(20, 32, 43, .08);
+                border-radius: 17px;
+                display: grid;
+                grid-template-columns: 44px minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 12px;
+                background: #ffffff;
+                box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+            }
+
+            .fulfillment-description-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                display: grid;
+                place-items: center;
+                color: #7b8798;
+                background: #f1f3f6;
+                font-size: 19px;
+            }
+
+            .fulfillment-description-toggle {
+                width: 36px;
+                height: 36px;
+                border: 0;
+                border-radius: 10px;
+                display: grid;
+                place-items: center;
+                color: #98a2b3;
+                background: transparent;
+                cursor: pointer;
+            }
+
+            .fulfillment-description-toggle i {
+                transition: transform .22s ease;
+            }
+
+            .fulfillment-description.is-open .fulfillment-description-toggle i {
+                transform: rotate(90deg);
+            }
+
+            .fulfillment-description p {
+                display: none;
+            }
+
+            .fulfillment-description.is-open p {
+                display: block;
+                grid-column: 1 / -1;
+                margin: 4px 0 0;
+                padding-top: 12px;
+                border-top: 1px solid rgba(20, 32, 43, .08);
+            }
+
+            .fulfillment-description-toggle {
+                color: #98a2b3;
+                font-size: 18px;
             }
 
             .fulfillment-page .location-list {
@@ -4007,6 +4211,29 @@
             .fulfillment-action {
                 align-items: stretch;
                 flex-direction: column;
+            }
+
+            .fulfillment-action-buttons {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .fulfillment-action-buttons .primary-btn,
+            .fulfillment-action-buttons .secondary-btn {
+                width: 100%;
+                min-width: 0;
+                justify-content: center;
+                padding-inline: 14px;
+            }
+
+            .fulfillment-action-label-desktop {
+                display: none;
+            }
+
+            .fulfillment-action-label-mobile {
+                display: inline;
             }
 
             .request-qr-shell {
@@ -4292,6 +4519,64 @@
                 font-size: 13px;
             }
 
+            .fulfillment-summary {
+                padding: 0;
+                border-radius: 0;
+            }
+
+            .fulfillment-mobile-profile {
+                grid-template-columns: 68px minmax(0, 1fr);
+                gap: 14px;
+                margin-bottom: 18px;
+            }
+
+            .fulfillment-mobile-avatar {
+                width: 68px;
+                height: 68px;
+                border-width: 5px;
+                font-size: 27px;
+            }
+
+            .fulfillment-mobile-name {
+                font-size: 18px;
+            }
+
+            .fulfillment-summary-main {
+                gap: 10px;
+            }
+
+            .fulfillment-need,
+            .fulfillment-meta {
+                min-height: 96px;
+                grid-template-columns: 36px minmax(0, 1fr);
+                gap: 9px;
+                padding: 12px !important;
+                border-radius: 14px;
+            }
+
+            .fulfillment-card-icon,
+            .fulfillment-description-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                font-size: 16px;
+            }
+
+            .fulfillment-label {
+                font-size: 10px;
+            }
+
+            .fulfillment-need h3,
+            .fulfillment-meta strong {
+                font-size: 13px;
+            }
+
+            .fulfillment-description {
+                grid-template-columns: 36px minmax(0, 1fr) auto;
+                padding: 12px;
+                border-radius: 14px;
+            }
+
             .code-modal-overlay {
                 padding: 8px;
             }
@@ -4427,6 +4712,7 @@
             .fulfillment-action .primary-btn,
             .fulfillment-action .secondary-btn {
                 width: 100%;
+                min-width: 0;
                 justify-content: center;
             }
 
@@ -4796,11 +5082,30 @@
                     'Pakaian' => 'fas fa-shirt',
                     default => 'fas fa-box-open',
                 };
+                $activeRecipientInitial = strtoupper(substr($activeRequest['penerima'] ?? 'P', 0, 1));
             @endphp
 
             <section class="fulfillment-page">
                 <div class="fulfillment-top">
                     <section class="fulfillment-summary">
+                        <div class="fulfillment-mobile-profile">
+                            <div class="fulfillment-mobile-avatar">
+                                @if(! empty($activeRequest['penerima_photo']))
+                                    <img src="{{ $activeRequest['penerima_photo'] }}" alt="{{ $activeRequest['penerima'] }}">
+                                @else
+                                    <span>{{ $activeRecipientInitial }}</span>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="fulfillment-mobile-greeting">Halo,</p>
+                                <h2 class="fulfillment-mobile-name">{{ $activeRequest['penerima'] }}</h2>
+                                <span class="fulfillment-mobile-role">
+                                    <i class="fas fa-circle-check"></i>
+                                    {{ $activeRequest['jenis_penerima'] ?? 'Penerima' }}
+                                </span>
+                            </div>
+                        </div>
+
                         <div class="fulfillment-summary-main">
                             <div class="fulfillment-avatar">
                                 @if(! empty($activeRequest['penerima_photo']))
@@ -4811,6 +5116,7 @@
                             </div>
 
                             <div class="fulfillment-need">
+                                <span class="fulfillment-card-icon is-need"><i class="{{ $requestIcon }}"></i></span>
                                 <div>
                                     <span class="fulfillment-label">Kebutuhan Utama</span>
                                     <h3>{{ $activeRequest['nama_barang'] }}</h3>
@@ -4818,23 +5124,44 @@
                             </div>
 
                             <div class="fulfillment-meta">
-                                <span class="fulfillment-label">Jumlah</span>
-                                <strong>{{ $activeRequest['jumlah'] }} Pcs</strong>
+                                <span class="fulfillment-card-icon is-quantity"><i class="fas fa-cube"></i></span>
+                                <div>
+                                    <span class="fulfillment-label">Jumlah</span>
+                                    <strong>{{ $activeRequest['jumlah'] }} Pcs</strong>
+                                </div>
                             </div>
 
                             <div class="fulfillment-meta">
-                                <span class="fulfillment-label">Kategori</span>
-                                <strong>{{ $activeRequest['kategori_barang'] }}</strong>
+                                <span class="fulfillment-card-icon is-category"><i class="{{ $requestIcon }}"></i></span>
+                                <div>
+                                    <span class="fulfillment-label">Kategori</span>
+                                    <strong>{{ $activeRequest['kategori_barang'] }}</strong>
+                                </div>
                             </div>
 
                             <div class="fulfillment-meta" style="border-right:0;padding-right:0;">
-                                <span class="fulfillment-label">Tujuan Penerima</span>
-                                <strong>{{ $activeRequest['penerima'] }}</strong>
+                                <span class="fulfillment-card-icon is-recipient"><i class="fas fa-bullseye"></i></span>
+                                <div>
+                                    <span class="fulfillment-label">Tujuan Penerima</span>
+                                    <strong>{{ $activeRequest['penerima'] }}</strong>
+                                </div>
                             </div>
                         </div>
 
                         <div class="fulfillment-description">
-                            <h4>Deskripsi Lengkap</h4>
+                            <span class="fulfillment-description-icon"><i class="fas fa-file-lines"></i></span>
+                            <div>
+                                <h4>Deskripsi Lengkap</h4>
+                            </div>
+                            <button
+                                type="button"
+                                class="fulfillment-description-toggle"
+                                aria-label="Tampilkan deskripsi lengkap"
+                                aria-expanded="false"
+                                onclick="const card = this.closest('.fulfillment-description'); const open = card.classList.toggle('is-open'); this.setAttribute('aria-expanded', open ? 'true' : 'false'); this.setAttribute('aria-label', open ? 'Sembunyikan deskripsi lengkap' : 'Tampilkan deskripsi lengkap');"
+                            >
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </button>
                             <p>{{ $activeRequest['deskripsi'] }}</p>
                         </div>
                     </section>
@@ -4927,10 +5254,12 @@
                         <i class="fas fa-shield-heart"></i>
                         Rebox memastikan setiap bantuan tersalurkan dengan amanah dan tepat sasaran.
                     </span>
-                    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+                    <div class="fulfillment-action-buttons">
                         <button type="button" class="secondary-btn" wire:click="backToList">Kembali</button>
                         <button type="button" class="primary-btn" wire:click="goToCode">
-                            <i class="fas fa-briefcase"></i> Penuhi Permintaan Sekarang
+                            <i class="fas fa-briefcase"></i>
+                            <span class="fulfillment-action-label-desktop">Penuhi Permintaan Sekarang</span>
+                            <span class="fulfillment-action-label-mobile">Penuhi</span>
                         </button>
                     </div>
                 </section>
@@ -5237,6 +5566,30 @@
             return match ? match[0] : String(value || '').trim().toUpperCase();
         }
 
+        function requestCameraErrorMessage(error) {
+            if (!window.isSecureContext) {
+                return 'Kamera hanya dapat digunakan melalui HTTPS atau localhost.';
+            }
+
+            if (error?.name === 'NotAllowedError' || error?.name === 'SecurityError') {
+                return 'Akses kamera ditolak. Izinkan kamera pada pengaturan situs browser, lalu coba lagi.';
+            }
+
+            if (error?.name === 'NotFoundError' || error?.name === 'DevicesNotFoundError') {
+                return 'Kamera tidak ditemukan pada perangkat ini.';
+            }
+
+            if (error?.name === 'NotReadableError' || error?.name === 'TrackStartError') {
+                return 'Kamera sedang digunakan aplikasi lain. Tutup aplikasi kamera atau panggilan video, lalu coba lagi.';
+            }
+
+            if (error?.name === 'OverconstrainedError' || error?.name === 'ConstraintNotSatisfiedError') {
+                return 'Kamera tersedia, tetapi mode yang dipilih tidak didukung.';
+            }
+
+            return 'Kamera gagal aktif. Periksa izin kamera browser, lalu coba lagi.';
+        }
+
         function initRequestQrScanner(root = document) {
             const scanner = root.querySelector('[data-request-qr-scanner]');
 
@@ -5418,14 +5771,17 @@
 
             const startCamera = async (facingMode = activeFacingMode, strict = false) => {
                 if (!navigator.mediaDevices?.getUserMedia) {
-                    setRequestQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
+                    setRequestQrStatus(
+                        scanner,
+                        window.isSecureContext
+                            ? 'Browser tidak mendukung akses kamera. Gunakan Chrome atau Edge terbaru.'
+                            : 'Kamera hanya dapat digunakan melalui HTTPS atau localhost.',
+                        true
+                    );
                     return false;
                 }
 
-                if (typeof window.jsQR !== 'function') {
-                    setRequestQrStatus(scanner, 'Decoder QR belum termuat. Refresh halaman lalu coba lagi.', true);
-                    return false;
-                }
+                let cameraStream = null;
 
                 try {
                     if (typeof window.stopDonationQrScanner === 'function') {
@@ -5437,7 +5793,6 @@
                     startButton.disabled = true;
                     updateCameraSwitch(false, true);
                     setRequestQrStatus(scanner, 'Menyiapkan kamera...');
-                    let cameraStream;
 
                     try {
                         cameraStream = await navigator.mediaDevices.getUserMedia({
@@ -5451,22 +5806,32 @@
                     } catch (cameraError) {
                         if (strict) throw cameraError;
 
-                        cameraStream = await navigator.mediaDevices.getUserMedia({
-                            video: {
-                                width: { ideal: 960 },
-                                height: { ideal: 540 },
-                            },
-                            audio: false,
-                        });
+                        try {
+                            cameraStream = await navigator.mediaDevices.getUserMedia({
+                                video: {
+                                    width: { ideal: 960 },
+                                    height: { ideal: 540 },
+                                },
+                                audio: false,
+                            });
+                        } catch (fallbackError) {
+                            cameraStream = await navigator.mediaDevices.getUserMedia({
+                                video: true,
+                                audio: false,
+                            });
+                        }
                     }
 
                     if (cameraSession !== window.reboxRequestQrSession || !scanner.isConnected || !video?.isConnected) {
                         cameraStream.getTracks().forEach((track) => track.stop());
-                        return;
+                        return false;
                     }
 
                     window.reboxRequestQrStream = cameraStream;
+                    video.muted = true;
+                    video.setAttribute('playsinline', '');
                     video.srcObject = cameraStream;
+                    await video.play();
                     empty?.classList.add('is-hidden');
                     video.closest('.request-qr-camera')?.classList.add('is-scanning');
                     activeFacingMode = facingMode;
@@ -5475,15 +5840,31 @@
                     scanFrameCount = 0;
                     setRequestQrStatus(
                         scanner,
-                        `${facingMode === 'environment' ? 'Kamera belakang' : 'Kamera depan'} aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.`
+                        typeof window.jsQR === 'function'
+                            ? `${facingMode === 'environment' ? 'Kamera belakang' : 'Kamera depan'} aktif. Tampilkan QR ke kamera, box akan terbuka otomatis saat kode cocok.`
+                            : 'Kamera aktif, tetapi decoder QR belum termuat. Refresh halaman untuk memindai QR.'
                     );
-                    await video.play();
                     updateCameraSwitch(true);
-                    scanLoop();
+
+                    if (typeof window.jsQR === 'function') {
+                        scanLoop();
+                    }
+
                     return true;
                 } catch (error) {
+                    cameraStream?.getTracks().forEach((track) => track.stop());
+
+                    if (window.reboxRequestQrStream === cameraStream) {
+                        window.reboxRequestQrStream = null;
+                    }
+
+                    window.reboxRequestQrScanning = false;
+                    video && (video.srcObject = null);
+                    empty?.classList.remove('is-hidden');
+                    video?.closest('.request-qr-camera')?.classList.remove('is-scanning');
+
                     if (scanner.isConnected) {
-                        setRequestQrStatus(scanner, 'Kamera gagal aktif. Izinkan akses kamera di browser, lalu coba lagi.', true);
+                        setRequestQrStatus(scanner, requestCameraErrorMessage(error), true);
                     }
                     updateCameraSwitch(false);
                     return false;

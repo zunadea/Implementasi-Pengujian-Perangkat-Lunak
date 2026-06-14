@@ -1522,15 +1522,40 @@
                 min-height: auto;
             }
 
+            .welcome-text {
+                margin-bottom: 34px;
+                font-size: 21px;
+            }
+
+            .hero-title {
+                margin-bottom: 30px;
+                font-size: 30px;
+                line-height: 1.14;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 36px;
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
             .hero-hand {
                 display: none;
             }
 
-            .category-strip,
             .carousel-window,
             .detail-grid {
                 grid-template-columns: 1fr;
                 justify-items: center;
+            }
+
+            .category-strip {
+                width: min(100%, 340px);
+                margin-inline: auto;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-content: center;
+                justify-items: center;
+                gap: 28px 12px;
             }
 
             .box-card.is-prev,
@@ -1550,6 +1575,48 @@
 
             .donation-total h2 {
                 margin: 0;
+                max-width: min(100%, 420px);
+                justify-self: center;
+                font-size: 28px;
+                line-height: 1.12;
+                overflow-wrap: anywhere;
+            }
+
+            .total-number {
+                min-height: 112px;
+                font-size: 68px;
+            }
+
+            .total-number-current {
+                min-width: 110px;
+                font-size: 68px;
+            }
+
+            .total-number-prev,
+            .total-number-next {
+                font-size: 30px;
+            }
+
+            .quote-box {
+                font-size: 16px;
+                line-height: 1.25;
+            }
+
+            .steps-section h3 {
+                font-size: 15px;
+            }
+
+            .step-number {
+                font-size: 36px;
+            }
+
+            .step-copy {
+                font-size: 13px;
+                line-height: 1.2;
+            }
+
+            .step-copy strong {
+                font-size: 15px;
             }
 
             .steps-grid {
@@ -1575,10 +1642,41 @@
             .step-three-number { order: 5; }
             .step-three-copy { order: 6; }
 
+            .steps-section {
+                margin-bottom: 42px;
+            }
+
+            .credit-line {
+                margin-top: 34px;
+            }
+
             .modern-card {
-                padding: 60px 30px;
+                min-height: auto;
+                margin-bottom: 54px;
+                padding: 12px 0;
                 grid-template-columns: 1fr;
                 text-align: center;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            .modern-card small {
+                font-size: 10px;
+            }
+
+            .modern-card h2 {
+                font-size: 24px;
+                line-height: 1.12;
+                margin-top: 12px;
+                margin-bottom: 18px;
+            }
+
+            .modern-card p {
+                font-size: 12px;
+                line-height: 1.4;
             }
 
             .modern-card h2,
@@ -1589,16 +1687,174 @@
 
             .modern-mockup {
                 justify-content: center;
-                min-height: 190px;
+                min-height: 160px;
+                transform: none;
+            }
+
+            .modern-mockup img {
+                width: min(78%, 380px);
+                max-height: 230px;
+                object-position: center;
+                margin-inline: auto;
+                transform: translateX(7%);
             }
 
             .footer-links {
                 flex-wrap: wrap;
-                gap: 18px 28px;
+                gap: 14px 24px;
+                margin-bottom: 0;
+            }
+
+            .footer-dashboard {
+                width: 100vw;
+                height: 44px;
+                margin: 0 calc(50% - 50vw) -70px;
+                padding: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                opacity: 1 !important;
+                visibility: visible;
+                transform: none !important;
+                z-index: 2;
+            }
+
+            .footer-dashboard::before,
+            .footer-dashboard::after {
+                display: block;
+                top: 0;
+                bottom: auto;
+                width: 18%;
+                height: 100%;
+                background: var(--rebox-green);
+                box-shadow: 0 -5px 18px rgba(0, 134, 0, 0.24);
+            }
+
+            .footer-dashboard::before {
+                left: 0;
+                border-radius: 0 28px 0 0;
+            }
+
+            .footer-dashboard::after {
+                right: 0;
+                border-radius: 28px 0 0 0;
+            }
+
+            .footer-dashboard > * {
+                display: none;
             }
         }
 
         @media (max-width: 640px) {
+            .welcome-text {
+                margin-bottom: 26px;
+                font-size: 17px;
+            }
+
+            .hero-title {
+                margin-bottom: 24px;
+                font-size: 25px;
+            }
+
+            .hero-subtitle {
+                font-size: 12px;
+            }
+
+            .donation-total h2 {
+                max-width: 280px;
+                font-size: 22px;
+                line-height: 1.16;
+            }
+
+            .total-number {
+                min-height: 88px;
+                font-size: 52px;
+            }
+
+            .total-number-window {
+                gap: 4px;
+            }
+
+            .total-number-current {
+                min-width: 82px;
+                font-size: 52px;
+            }
+
+            .total-number-prev,
+            .total-number-next {
+                font-size: 23px;
+            }
+
+            .quote-box {
+                font-size: 14px;
+                line-height: 1.28;
+            }
+
+            .steps-section h3 {
+                font-size: 13px;
+            }
+
+            .step-number {
+                font-size: 32px;
+            }
+
+            .step-copy {
+                font-size: 11px;
+            }
+
+            .step-copy strong {
+                font-size: 13px;
+            }
+
+            .modern-card {
+                margin-bottom: 8px;
+                padding-inline: 8px;
+            }
+
+            .modern-card h2 {
+                max-width: 270px;
+                font-size: 20px;
+                line-height: 1.12;
+            }
+
+            .modern-card p {
+                max-width: 270px;
+                font-size: 11px;
+                line-height: 1.38;
+            }
+
+            .steps-section {
+                margin-bottom: 30px;
+            }
+
+            .credit-line {
+                margin-top: 26px;
+            }
+
+            .modern-mockup {
+                min-height: 135px;
+            }
+
+            .modern-mockup img {
+                width: min(72%, 290px);
+                max-height: 175px;
+                transform: translateX(7%);
+            }
+
+            .footer-dashboard {
+                height: 28px;
+            }
+
+            .footer-dashboard::before,
+            .footer-dashboard::after {
+                width: 22%;
+                border-radius: 0 18px 0 0;
+            }
+
+            .footer-dashboard::after {
+                border-radius: 18px 0 0 0;
+            }
+
             .carousel-stage {
                 grid-template-columns: repeat(2, 48px);
                 grid-template-rows: auto 48px;

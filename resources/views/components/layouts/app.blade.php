@@ -276,24 +276,43 @@
                 overflow-x: hidden;
             }
 
+            .top-shell:not(.rebox-menu-ready) {
+                min-height: 64px !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+
             body.rebox-mobile-menu-active {
                 overflow: hidden;
             }
 
             .top-shell.rebox-menu-ready > .profile-dropdown {
-                width: min(230px, calc(100vw - 88px)) !important;
+                width: 59px !important;
             }
 
-            .profile-pill.rebox-profile-identity-pill {
-                width: 100% !important;
-                max-width: 100% !important;
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-pill.rebox-profile-identity-pill {
+                width: 59px !important;
+                max-width: 59px !important;
+                height: 59px !important;
+                min-height: 59px !important;
+                justify-content: center !important;
+                gap: 0 !important;
+                padding: 3px !important;
+                border-radius: 50% !important;
+                margin: 0 !important;
+            }
+
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-identity,
+            .top-shell.rebox-menu-ready > .profile-dropdown .profile-caret {
+                display: none !important;
             }
 
             .rebox-profile-identity-pill img,
             .rebox-profile-identity-pill .profile-avatar-fallback {
-                width: 42px !important;
-                height: 42px !important;
-                flex: 0 0 42px;
+                width: 53px !important;
+                height: 53px !important;
+                flex: 0 0 53px;
             }
 
             .rebox-profile-identity-pill .profile-name {
@@ -302,15 +321,28 @@
 
             .top-shell.rebox-menu-ready {
                 position: relative;
-                width: 100% !important;
-                max-width: 100% !important;
+                left: calc(50% - 50vw + 28px) !important;
+                width: calc(100vw - 56px) !important;
+                max-width: calc(100vw - 56px) !important;
                 min-width: 0 !important;
+                min-height: 64px !important;
                 display: grid !important;
-                grid-template-columns: minmax(0, 1fr) auto !important;
+                grid-template-columns: 48px minmax(0, 1fr) !important;
                 align-items: center !important;
-                gap: 12px !important;
+                gap: 16px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
                 transform: none !important;
                 filter: none !important;
+            }
+
+            .request-page > .top-shell.rebox-menu-ready,
+            .riwayat-inner > .top-shell.rebox-menu-ready {
+                top: 2px !important;
+            }
+
+            .profile-inner > .top-shell.rebox-menu-ready {
+                top: 0 !important;
             }
 
             .top-shell.rebox-menu-ready.is-mobile-menu-open {
@@ -321,6 +353,8 @@
                 grid-column: 1;
                 grid-row: 1;
                 position: relative;
+                left: 0 !important;
+                top: 0 !important;
                 z-index: 1102;
                 width: 48px;
                 height: 48px;
@@ -354,8 +388,8 @@
 
             .top-shell.rebox-menu-ready.is-mobile-menu-open > .rebox-mobile-menu-toggle {
                 position: fixed;
-                top: 14px;
-                left: 14px;
+                top: 14px !important;
+                left: 14px !important;
             }
 
             .top-shell.rebox-menu-ready > .top-nav {
@@ -445,22 +479,23 @@
             }
 
             .top-shell.rebox-menu-ready > .profile-dropdown {
-                width: min(220px, 100%) !important;
+                width: 54px !important;
             }
 
             .top-shell.rebox-menu-ready > .profile-dropdown .profile-pill.rebox-profile-identity-pill {
-                width: 100% !important;
-                max-width: 100% !important;
+                width: 54px !important;
+                max-width: 54px !important;
                 min-height: 54px !important;
-                gap: 8px !important;
-                padding: 6px 10px 6px 7px !important;
+                height: 54px !important;
+                gap: 0 !important;
+                padding: 3px !important;
             }
 
             .rebox-profile-identity-pill img,
             .rebox-profile-identity-pill .profile-avatar-fallback {
-                width: 38px !important;
-                height: 38px !important;
-                flex-basis: 38px;
+                width: 48px !important;
+                height: 48px !important;
+                flex-basis: 48px;
             }
 
             .rebox-profile-identity-pill .profile-name {
@@ -486,6 +521,10 @@
                 right: 0 !important;
                 left: auto !important;
                 max-width: calc(100vw - 28px);
+            }
+
+            .profile-inner > .top-shell.rebox-menu-ready {
+                top: 6px !important;
             }
         }
 
@@ -641,18 +680,44 @@
 
 <script>
     (() => {
+        if (window.reboxResponsiveNavigationReady) return;
+        window.reboxResponsiveNavigationReady = true;
+
+        const syncBodyMenuState = () => {
+            document.body.classList.toggle(
+                'rebox-mobile-menu-active',
+                Boolean(document.querySelector('.top-shell.rebox-menu-ready.is-mobile-menu-open'))
+            );
+        };
+
         const closeMobileMenu = (shell) => {
             if (!shell) return;
 
             shell.classList.remove('is-mobile-menu-open');
-            if (!document.querySelector('.top-shell.rebox-menu-ready.is-mobile-menu-open')) {
-                document.body.classList.remove('rebox-mobile-menu-active');
-            }
             const button = shell.querySelector(':scope > .rebox-mobile-menu-toggle');
             const icon = button?.querySelector('i');
             button?.setAttribute('aria-expanded', 'false');
+            button?.setAttribute('aria-label', 'Buka menu navigasi');
             icon?.classList.remove('fa-xmark');
             icon?.classList.add('fa-bars');
+            syncBodyMenuState();
+        };
+
+        const closeAllMobileMenus = (except = null) => {
+            document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach((shell) => {
+                if (shell !== except) closeMobileMenu(shell);
+            });
+        };
+
+        const openMobileMenu = (shell, button) => {
+            closeAllMobileMenus(shell);
+            shell.classList.add('is-mobile-menu-open');
+            button.setAttribute('aria-expanded', 'true');
+            button.setAttribute('aria-label', 'Tutup menu navigasi');
+            const icon = button.querySelector('i');
+            icon?.classList.remove('fa-bars');
+            icon?.classList.add('fa-xmark');
+            syncBodyMenuState();
         };
 
         const initResponsiveNavigation = () => {
@@ -661,11 +726,11 @@
                 if (!nav) return;
 
                 shell.classList.add('rebox-menu-ready');
+                const navId = nav.id || `rebox-responsive-nav-${index}`;
+                nav.id = navId;
 
                 let button = shell.querySelector(':scope > .rebox-mobile-menu-toggle');
                 if (!button) {
-                    const navId = nav.id || `rebox-responsive-nav-${index}`;
-                    nav.id = navId;
                     button = document.createElement('button');
                     button.type = 'button';
                     button.className = 'rebox-mobile-menu-toggle';
@@ -677,51 +742,84 @@
                     shell.insertBefore(button, nav);
                 }
 
-                if (button.dataset.bound !== 'true') {
-                    button.dataset.bound = 'true';
-                    button.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        const isOpen = shell.classList.toggle('is-mobile-menu-open');
-                        document.body.classList.toggle('rebox-mobile-menu-active', isOpen);
-                        const icon = button.querySelector('i');
-                        button.setAttribute('aria-expanded', String(isOpen));
-                        button.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-                        icon?.classList.toggle('fa-bars', !isOpen);
-                        icon?.classList.toggle('fa-xmark', isOpen);
-                    });
-
-                    nav.addEventListener('click', (event) => {
-                        if (event.target.closest('a')) closeMobileMenu(shell);
-                    });
+                if (nav.id !== button.getAttribute('aria-controls')) {
+                    button.setAttribute('aria-controls', nav.id);
                 }
             });
+
+            document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach((shell) => {
+                if (window.innerWidth > 1024 || !shell.querySelector(':scope > .top-nav')) {
+                    closeMobileMenu(shell);
+                }
+            });
+
+            syncBodyMenuState();
         };
 
         document.addEventListener('click', (event) => {
+            const toggle = event.target.closest('.rebox-mobile-menu-toggle');
+
+            if (toggle) {
+                const shell = toggle.closest('.top-shell.rebox-menu-ready');
+                if (!shell) return;
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (shell.classList.contains('is-mobile-menu-open')) {
+                    closeMobileMenu(shell);
+                } else {
+                    openMobileMenu(shell, toggle);
+                }
+                return;
+            }
+
+            const navLink = event.target.closest('.top-shell.rebox-menu-ready > .top-nav a');
+            if (navLink) {
+                closeMobileMenu(navLink.closest('.top-shell.rebox-menu-ready'));
+                return;
+            }
+
             document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach((shell) => {
-                if (event.target === shell || !shell.contains(event.target)) closeMobileMenu(shell);
+                const nav = shell.querySelector(':scope > .top-nav');
+                if (!nav?.contains(event.target)) closeMobileMenu(shell);
             });
         });
 
         document.addEventListener('keydown', (event) => {
             if (event.key !== 'Escape') return;
-            document.querySelectorAll('.top-shell.rebox-menu-ready.is-mobile-menu-open').forEach(closeMobileMenu);
+            const openButton = document.querySelector('.top-shell.rebox-menu-ready.is-mobile-menu-open > .rebox-mobile-menu-toggle');
+            closeAllMobileMenus();
+            openButton?.focus();
         });
 
         window.addEventListener('resize', () => {
             if (window.innerWidth > 1024) {
-                document.querySelectorAll('.top-shell.rebox-menu-ready').forEach(closeMobileMenu);
+                closeAllMobileMenus();
             }
         });
 
+        document.addEventListener('livewire:navigating', () => closeAllMobileMenus());
         document.addEventListener('DOMContentLoaded', initResponsiveNavigation);
-        document.addEventListener('livewire:navigated', initResponsiveNavigation);
+        document.addEventListener('livewire:navigated', () => {
+            closeAllMobileMenus();
+            initResponsiveNavigation();
+        });
         document.addEventListener('livewire:initialized', initResponsiveNavigation);
 
-        new MutationObserver(() => window.requestAnimationFrame(initResponsiveNavigation)).observe(document.body, {
+        let navigationInitFrame = null;
+        new MutationObserver(() => {
+            if (navigationInitFrame) return;
+            navigationInitFrame = window.requestAnimationFrame(() => {
+                navigationInitFrame = null;
+                initResponsiveNavigation();
+            });
+        }).observe(document.body, {
             childList: true,
             subtree: true,
         });
+
+        initResponsiveNavigation();
     })();
 </script>
 

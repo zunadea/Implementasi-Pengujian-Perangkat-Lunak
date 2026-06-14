@@ -334,8 +334,7 @@
 
         .location-search-row {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 52px;
-            gap: 12px;
+            grid-template-columns: minmax(0, 1fr);
             margin-bottom: 24px;
         }
 
@@ -363,25 +362,6 @@
             color: #14202b;
             font-size: 14px;
             font-weight: 500;
-        }
-
-        .filter-square {
-            width: 52px;
-            height: 50px;
-            border: 1px solid rgba(20, 32, 43, 0.08);
-            border-radius: 14px;
-            background: #ffffff;
-            color: #667085;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
-        }
-
-        .filter-square:hover {
-            color: var(--rebox-green);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 22px rgba(15, 23, 42, .07);
         }
 
         .location-list {
@@ -1979,9 +1959,6 @@
                                     <i class="fas fa-search"></i>
                                     <input type="text" wire:model.live="search_lokasi" placeholder="Cari Rebox Dago, Bojongsoang...">
                                 </label>
-                                <button type="button" class="filter-square" aria-label="Filter lokasi">
-                                    <i class="fas fa-sliders"></i>
-                                </button>
                             </div>
                             <p class="selection-hint">Klik dua kali pada card untuk memilih lokasi box.</p>
 

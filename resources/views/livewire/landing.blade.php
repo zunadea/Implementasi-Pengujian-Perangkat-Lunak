@@ -1728,12 +1728,37 @@
                 min-height: 520px;
             }
 
+            .welcome-text {
+                margin-bottom: 34px;
+                font-size: 21px;
+            }
+
+            .hero-title {
+                margin-bottom: 30px;
+                font-size: 30px;
+                line-height: 1.14;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 36px;
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
             .hero-hand { display: none; }
 
-            .category-strip,
             .detail-grid {
                 grid-template-columns: 1fr;
                 justify-items: center;
+            }
+
+            .category-strip {
+                width: min(100%, 340px);
+                margin-inline: auto;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-content: center;
+                justify-items: center;
+                gap: 28px 12px;
             }
 
             .rebox-landing-page .category-strip {
@@ -1754,8 +1779,14 @@
                 padding-inline: 0;
             }
 
+            .impact-copy h2 {
+                font-size: 19px;
+                line-height: 1.18;
+            }
+
             .impact-copy p {
                 margin-inline: auto;
+                font-size: 12px;
             }
 
             .impact-grid {
@@ -1814,6 +1845,28 @@
                 height: 24px;
             }
 
+            .quote-box {
+                font-size: 16px;
+                line-height: 1.25;
+            }
+
+            .steps-section h3 {
+                font-size: 15px;
+            }
+
+            .step-number {
+                font-size: 36px;
+            }
+
+            .step-copy {
+                font-size: 13px;
+                line-height: 1.2;
+            }
+
+            .step-copy strong {
+                font-size: 15px;
+            }
+
             .steps-grid {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
@@ -1832,10 +1885,41 @@
             .step-three-number { order: 5; }
             .step-three-copy { order: 6; }
 
+            .steps-section {
+                margin-bottom: 42px;
+            }
+
+            .credit-line {
+                margin-top: 34px;
+            }
+
             .modern-card {
-                padding: 60px 30px;
+                min-height: auto;
+                margin-bottom: 54px;
+                padding: 12px 0;
                 grid-template-columns: 1fr;
                 text-align: center;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            .modern-card small {
+                font-size: 10px;
+            }
+
+            .modern-card h2 {
+                font-size: 24px;
+                line-height: 1.12;
+                margin-top: 12px;
+                margin-bottom: 18px;
+            }
+
+            .modern-card p {
+                font-size: 12px;
+                line-height: 1.4;
             }
 
             .modern-card h2,
@@ -1846,8 +1930,16 @@
 
             .modern-mockup {
                 justify-content: center;
-                min-height: 190px;
+                min-height: 160px;
                 transform: none;
+            }
+
+            .modern-mockup img {
+                width: min(78%, 380px);
+                max-height: 230px;
+                object-position: center;
+                margin-inline: auto;
+                transform: translateX(7%);
             }
 
             .faq-section {
@@ -1902,18 +1994,65 @@
             }
 
             .footer-dashboard {
-                padding: 42px 24px 28px;
-                border-radius: 24px 24px 0 0;
+                width: 100vw;
+                height: 44px;
+                margin: 0 calc(50% - 50vw) -70px;
+                padding: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                overflow: visible;
+                opacity: 1 !important;
+                visibility: visible;
+                transform: none !important;
+                z-index: 2;
+            }
+
+            .footer-dashboard::before,
+            .footer-dashboard::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: auto;
+                width: 18%;
+                height: 100%;
+                background: var(--rebox-green);
+                box-shadow: 0 -5px 18px rgba(0, 134, 0, 0.24);
+                opacity: 1;
+            }
+
+            .footer-dashboard::before {
+                right: auto;
+                bottom: auto;
+                left: 0;
+                border-radius: 0 28px 0 0;
+            }
+
+            .footer-dashboard::after {
+                right: 0;
+                bottom: auto;
+                left: auto;
+                border-radius: 28px 0 0 0;
+                filter: none;
+            }
+
+            .footer-dashboard > * {
+                display: none;
             }
 
             .footer-links {
                 flex-wrap: wrap;
-                gap: 18px 28px;
+                gap: 14px 24px;
+                margin-bottom: 0;
             }
 
             .footer-legacy {
-                margin-bottom: 38px;
+                margin-bottom: 28px;
                 padding-inline: 18px;
+            }
+
+            .footer-legacy-copy {
+                display: none;
             }
 
             .footer-grid {
@@ -1962,6 +2101,111 @@
             [data-carousel-next] {
                 grid-column: 2;
                 grid-row: 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .welcome-text {
+                margin-bottom: 26px;
+                font-size: 17px;
+            }
+
+            .hero-title {
+                margin-bottom: 24px;
+                font-size: 25px;
+            }
+
+            .hero-subtitle {
+                font-size: 12px;
+            }
+
+            .impact-copy h2 {
+                font-size: 17px;
+            }
+
+            .quote-box {
+                font-size: 14px;
+                line-height: 1.28;
+            }
+
+            .steps-section h3 {
+                font-size: 13px;
+            }
+
+            .step-number {
+                font-size: 32px;
+            }
+
+            .step-copy {
+                font-size: 11px;
+            }
+
+            .step-copy strong {
+                font-size: 13px;
+            }
+
+            .modern-card {
+                margin-bottom: 36px;
+                padding-inline: 8px;
+            }
+
+            .modern-card h2 {
+                max-width: 270px;
+                font-size: 20px;
+                line-height: 1.12;
+            }
+
+            .modern-card p {
+                max-width: 270px;
+                font-size: 11px;
+                line-height: 1.38;
+            }
+
+            .steps-section {
+                margin-bottom: 30px;
+            }
+
+            .credit-line {
+                margin-top: 26px;
+            }
+
+            .modern-mockup {
+                min-height: 135px;
+            }
+
+            .modern-mockup img {
+                width: min(72%, 290px);
+                max-height: 175px;
+                transform: translateX(7%);
+            }
+
+            .footer-legacy {
+                margin-bottom: 20px;
+            }
+
+            .footer-links {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px 18px;
+                font-size: 10px;
+            }
+
+            .footer-links span:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .footer-dashboard {
+                height: 28px;
+            }
+
+            .footer-dashboard::before,
+            .footer-dashboard::after {
+                width: 22%;
+                border-radius: 0 18px 0 0;
+            }
+
+            .footer-dashboard::after {
+                border-radius: 18px 0 0 0;
             }
         }
     </style>

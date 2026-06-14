@@ -705,7 +705,7 @@
             50% { transform: translateY(-3px) scale(1.03); }
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1024px) {
             .profile-inner { padding: 24px 28px 70px; }
             .top-shell, .profile-layout { grid-template-columns: 1fr; }
             .profile-dropdown { justify-self: end; margin-top: -18px; }
@@ -713,12 +713,11 @@
             .panel-actions { grid-template-columns: 1fr; }
 
             .profile-hero {
-                margin-bottom: 24px;
+                display: none;
             }
 
             .profile-hero p {
-                margin-bottom: 6px;
-                font-size: 12px;
+                display: none;
             }
 
             .profile-hero h1 {
@@ -727,10 +726,7 @@
             }
 
             .profile-hero span {
-                max-width: 430px;
-                margin: 12px auto 0;
-                font-size: 12px;
-                line-height: 1.5;
+                display: none;
             }
 
             .profile-layout {
@@ -785,13 +781,16 @@
                 margin-top: 18px;
                 padding-top: 0;
                 border-top: 0;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                align-items: stretch;
                 gap: 12px;
             }
 
             .stat-row {
-                min-height: 76px;
+                min-width: 0;
+                min-height: 92px;
                 position: relative;
-                padding: 14px 48px 14px 14px;
+                padding: 14px;
                 border: 1px solid rgba(0, 134, 0, .12);
                 border-radius: 18px;
                 background: rgba(255, 255, 255, .88);
@@ -799,29 +798,29 @@
             }
 
             .stat-row::after {
-                content: "\f054";
-                position: absolute;
-                right: 18px;
-                top: 50%;
-                color: var(--rebox-green);
-                font-family: "Font Awesome 6 Free";
-                font-size: 13px;
-                font-weight: 900;
-                transform: translateY(-50%);
+                content: none;
             }
 
             .stat-row strong {
                 color: #07952b;
-                font-size: 17px;
+                font-size: clamp(13px, 2.8vw, 17px);
+                overflow-wrap: anywhere;
             }
 
             .stat-row span {
                 font-size: 11px;
+                line-height: 1.35;
             }
 
             .info-card {
                 border-radius: 20px;
                 box-shadow: 0 14px 34px rgba(26, 73, 38, .08);
+            }
+
+            .info-card.is-overview {
+                width: 100%;
+                padding: 0;
+                margin: 0;
             }
 
             .info-card.is-overview .panel-content {
@@ -836,6 +835,7 @@
             .info-card.is-overview .panel-actions {
                 display: grid;
                 gap: 0;
+                margin: 0;
                 padding: 6px 16px;
             }
 
@@ -891,6 +891,7 @@
                 color: var(--rebox-green);
                 font-size: 12px;
                 justify-self: end;
+                margin-right: 14px;
             }
 
             .info-card.is-overview .form-footer {
