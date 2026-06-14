@@ -1,4 +1,4 @@
-sudo chown -R 501:20 "/Users/muhrheivandy/.npm"<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

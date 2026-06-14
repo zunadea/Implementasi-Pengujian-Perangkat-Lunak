@@ -22,17 +22,13 @@ class GoogleAuthController extends Controller
                 ->with('error', 'Login Google belum aktif. Isi GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET terlebih dahulu.');
         }
 
-        return Socialite::driver('google')
-            ->stateless()
-            ->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function callback(Request $request): RedirectResponse
     {
         try {
-            $googleUser = Socialite::driver('google')
-                ->stateless()
-                ->user();
+            $googleUser = Socialite::driver('google')->user();
         } catch (Throwable $exception) {
             Log::warning('Google login callback failed.', [
                 'exception' => $exception::class,
@@ -72,7 +68,7 @@ class GoogleAuthController extends Controller
             $request->session()->regenerate();
 
             return redirect()
-                ->route('dashboard')
+                ->route($user->role === 'admin' ? 'admin.verification' : 'dashboard')
                 ->with('message', 'Selamat datang kembali!');
         }
 

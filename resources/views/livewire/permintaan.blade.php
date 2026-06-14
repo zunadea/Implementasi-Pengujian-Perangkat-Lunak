@@ -5505,7 +5505,7 @@
 
                 <div class="donor-flow-summary">
                     <div>Tujuan: <strong>{{ $selectedRequest['penerima'] ?? '-' }}</strong></div>
-                    <div>Status: <strong style="color:#b7791f;">Proses pengantaran</strong></div>
+                    <div>Status: <strong style="color:#14933a;">Disetujui, belum diantarkan</strong></div>
                 </div>
 
                 <div class="notice-yellow">

@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\User;
 use App\Models\Donation;
+use App\Models\PermintaanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -48,8 +49,8 @@ class Profile extends Component
         $this->verification_nik = $user->verification_nik;
         $this->verification_nik_name = $user->verification_nik_name;
         $this->donation_count = Donation::where('user_id', $user->id)->count();
-        $this->distribution_count = Donation::where('user_id', $user->id)
-            ->whereIn('status', ['disalurkan', 'selesai', 'completed'])
+        $this->distribution_count = PermintaanModel::where('fulfilled_by_user_id', $user->id)
+            ->whereIn('status', ['Diterima', 'diterima', 'Selesai', 'selesai', 'received', 'completed'])
             ->count();
     }
 

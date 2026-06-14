@@ -45,7 +45,7 @@ class Dashboard extends Component
 
         $dashboardTotal = $isRecipient
             ? PermintaanModel::where('user_id', $user?->id)
-                ->whereIn('status', ['Selesai', 'selesai', 'Disetujui', 'disetujui', 'completed'])
+                ->whereIn('status', ['Diterima', 'diterima', 'Selesai', 'selesai', 'received', 'completed'])
                 ->sum('jumlah')
             : Donation::where('user_id', $user?->id)->count();
 

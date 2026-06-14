@@ -110,8 +110,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/verifikasi', AdminVerification::class)
         ->middleware('admin')
         ->name('admin.verification');
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::match(['get', 'post'], '/logout', function (Request $request) {
+    Route::get('/dashboard', Dashboard::class)
+        ->middleware('role:donatur,penerima')
+        ->name('dashboard');
+    Route::post('/logout', function (Request $request) {
         Auth::logout();
 
         $request->session()->invalidate();
@@ -119,13 +121,23 @@ Route::group(['middleware' => 'auth'], function () {
 
         return redirect()->route('login');
     })->name('logout');
-    Route::get('/profile', Profile::class)->name('profile');
+    Route::get('/profile', Profile::class)
+        ->middleware('role:donatur,penerima')
+        ->name('profile');
     
-    // --- FITUR PENERIMA ---
-    Route::get('/permintaan', Permintaan::class)->name('permintaan');
-    Route::get('/riwayat', Riwayat::class)->name('riwayat');
+    // --- FITUR DONATUR & PENERIMA ---
+    Route::get('/permintaan', Permintaan::class)
+        ->middleware('role:donatur,penerima')
+        ->name('permintaan');
+    Route::get('/riwayat', Riwayat::class)
+        ->middleware('role:donatur,penerima')
+        ->name('riwayat');
 
     // --- FITUR DONATUR ---
-    Route::get('/riwayat-permintaan', RiwayatPermintaan::class)->name('riwayat.permintaan');
-    Route::get('/form-donasi/{name?}', FormDonasi::class)->name('form-donasi');
+    Route::get('/riwayat-permintaan', RiwayatPermintaan::class)
+        ->middleware('role:donatur')
+        ->name('riwayat.permintaan');
+    Route::get('/form-donasi/{name?}', FormDonasi::class)
+        ->middleware('role:donatur')
+        ->name('form-donasi');
 });

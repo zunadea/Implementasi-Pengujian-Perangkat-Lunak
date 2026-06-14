@@ -1747,9 +1747,43 @@
 
             .hero-hand { display: none; }
 
+            .all-locations {
+                width: calc(100% + 28px);
+                margin-right: -14px;
+                margin-left: -14px;
+                overflow: hidden;
+            }
+
             .detail-grid {
-                grid-template-columns: 1fr;
-                justify-items: center;
+                display: flex;
+                justify-content: flex-start;
+                gap: 18px;
+                width: 100%;
+                padding: 12px 14px 24px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-padding-inline: 14px;
+                overscroll-behavior-inline: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(0, 134, 0, .38) transparent;
+            }
+
+            .detail-grid::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .detail-grid::-webkit-scrollbar-thumb {
+                border-radius: 999px;
+                background: rgba(0, 134, 0, .38);
+            }
+
+            .detail-grid .box-card {
+                flex: 0 0 min(78vw, 288px);
+                width: min(78vw, 288px);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
             }
 
             .category-strip {

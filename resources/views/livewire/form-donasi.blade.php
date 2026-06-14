@@ -2456,8 +2456,13 @@
             };
 
             const startCamera = async (facingMode = activeFacingMode, strict = false) => {
+                if (!window.isSecureContext) {
+                    setDonationQrStatus(scanner, 'Kamera hanya dapat digunakan melalui HTTPS atau localhost.', true);
+                    return false;
+                }
+
                 if (!navigator.mediaDevices?.getUserMedia) {
-                    setDonationQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome terbaru di laptop ini.', true);
+                    setDonationQrStatus(scanner, 'Browser tidak mendukung akses kamera. Gunakan Chrome, Edge, atau Safari terbaru.', true);
                     return false;
                 }
 

@@ -30,6 +30,8 @@ class FormDonasi extends Component
 
     public function mount(?string $name = null): void
     {
+        abort_unless(Auth::user()?->role === 'donatur', 403);
+
         if (! $name) {
             return;
         }
