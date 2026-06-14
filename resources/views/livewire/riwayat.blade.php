@@ -28,7 +28,8 @@
 
         .rebox-riwayat-page {
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: clip;
+            overflow-y: visible;
             color: var(--rebox-ink);
             font-family: var(--sf-pro);
             background:
@@ -1053,7 +1054,7 @@
         .recipient-filter-bar {
             min-height: 74px;
             display: grid;
-            grid-template-columns: repeat(5, minmax(120px, auto)) 1fr;
+            grid-template-columns: repeat(6, minmax(112px, 1fr));
             align-items: center;
             gap: 12px;
             padding: 0 22px;
@@ -1229,6 +1230,7 @@
         .recipient-status-pill.is-menunggu { color: #d28a00; background: #fff4d8; }
         .recipient-status-pill.is-diproses { color: #2563eb; background: #eaf2ff; }
         .recipient-status-pill.is-disetujui { color: #14933a; background: #e8f8ec; }
+        .recipient-status-pill.is-diterima { color: #067647; background: #dcfae6; }
         .recipient-status-pill.is-ditolak { color: #dc2626; background: #feecec; }
 
         .recipient-time {
@@ -2204,8 +2206,9 @@
                     @foreach ([
                         ['label' => 'Semua', 'icon' => 'fas fa-grip'],
                         ['label' => 'Menunggu', 'icon' => 'far fa-clock'],
-                        ['label' => 'Diproses', 'icon' => 'fas fa-arrows-rotate'],
                         ['label' => 'Disetujui', 'icon' => 'far fa-circle-check'],
+                        ['label' => 'Diproses', 'icon' => 'fas fa-arrows-rotate'],
+                        ['label' => 'Diterima', 'icon' => 'fas fa-box-open'],
                         ['label' => 'Ditolak', 'icon' => 'far fa-circle-xmark'],
                     ] as $filter)
                         <button
@@ -2226,8 +2229,9 @@
                                 $statusClass = 'is-' . strtolower($history['status']);
                                 $statusIcon = match ($history['status']) {
                                     'Menunggu' => 'far fa-clock',
-                                    'Diproses' => 'fas fa-arrows-rotate',
                                     'Disetujui' => 'far fa-circle-check',
+                                    'Diproses' => 'fas fa-arrows-rotate',
+                                    'Diterima' => 'fas fa-box-open',
                                     'Ditolak' => 'far fa-circle-xmark',
                                     default => 'far fa-clock',
                                 };
@@ -2367,7 +2371,7 @@
                             </form>
                         @endif
 
-                        @if($selectedRecipientRequest['status'] === 'Disetujui')
+                        @if($selectedRecipientRequest['status'] === 'Diterima')
                             <div class="feedback-complete-box">
                                 <strong>Feedback sudah dikirim.</strong>
                                 @if($selectedRecipientRequest['feedback_at'])
@@ -2437,7 +2441,9 @@
                                 ->take(2)
                                 ->map(fn ($part) => strtoupper(substr($part, 0, 1)))
                                 ->implode('');
-                            $isDone = strtolower($history['status'] ?? '') === 'selesai';
+                            $donorStatus = strtolower($history['status'] ?? '');
+                            $isDone = $donorStatus === 'selesai';
+                            $isApproved = $donorStatus === 'disetujui';
                         @endphp
                         <article class="donor-history-card" style="--row-index: {{ $loop->index }};" wire:key="{{ $tab }}-history-{{ $loop->index }}">
                             <img src="{{ $history['image'] }}" class="donor-history-image" alt="{{ $history['nama_barang'] }}">
@@ -2502,11 +2508,13 @@
                             @if ($tab === 'salurkan')
                                 <div class="donor-status-box {{ $isDone ? 'is-done' : 'is-process' }} {{ $isDone && !empty($history['feedback_photo_url']) ? 'has-proof' : '' }}">
                                     <span>
-                                        <i class="{{ $isDone ? 'far fa-circle-check' : 'far fa-clock' }}"></i>
+                                        <i class="{{ $isDone ? 'far fa-circle-check' : ($isApproved ? 'fas fa-handshake' : 'fas fa-truck-fast') }}"></i>
                                         @if($isDone)
                                             Selesai<br>Disalurkan
+                                        @elseif($isApproved)
+                                            Disetujui<br>Belum Diantar
                                         @else
-                                            Proses<br>Penyaluran
+                                            Sedang<br>Diantarkan
                                         @endif
                                     </span>
                                     @if($isDone && !empty($history['feedback_photo_url']))
@@ -2705,8 +2713,13 @@
                             </div>
                         @else
                             <div class="feedback-complete-box">
-                                <strong>Menunggu feedback penerima.</strong>
-                                Riwayat ini akan berubah menjadi selesai setelah penerima mengunggah bukti barang diterima.
+                                @if($selectedDonorRequest['can_start_delivery'])
+                                    <strong>Barang belum mulai diantarkan.</strong>
+                                    Tekan tombol Antarkan Barang saat kamu mulai menuju lokasi penerima.
+                                @else
+                                    <strong>Menunggu feedback penerima.</strong>
+                                    Barang sedang diantarkan. Riwayat akan berubah menjadi selesai setelah penerima mengunggah bukti barang diterima.
+                                @endif
                             </div>
                         @endif
 
@@ -2720,7 +2733,14 @@
                                     Buka Maps
                                 </button>
                             @endif
-                            <button type="button" class="recipient-action-primary" wire:click="closeDonorDetail">Tutup</button>
+                            @if($selectedDonorRequest['can_start_delivery'])
+                                <button type="button" class="recipient-action-primary" wire:click="startDelivery">
+                                    <i class="fas fa-truck-fast"></i>
+                                    Antarkan Barang
+                                </button>
+                            @else
+                                <button type="button" class="recipient-action-primary" wire:click="closeDonorDetail">Tutup</button>
+                            @endif
                         </div>
                         @endif
                     </section>

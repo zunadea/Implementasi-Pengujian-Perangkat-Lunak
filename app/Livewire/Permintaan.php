@@ -263,14 +263,17 @@ class Permintaan extends Component
         ]);
 
         if (! empty($this->selectedRequest['id'])) {
-            $request = PermintaanModel::find($this->selectedRequest['id']);
-
-            if ($request) {
-                $request->update([
-                    'status' => 'Diproses',
+            $updated = PermintaanModel::whereKey($this->selectedRequest['id'])
+                ->whereIn('status', ['Pending', 'pending', 'Menunggu', 'menunggu'])
+                ->update([
+                    'status' => 'Disetujui',
                     'fulfilled_by_user_id' => Auth::id(),
                     'fulfilled_at' => now(),
                 ]);
+
+            if (! $updated) {
+                $this->addError('salurkan_nama_barang', 'Permintaan ini sudah dipenuhi oleh donatur lain.');
+                return;
             }
         }
 

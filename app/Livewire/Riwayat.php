@@ -66,7 +66,7 @@ class Riwayat extends Component
 
     public function setRecipientStatusFilter(string $status): void
     {
-        $allowed = ['Semua', 'Menunggu', 'Diproses', 'Disetujui', 'Ditolak'];
+        $allowed = ['Semua', 'Menunggu', 'Disetujui', 'Diproses', 'Diterima', 'Ditolak'];
         $this->recipientStatusFilter = in_array($status, $allowed, true) ? $status : 'Semua';
     }
 
@@ -141,6 +141,32 @@ class Riwayat extends Component
         $this->showMissingLocationNotice = false;
     }
 
+    public function startDelivery(): void
+    {
+        if (! $this->selectedDonorRequestId || $this->selectedDonorDetailType !== 'salurkan') {
+            return;
+        }
+
+        $updated = PermintaanModel::whereKey($this->selectedDonorRequestId)
+            ->where('fulfilled_by_user_id', Auth::id())
+            ->whereIn('status', ['Disetujui', 'disetujui', 'Approved', 'approved', 'Setuju', 'setuju'])
+            ->update([
+                'status' => 'Diproses',
+            ]);
+
+        if (! $updated) {
+            return;
+        }
+
+        $request = PermintaanModel::with(['fulfilledBy', 'user'])
+            ->where('fulfilled_by_user_id', Auth::id())
+            ->find($this->selectedDonorRequestId);
+
+        if ($request) {
+            $this->selectedDonorRequest = $this->formatDonorSalurkanRequest($request);
+        }
+    }
+
     public function openFeedbackForm(): void
     {
         if (! $this->selectedRecipientRequestId) {
@@ -181,14 +207,14 @@ class Riwayat extends Component
 
         $request = PermintaanModel::where('user_id', Auth::id())->find($this->selectedRecipientRequestId);
 
-        if (! $request) {
+        if (! $request || $this->recipientStatus($request->status ?? 'Pending') !== 'Diproses') {
             return;
         }
 
         $path = $this->feedback_photo->store('feedback-permintaan', 'public');
 
         $request->update([
-            'status' => 'Selesai',
+            'status' => 'Diterima',
             'feedback_photo' => $path,
             'feedback_nama_barang' => $this->feedback_nama_barang,
             'feedback_jumlah' => (int) $this->feedback_jumlah,
@@ -214,8 +240,9 @@ class Riwayat extends Component
 
         return match ($normalized) {
             'pending', 'menunggu' => 'Menunggu',
+            'approved', 'setuju', 'disetujui' => 'Disetujui',
             'proses', 'diproses', 'processing' => 'Diproses',
-            'approved', 'setuju', 'disetujui', 'selesai' => 'Disetujui',
+            'diterima', 'received', 'selesai', 'completed' => 'Diterima',
             'rejected', 'tolak', 'ditolak' => 'Ditolak',
             default => ucfirst($status ?: 'Menunggu'),
         };
@@ -331,8 +358,10 @@ class Riwayat extends Component
             ->latest('fulfilled_at')
             ->get()
             ->map(function ($request) {
-                $isComplete = $this->hasRecipientFeedback($request);
-                $status = $isComplete ? 'Selesai' : 'Proses';
+                $hasFeedback = $this->hasRecipientFeedback($request);
+                $isComplete = $this->recipientStatus($request->status ?? '') === 'Diterima'
+                    || $hasFeedback;
+                $status = $isComplete ? 'Selesai' : $this->recipientStatus($request->status ?? 'Disetujui');
                 $dateTime = $this->formatIndonesiaDateTime($request->fulfilled_at ?? $request->updated_at ?? $request->created_at);
 
                 return [
@@ -350,7 +379,7 @@ class Riwayat extends Component
                     'kategori' => $request->kategori,
                     'status' => $status,
                     'feedback_at' => $request->feedback_at ? \Carbon\Carbon::parse($request->feedback_at)->translatedFormat('d M Y, H:i') : null,
-                    'feedback_photo_url' => $isComplete ? asset('storage/' . $request->feedback_photo) : null,
+                    'feedback_photo_url' => $hasFeedback ? asset('storage/' . $request->feedback_photo) : null,
                     'feedback_note' => $request->feedback_note,
                     'image' => asset('images/GambarcardRebox2.png'),
                 ];
@@ -361,9 +390,12 @@ class Riwayat extends Component
 
     private function formatDonorSalurkanRequest(PermintaanModel $request): array
     {
-        $isComplete = $this->hasRecipientFeedback($request);
+        $hasFeedback = $this->hasRecipientFeedback($request);
+        $isComplete = $this->recipientStatus($request->status ?? '') === 'Diterima'
+            || $hasFeedback;
         $fulfilledAt = $this->formatIndonesiaDateTime($request->fulfilled_at ?? $request->updated_at ?? $request->created_at);
         $mapsUrl = filled($request->google_maps_link) ? trim($request->google_maps_link) : null;
+        $status = $isComplete ? 'Selesai' : $this->recipientStatus($request->status ?? 'Disetujui');
 
         return [
             'id' => $request->id,
@@ -377,13 +409,16 @@ class Riwayat extends Component
             'lokasi_hub' => $request->lokasi_hub ?: 'Lokasi penerima belum diisi.',
             'maps_url' => $mapsUrl,
             'has_maps_location' => filled($mapsUrl),
-            'status' => $isComplete ? 'Selesai' : 'Proses',
-            'status_note' => $isComplete
-                ? 'Penerima sudah mengisi feedback dan mengunggah bukti barang diterima.'
-                : 'Menunggu penerima mengisi feedback dan bukti barang diterima.',
+            'status' => $status,
+            'can_start_delivery' => $status === 'Disetujui',
+            'status_note' => match ($status) {
+                'Selesai' => 'Penerima sudah mengisi feedback dan mengunggah bukti barang diterima.',
+                'Diproses' => 'Barang sedang diantarkan menuju lokasi penerima.',
+                default => 'Barang sudah disetujui untuk dipenuhi dan masih berada bersama donatur.',
+            },
             'fulfilled_at' => $fulfilledAt['date'] . ', ' . $fulfilledAt['time'],
             'feedback_at' => $request->feedback_at ? \Carbon\Carbon::parse($request->feedback_at)->translatedFormat('d M Y, H:i') : null,
-            'feedback_photo_url' => $isComplete ? asset('storage/' . $request->feedback_photo) : null,
+            'feedback_photo_url' => $hasFeedback ? asset('storage/' . $request->feedback_photo) : null,
             'feedback_nama_barang' => $request->feedback_nama_barang,
             'feedback_jumlah' => $request->feedback_jumlah ? $request->feedback_jumlah . ' Pcs' : null,
             'feedback_note' => $request->feedback_note,

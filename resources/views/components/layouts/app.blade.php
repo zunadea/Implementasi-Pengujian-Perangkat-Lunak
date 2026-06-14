@@ -21,6 +21,13 @@
 
         * { box-sizing: border-box; }
 
+        @media (min-width: 1025px) {
+            html {
+                overflow-y: scroll;
+                scrollbar-gutter: stable;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
@@ -346,6 +353,10 @@
             }
 
             .top-shell.rebox-menu-ready.is-mobile-menu-open {
+                z-index: 1200 !important;
+            }
+
+            .request-page > .top-shell.rebox-menu-ready.is-mobile-menu-closing {
                 z-index: 1200 !important;
             }
 
@@ -686,12 +697,24 @@
         const syncBodyMenuState = () => {
             document.body.classList.toggle(
                 'rebox-mobile-menu-active',
-                Boolean(document.querySelector('.top-shell.rebox-menu-ready.is-mobile-menu-open'))
+                Boolean(document.querySelector(
+                    '.top-shell.rebox-menu-ready.is-mobile-menu-open, .request-page > .top-shell.rebox-menu-ready.is-mobile-menu-closing'
+                ))
             );
         };
 
         const closeMobileMenu = (shell) => {
             if (!shell) return;
+
+            const isRequestMenu = shell.parentElement?.classList.contains('request-page');
+            if (shell.reboxCloseTimer) {
+                window.clearTimeout(shell.reboxCloseTimer);
+                shell.reboxCloseTimer = null;
+            }
+
+            if (isRequestMenu && shell.classList.contains('is-mobile-menu-open')) {
+                shell.classList.add('is-mobile-menu-closing');
+            }
 
             shell.classList.remove('is-mobile-menu-open');
             const button = shell.querySelector(':scope > .rebox-mobile-menu-toggle');
@@ -700,6 +723,15 @@
             button?.setAttribute('aria-label', 'Buka menu navigasi');
             icon?.classList.remove('fa-xmark');
             icon?.classList.add('fa-bars');
+
+            if (isRequestMenu && shell.classList.contains('is-mobile-menu-closing')) {
+                shell.reboxCloseTimer = window.setTimeout(() => {
+                    shell.classList.remove('is-mobile-menu-closing');
+                    shell.reboxCloseTimer = null;
+                    syncBodyMenuState();
+                }, 300);
+            }
+
             syncBodyMenuState();
         };
 
@@ -711,6 +743,11 @@
 
         const openMobileMenu = (shell, button) => {
             closeAllMobileMenus(shell);
+            if (shell.reboxCloseTimer) {
+                window.clearTimeout(shell.reboxCloseTimer);
+                shell.reboxCloseTimer = null;
+            }
+            shell.classList.remove('is-mobile-menu-closing');
             shell.classList.add('is-mobile-menu-open');
             button.setAttribute('aria-expanded', 'true');
             button.setAttribute('aria-label', 'Tutup menu navigasi');
